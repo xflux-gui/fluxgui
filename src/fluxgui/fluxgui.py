@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import appindicator
 import gtk
+import gtk.glade
 import sys
 import subprocess
 
@@ -116,8 +117,12 @@ class Indicator:
 class Preferences:
 
   def __init__(self, main):
-    #import glade file here, somehow
-    print "open preferences"
+    self.gladefile = "preferences.glade"
+    self.wTree = gtk.glade.XML(self.gladefile)
+
+    self.window = self.wTree.get_widget("window1")
+
+    self.window.show()
 
   def delete_event(self, widget, data=None):
     #get latitude and save it

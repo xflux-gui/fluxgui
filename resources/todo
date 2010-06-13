@@ -1,0 +1,15 @@
+1.0:
+  - own icon
+  - start xflux automatically
+  - lucid icon style
+  - indicator applet
+  - toggle on/off function
+  - preferences pane with save lat/long function
+  - if no preferences, open preferences to let people enter lat/long
+
+1.1:
+
+  - icon indicates state
+  - 'turn off for an hour'
+  -
+

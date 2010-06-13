@@ -50,7 +50,7 @@ class Fluxgui:
     gtk.main()
 
   def exit(self, widget, data=None):
-    self.kill_xflux("activate")
+    self.stop_xflux("activate")
     gtk.main_quit()
     sys.exit(0)
 
@@ -117,6 +117,7 @@ class Preferences:
 
   def __init__(self, main):
     #import glade file here, somehow
+    print "open preferences"
 
   def delete_event(self, widget, data=None):
     #get latitude and save it
@@ -129,3 +130,4 @@ class Preferences:
 if __name__=="__main__":
   app = Fluxgui()
   app.run()
+

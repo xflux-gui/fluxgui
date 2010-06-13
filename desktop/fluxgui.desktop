@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=F.lux
-Comment=Better lighting...for your computer
+Name=fluxgui
+Comment=A gnome-applet to control xflux
 Terminal=false
 Icon=flux
 Type=Application

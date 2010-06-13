@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(name = "fluxgui",
     version = "1.0.0",
-    description = "fluxgui - a gnome-applet to controll xflux",
+    description = "fluxgui - a gnome-applet to control xflux",
     author = "Kilian Valkhof",
     author_email = "kilian@kilianvalkhof.com",
     url = "http://fluxgui.kilianvalkhof.com",

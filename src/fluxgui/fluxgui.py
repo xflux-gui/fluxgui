@@ -4,40 +4,46 @@ import gtk
 import sys
 import subprocess
 
+VERSION = "1.0.0"
+MYLATITUDE = "52.07"
+
 class Fluxgui:
 
   def __init__(self):
     self.indicator = Indicator(self)
-    self.start_xflux("52.07") #get these from preferences file
+    self.start_xflux(MYLATITUDE) #get these from preferences file
 
   def start_xflux(self, latitude):
-    self.xflux = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
+    process = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
 
-    returncode = self.xflux.stdout
-    self.xfluxKillCode = ""
+    returncode = process.stdout
+    self.xflux_kill_code = ""
 
+    #figure out if this is correct
     while True:
       line = returncode.readline()
       if "background" in line:
         newline = line.split("\'")
-        self.xfluxKillCode = newline[1]
+        self.xflux_kill_code = newline[1]
         return
       return
 
-  def kill_xflux(self, item):
-    self.indicator.killxflux.hide()
-    self.indicator.restartxflux.show()
+  def stop_xflux(self, item):
+    self.indicator.item_turn_off.hide()
+    self.indicator.item_turn_on.show()
 
-    self.xfluxKill = subprocess.Popen(self.xfluxKillCode, stdout=subprocess.PIPE)
+    #figure out how to get this actually working (permission denied, now)
+    process = subprocess.Popen(self.xflux_kill_code, stdout=subprocess.PIPE)
 
   def restart_xflux(self, item):
-    self.indicator.killxflux.show()
-    self.indicator.restartxflux.hide()
+    self.stop_xflux(self, "activate")
 
-    self.start_xflux("52.07") #get these from preferences file
+    self.indicator.item_turn_off.show()
+    self.indicator.item_turn_on.hide()
+
+    self.start_xflux(MYLATITUDE) #get these from preferences file
 
   def open_preferences(self, item):
-    print "yellow"
     self.preferences = Preferences(self)
 
   def run(self):
@@ -77,15 +83,15 @@ class Indicator:
   def setup_menu(self):
     menu = gtk.Menu()
 
-    self.killxflux = gtk.MenuItem("_Turn f.lux off")
-    self.killxflux.connect("activate", self.main.kill_xflux)
-    self.killxflux.show()
-    menu.append(self.killxflux)
+    self.item_turn_off = gtk.MenuItem("_Turn f.lux off")
+    self.item_turn_off.connect("activate", self.main.stop_xflux)
+    self.item_turn_off.show()
+    menu.append(self.item_turn_off)
 
-    self.restartxflux = gtk.MenuItem("_Turn f.lux on")
-    self.restartxflux.connect("activate", self.main.restart_xflux)
-    self.restartxflux.hide()
-    menu.append(self.restartxflux)
+    self.item_turn_on = gtk.MenuItem("_Turn f.lux on")
+    self.item_turn_on.connect("activate", self.main.restart_xflux)
+    self.item_turn_on.hide()
+    menu.append(self.item_turn_on)
 
     item = gtk.MenuItem("_Preferences")
     item.connect("activate", self.main.open_preferences)
@@ -106,30 +112,20 @@ class Indicator:
   def main(self):
     gtk.main()
 
+
 class Preferences:
 
   def __init__(self, main):
-    self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    self.window.set_title("fluxgui preferences")
-    self.window.connect("delete_event", self.delete_event)
-    self.window.set_border_width(10)
-
-    self.button = gtk.Button("Hello World")
-    #self.button.connect("clicked", self.hello, None)
-    self.window.add(self.button)
-
-    self.button.show()
-
-    self.window.show()
+    #import glade file here, somehow
 
   def delete_event(self, widget, data=None):
-    print "save stuff here"
+    #get latitude and save it
     return False
 
   def main(self):
     gtk.main()
 
+
 if __name__=="__main__":
   app = Fluxgui()
   app.run()
-

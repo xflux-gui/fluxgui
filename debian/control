@@ -1,0 +1,15 @@
+Source: fluxgui
+Section: accessories
+Priority: optional
+Maintainer: Kilian Valkhof <kilian@kilianvalkhof.com>
+Build-Depends: debhelper (>=7), python-support (>=0.8.7), python
+XS-Python-Version: >=2.6
+Standards-Version: 3.8.0
+Homepage: http://fluxgui.kilianvalkhof.com
+
+Package: fluxgui
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+XB-Python-Version: ${python:Versions}
+Description: TODO
+

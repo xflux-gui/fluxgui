@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=F.lux
+Comment=Better lighting...for your computer
+Terminal=false
+Icon=flux
+Type=Application
+Exec=fluxgui
+Categories=GNOME;GTK;Accessories;
+StartupNotify=true
+

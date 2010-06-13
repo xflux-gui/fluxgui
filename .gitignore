@@ -1,0 +1,5 @@
+*.pyc
+MANIFEST
+dist/
+build/
+

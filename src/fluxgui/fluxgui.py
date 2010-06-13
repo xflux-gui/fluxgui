@@ -7,9 +7,53 @@ import subprocess
 class Fluxgui:
 
   def __init__(self):
-
-    self.setup_indicator()
+    self.indicator = Indicator(self)
     self.start_xflux("52.07") #get these from preferences file
+
+  def start_xflux(self, latitude):
+    self.xflux = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
+
+    returncode = self.xflux.stdout
+    self.xfluxKillCode = ""
+
+    while True:
+      line = returncode.readline()
+      if "background" in line:
+        newline = line.split("\'")
+        self.xfluxKillCode = newline[1]
+        return
+      return
+
+  def kill_xflux(self, item):
+    self.killxflux.hide()
+    self.restartxflux.show()
+
+    self.xfluxKill = subprocess.Popen(self.xfluxKillCode, stdout=subprocess.PIPE)
+
+  def restart_xflux(self, item):
+    self.killxflux.show()
+    self.restartxflux.hide()
+
+    self.start_xflux("52.07") #get these from preferences file
+
+  def open_preferences(self, item):
+    print "yellow"
+    self.preferences = Preferences()
+
+  def run(self):
+    gtk.main()
+
+  def exit(self, widget, data=None):
+    self.kill_xflux("activate")
+    gtk.main_quit()
+    sys.exit(0)
+
+
+class Indicator(main):
+
+  def __init__(self, main):
+    self.main = main
+    self.setup_indicator()
 
   def setup_indicator(self):
     self.indicator = appindicator.Indicator(
@@ -34,17 +78,17 @@ class Fluxgui:
     menu = gtk.Menu()
 
     self.killxflux = gtk.MenuItem("_Turn f.lux off")
-    self.killxflux.connect("activate", self.kill_xflux)
+    self.killxflux.connect("activate", self.main.kill_xflux)
     self.killxflux.show()
     menu.append(self.killxflux)
 
     self.restartxflux = gtk.MenuItem("_Turn f.lux on")
-    self.restartxflux.connect("activate", self.restart_xflux)
+    self.restartxflux.connect("activate", self.main.restart_xflux)
     self.restartxflux.hide()
     menu.append(self.restartxflux)
 
     item = gtk.MenuItem("_Preferences")
-    item.connect("activate", self.open_preferences)
+    item.connect("activate", self.main.open_preferences)
     item.show()
     menu.append(item)
 
@@ -53,49 +97,14 @@ class Fluxgui:
     menu.append(item)
 
     item = gtk.MenuItem("Exit")
-    item.connect("activate", self.exit)
+    item.connect("activate", self.main.exit)
     item.show()
     menu.append(item)
 
     return menu
 
-  def start_xflux(self, latitude):
-    self.xflux = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
-    returncode = self.xflux.stdout
-    self.xfluxKillCode = ""
-    while True:
-      line = returncode.readline()
-      if "background" in line:
-        newline = line.split("\'")
-        self.xfluxKillCode = newline[1]
-        return
-      return
-
-
-  def restart_xflux(self, item):
-    self.killxflux.show()
-    self.restartxflux.hide()
-
-    self.start_xflux("52.07") #get these from preferences file
-
-  def kill_xflux(self, item):
-    self.killxflux.hide()
-    self.restartxflux.show()
-
-    self.xfluxKill = subprocess.Popen(self.xfluxKillCode, stdout=subprocess.PIPE)
-
-  def open_preferences(self, item):
-    print "yellow"
-    self.preferences = Preferences()
-
-  def run(self):
+  def main(self):
     gtk.main()
-
-  def exit(self, widget, data=None):
-    self.kill_xflux("activate")
-    gtk.main_quit()
-    sys.exit(0)
-
 
 class Preferences:
 
@@ -125,4 +134,3 @@ class Preferences:
 if __name__=="__main__":
   app = Fluxgui()
   app.run()
-

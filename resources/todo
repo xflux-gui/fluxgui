@@ -1,9 +1,9 @@
 1.0:
   x own icon
-  - start xflux automatically
+  x start xflux automatically
   x lucid icon style
   x indicator applet
-  - toggle on/off function
+  x toggle on/off function
   - preferences pane with save lat/long function
   - if no preferences, open preferences to let people enter lat/long
 

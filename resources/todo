@@ -10,6 +10,10 @@
 1.1:
 
   - icon indicates state
-  - 'turn off for an hour'
-  - ?
+  - 'turn off for an hour'-function
+  - support american zipcodes as well
+
+1.1+
+  - display current colour temp
+  - set colour temp
 

@@ -14,9 +14,9 @@ setup(name = "fluxgui",
       package_data={'fluxgui': ['pixmaps/*.*']},
       scripts=['fluxgui'],
       data_files=[
+        ('bin', ['xflux']),
         ('share/icons/hicolor/scalable/apps', ['desktop/fluxgui.svg']),
         ('share/applications', ['desktop/fluxgui.desktop']),
 		    ('share/pixmaps', ['fluxgui.svg', 'fluxgui-dark.svg', 'fluxgui-light.svg'])],
     long_description = """longdesc""",
   )
-

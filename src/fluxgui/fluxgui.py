@@ -1,17 +1,15 @@
 #!/usr/bin/python
 import appindicator
-import gobject
 import gtk
-import pynotify
-import os
 import sys
-
+import subprocess
 
 class Fluxgui:
 
   def __init__(self):
 
     self.setup_indicator()
+    self.start_xflux("52.07", "4.51") #get these from preferences file
 
   def setup_indicator(self):
     self.indicator = appindicator.Indicator(
@@ -35,12 +33,17 @@ class Fluxgui:
   def setup_menu(self):
     menu = gtk.Menu()
 
-    item = gtk.MenuItem("Toggle off")
-    item.connect("activate", self.kill_xflux)
-    item.show()
-    menu.append(item)
+    self.killxflux = gtk.MenuItem("_Turn f.lux off")
+    self.killxflux.connect("activate", self.kill_xflux)
+    self.killxflux.show()
+    menu.append(self.killxflux)
 
-    item = gtk.MenuItem("Preferences")
+    self.restartxflux = gtk.MenuItem("_Turn f.lux on")
+    self.restartxflux.connect("activate", self.restart_xflux)
+    self.restartxflux.hide()
+    menu.append(self.restartxflux)
+
+    item = gtk.MenuItem("_Preferences")
     item.connect("activate", self.open_preferences)
     item.show()
     menu.append(item)
@@ -56,15 +59,23 @@ class Fluxgui:
 
     return menu
 
-  def start_xflux(self):
-    print "start xflux"
-    return
+  def start_xflux(self, latitude, longitude):
+    runString = ["/bin/xflux", "-l", latitude, longitude]
+    self.xflux = subprocess.Popen(runString)
 
-  def kill_xflux(self):
-    print "kill xflux"
-    return
+  def restart_xflux(self, item):
+    self.killxflux.show()
+    self.restartxflux.hide()
 
-  def open_preferences(self):
+    self.start_xflux("52.07", "4.51") #get these from preferences file
+
+  def kill_xflux(self, item):
+    self.killxflux.hide()
+    self.restartxflux.show()
+
+    self.xflux.terminate()
+
+  def open_preferences(self, item):
     print "open settings"
     return
 
@@ -72,6 +83,7 @@ class Fluxgui:
     gtk.main()
 
   def exit(self, widget, data=None):
+    self.kill_xflux("activate")
     gtk.main_quit()
     sys.exit(0)
 

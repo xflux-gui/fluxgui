@@ -9,7 +9,7 @@ class Fluxgui:
   def __init__(self):
 
     self.setup_indicator()
-    self.start_xflux("52.07", "4.51") #get these from preferences file
+    self.start_xflux("52.07") #get these from preferences file
 
   def setup_indicator(self):
     self.indicator = appindicator.Indicator(
@@ -59,15 +59,15 @@ class Fluxgui:
 
     return menu
 
-  def start_xflux(self, latitude, longitude):
-    runString = ["/bin/xflux", "-l", latitude, longitude]
+  def start_xflux(self, latitude):
+    runString = ["/bin/xflux", "-l", latitude]
     self.xflux = subprocess.Popen(runString)
 
   def restart_xflux(self, item):
     self.killxflux.show()
     self.restartxflux.hide()
 
-    self.start_xflux("52.07", "4.51") #get these from preferences file
+    self.start_xflux("52.07") #get these from preferences file
 
   def kill_xflux(self, item):
     self.killxflux.hide()
@@ -76,8 +76,8 @@ class Fluxgui:
     self.xflux.terminate()
 
   def open_preferences(self, item):
-    print "open settings"
-    return
+    print "yellow"
+    self.preferences = Preferences()
 
   def run(self):
     gtk.main()
@@ -86,6 +86,33 @@ class Fluxgui:
     self.kill_xflux("activate")
     gtk.main_quit()
     sys.exit(0)
+
+
+class Preferences:
+
+  def __init__(self):
+    self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    self.window.connect("delete_event", self.delete_event)
+    self.window.connect("destroy", self.destroy)
+    self.window.set_border_width(10)
+
+    self.label
+    self.button = gtk.Button("Hello World")
+    #self.button.connect("clicked", self.hello, None)
+    self.window.add(self.button)
+
+    self.button.show()
+
+    self.window.show()
+
+  def delete_event(self, widget, data=None):
+    return False
+
+  def destroy(self, widget, data=None):
+    gtk.main_quit()
+
+  def main(self):
+    gtk.main()
 
 if __name__=="__main__":
   app = Fluxgui()

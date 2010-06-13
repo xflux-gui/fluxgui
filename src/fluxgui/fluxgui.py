@@ -25,20 +25,20 @@ class Fluxgui:
       return
 
   def kill_xflux(self, item):
-    self.killxflux.hide()
-    self.restartxflux.show()
+    self.indicator.killxflux.hide()
+    self.indicator.restartxflux.show()
 
     self.xfluxKill = subprocess.Popen(self.xfluxKillCode, stdout=subprocess.PIPE)
 
   def restart_xflux(self, item):
-    self.killxflux.show()
-    self.restartxflux.hide()
+    self.indicator.killxflux.show()
+    self.indicator.restartxflux.hide()
 
     self.start_xflux("52.07") #get these from preferences file
 
   def open_preferences(self, item):
     print "yellow"
-    self.preferences = Preferences()
+    self.preferences = Preferences(self)
 
   def run(self):
     gtk.main()
@@ -49,7 +49,7 @@ class Fluxgui:
     sys.exit(0)
 
 
-class Indicator(main):
+class Indicator:
 
   def __init__(self, main):
     self.main = main
@@ -108,10 +108,10 @@ class Indicator(main):
 
 class Preferences:
 
-  def __init__(self):
+  def __init__(self, main):
     self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+    self.window.set_title("fluxgui preferences")
     self.window.connect("delete_event", self.delete_event)
-    self.window.connect("destroy", self.destroy)
     self.window.set_border_width(10)
 
     self.button = gtk.Button("Hello World")
@@ -123,10 +123,8 @@ class Preferences:
     self.window.show()
 
   def delete_event(self, widget, data=None):
+    print "save stuff here"
     return False
-
-  def destroy(self, widget, data=None):
-    gtk.main_quit()
 
   def main(self):
     gtk.main()
@@ -134,3 +132,4 @@ class Preferences:
 if __name__=="__main__":
   app = Fluxgui()
   app.run()
+

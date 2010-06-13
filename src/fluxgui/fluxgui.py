@@ -60,8 +60,17 @@ class Fluxgui:
     return menu
 
   def start_xflux(self, latitude):
-    runString = ["/bin/xflux", "-l", latitude]
-    self.xflux = subprocess.Popen(runString)
+    self.xflux = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
+    returncode = self.xflux.stdout
+    self.xfluxKillCode = ""
+    while True:
+      line = returncode.readline()
+      if "background" in line:
+        newline = line.split("\'")
+        self.xfluxKillCode = newline[1]
+        return
+      return
+
 
   def restart_xflux(self, item):
     self.killxflux.show()
@@ -73,7 +82,7 @@ class Fluxgui:
     self.killxflux.hide()
     self.restartxflux.show()
 
-    self.xflux.terminate()
+    self.xfluxKill = subprocess.Popen(self.xfluxKillCode, stdout=subprocess.PIPE)
 
   def open_preferences(self, item):
     print "yellow"
@@ -96,7 +105,6 @@ class Preferences:
     self.window.connect("destroy", self.destroy)
     self.window.set_border_width(10)
 
-    self.label
     self.button = gtk.Button("Hello World")
     #self.button.connect("clicked", self.hello, None)
     self.window.add(self.button)

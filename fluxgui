@@ -17,7 +17,7 @@
 
 import os, sys
 import subprocess
-import trimage
+import fluxgui
 
 if __name__ == "__main__":
     path = os.path.join(os.path.dirname(fluxgui.__file__), "fluxgui.py")

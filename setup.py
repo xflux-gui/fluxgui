@@ -9,14 +9,16 @@ setup(name = "f.lux indicator applet",
     author_email = "kilian@kilianvalkhof.com",
     url = "http://fluxgui.kilianvalkhof.com",
     license = "MIT license",
-      packages=['fluxgui'],
       package_dir={'fluxgui': 'src/fluxgui'},
+      packages=['fluxgui'],
+      package_data={'fluxgui': ['*.*']},
       scripts=['fluxgui'],
       data_files=[
         ('bin', ['xflux']),
-        ('share/icons/hicolor/scalable/apps', ['desktop/fluxgui.svg']),
+        ('share/icons/hicolor/scalable/apps', ['fluxgui.svg']),
         ('share/applications', ['desktop/fluxgui.desktop']),
-		    ('share/pixmaps', ['fluxgui.svg', 'fluxgui-dark.svg', 'fluxgui-light.svg'])],
+        ('share/pixmaps', ['fluxgui.svg', 'fluxgui-dark.svg', 'fluxgui-light.svg'])
+      ],
     long_description = """f.lux indicator applet is an indicator applet to
     control xflux, an application that makes the color of your computer's
     display adapt to the time of day, warm at nights and like sunlight during

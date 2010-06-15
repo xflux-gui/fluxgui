@@ -11,7 +11,6 @@ setup(name = "f.lux indicator applet",
     license = "MIT license",
       packages=['fluxgui'],
       package_dir={'fluxgui': 'src/fluxgui'},
-      package_data={'fluxgui': ['pixmaps/*.*']},
       scripts=['fluxgui'],
       data_files=[
         ('bin', ['xflux']),

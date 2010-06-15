@@ -2,7 +2,7 @@
 Name=f.lux indicator applet
 Comment=Better lightning...for your computer
 Terminal=false
-Icon=flux
+Icon=fluxgui
 Type=Application
 Exec=fluxgui
 Categories=GNOME;GTK;Accessories;

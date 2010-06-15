@@ -1,0 +1,12 @@
+fluxgui (1.0.0-0ubuntu1) lucid; urgency=low
+
+  * gnome indicator applet for xflux
+  * own logo
+  * starts xflux automatically
+  * adapts icon to lucid style
+  * allows on/off toggling of xflux
+  * saves the latitude settings in gconf
+  * opens preferences window if latitude is not yet set
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Tue, 15 Jun 2010 22:14:58 +0200
+

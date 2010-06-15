@@ -6,35 +6,22 @@ import sys
 import subprocess
 
 VERSION = "1.0.0"
-MYLATITUDE = "52.07"
 
 class Fluxgui:
 
   def __init__(self):
+    self.settings = Settings(self)
     self.indicator = Indicator(self)
-    self.start_xflux(MYLATITUDE) #get these from preferences file
+    self.start_xflux(self.settings.latitude) #get these from preferences file
 
   def start_xflux(self, latitude):
-    process = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
-
-    returncode = process.stdout
-    self.xflux_kill_code = ""
-
-    #figure out if this is correct
-    while True:
-      line = returncode.readline()
-      if "background" in line:
-        newline = line.split("\'")
-        self.xflux_kill_code = newline[1]
-        return
-      return
+    self.xflux = subprocess.Popen(["/bin/xflux", "-l", latitude], stdout=subprocess.PIPE)
 
   def stop_xflux(self, item):
     self.indicator.item_turn_off.hide()
     self.indicator.item_turn_on.show()
 
-    #figure out how to get this actually working (permission denied, now)
-    process = subprocess.Popen(self.xflux_kill_code, stdout=subprocess.PIPE)
+    self.xflux.terminate()
 
   def restart_xflux(self, item):
     self.stop_xflux(self, "activate")
@@ -42,7 +29,7 @@ class Fluxgui:
     self.indicator.item_turn_off.show()
     self.indicator.item_turn_on.hide()
 
-    self.start_xflux(MYLATITUDE) #get these from preferences file
+    self.start_xflux(self.settings.latitude) #get these from preferences file
 
   def open_preferences(self, item):
     self.preferences = Preferences(self)
@@ -117,19 +104,40 @@ class Indicator:
 class Preferences:
 
   def __init__(self, main):
+    self.main = main
     self.gladefile = "preferences.glade"
     self.wTree = gtk.glade.XML(self.gladefile)
 
     self.window = self.wTree.get_widget("window1")
+    self.window.connect("destroy", self.delete_event)
+
+    self.input = self.wTree.get_widget("entry1")
+    self.input.set_text(self.main.settings.latitude)
 
     self.window.show()
 
   def delete_event(self, widget, data=None):
     #get latitude and save it
+    self.main.settings.set_latitude(self.input.get_text())
     return False
 
   def main(self):
     gtk.main()
+
+class Settings:
+  def __init__(self, main):
+    self.main = main
+    self.get_latitude()
+
+  def get_latitude(self):
+    self.latitude = "52.07"
+
+  def set_latitude(self, latitude):
+    return
+
+  def main(self):
+   gtk.main()
+
 
 
 if __name__=="__main__":

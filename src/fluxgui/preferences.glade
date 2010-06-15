@@ -51,14 +51,14 @@
             <property name="visible">True</property>
             <child>
               <widget class="GtkLinkButton" id="linkbutton1">
-                <property name="label" translatable="yes">Find out your latitude at http://getlatlon.com</property>
+                <property name="label" translatable="yes">Find out your latitude</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="has_tooltip">True</property>
                 <property name="relief">none</property>
                 <property name="focus_on_click">False</property>
-                <property name="uri">http://getlatlon.com</property>
+                <property name="uri">http://stereopsis.com/flux/map.html</property>
               </widget>
               <packing>
                 <property name="padding">10</property>
@@ -75,3 +75,4 @@
     </child>
   </widget>
 </glade-interface>
+

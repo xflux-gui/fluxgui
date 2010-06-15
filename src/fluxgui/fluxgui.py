@@ -113,16 +113,19 @@ class Preferences:
 
     self.input = self.wTree.get_widget("entry1")
     self.input.set_text(self.main.settings.latitude)
+    self.input.connect("activate", self.delete_event)
 
     self.window.show()
 
   def delete_event(self, widget, data=None):
-    #get latitude and save it
+
     self.main.settings.set_latitude(self.input.get_text())
+    self.window.hide()
     return False
 
   def main(self):
     gtk.main()
+
 
 class Settings:
   def __init__(self, main):
@@ -133,11 +136,10 @@ class Settings:
     self.latitude = "52.07"
 
   def set_latitude(self, latitude):
-    return
+    self.latitude = latitude
 
   def main(self):
    gtk.main()
-
 
 
 if __name__=="__main__":

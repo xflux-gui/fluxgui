@@ -14,10 +14,10 @@ setup(name = "f.lux indicator applet",
       package_data={'fluxgui': ['*.*']},
       scripts=['fluxgui'],
       data_files=[
-        ('bin', ['xflux']),
         ('share/icons/hicolor/scalable/apps', ['fluxgui.svg']),
         ('share/applications', ['desktop/fluxgui.desktop']),
-        ('share/pixmaps', ['fluxgui.svg', 'fluxgui-dark.svg', 'fluxgui-light.svg'])
+        ('share/pixmaps', ['fluxgui.svg', 'fluxgui-dark.svg', 'fluxgui-light.svg']),
+        ('bin', ['xflux']),
       ],
     long_description = """f.lux indicator applet is an indicator applet to
     control xflux, an application that makes the color of your computer's

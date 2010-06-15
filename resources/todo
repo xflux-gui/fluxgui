@@ -4,8 +4,9 @@
   x lucid icon style
   x indicator applet
   x toggle on/off function
-  - preferences pane with save lat function
-  - if no preferences, open preferences to let people enter lat/long
+  x preferences pane with save lat function
+  x safe and get settings from gconf
+  x if no preferences, open preferences to let people enter lat/long
 
 1.1:
 

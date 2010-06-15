@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=fluxgui
-Comment=A gnome-applet to control xflux
+Name=f.lux indicator applet
+Comment=Better lightning...for your computer
 Terminal=false
 Icon=flux
 Type=Application

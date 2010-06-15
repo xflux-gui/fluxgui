@@ -3,7 +3,7 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="window1">
-    <property name="title" translatable="yes">fluxgui preferences</property>
+    <property name="title" translatable="yes">f.lux preferences</property>
     <property name="window_position">center</property>
     <child>
       <widget class="GtkVBox" id="vbox1">

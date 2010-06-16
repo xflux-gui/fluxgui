@@ -1,4 +1,4 @@
-include COPYING MANIFEST MANIFEST.in README fluxgui
-recursive-include desktop *.svg *.desktop
-recursive-include src/ *.py *.png
+include COPYING MANIFEST MANIFEST.in README fluxgui xflux
+recursive-include *.svg *.desktop
+recursive-include *.py *.glade
 

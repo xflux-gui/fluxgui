@@ -115,6 +115,7 @@ class Preferences:
         self.main = main
         self.gladefile = path.join(path.dirname(path.dirname(
           path.realpath(__file__))), "fluxgui/preferences.glade")
+        print self.gladefile
         self.wTree = gtk.glade.XML(self.gladefile)
 
         self.window = self.wTree.get_widget("window1")

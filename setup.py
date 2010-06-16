@@ -11,7 +11,7 @@ setup(name = "f.lux indicator applet",
     license = "MIT license",
     package_dir = {'fluxgui' : 'src/fluxgui'},
     packages = ["fluxgui",],
-    package_data = {"fluxgui" : ["pixmaps/*.*"] },
+    package_data = {"fluxgui" : ["*.glade"] },
     data_files=[('share/icons/hicolor/scalable/apps', ['fluxgui.svg']),
             ('share/applications', ['desktop/fluxgui.desktop']),
             ('share/pixmaps', ['fluxgui.svg', 'fluxgui-light.svg', 'fluxgui-dark.svg']),
@@ -22,3 +22,4 @@ setup(name = "f.lux indicator applet",
     display adapt to the time of day, warm at nights and like sunlight during
     the day""",
   )
+

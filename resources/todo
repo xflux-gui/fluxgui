@@ -7,9 +7,9 @@
   x preferences pane with save lat function
   x safe and get settings from gconf
   x if no preferences, open preferences to let people enter lat/long
-
+  - suggest latitude from clock applet if possible
+  - show dialog about the above and preferences
 1.1:
-
   - icon indicates state
   - 'turn off for an hour'-function
   - support american zipcodes as well

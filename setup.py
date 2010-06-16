@@ -7,21 +7,18 @@ setup(name = "f.lux indicator applet",
     description = "f.lux indicator applet - better lightning...for your computer",
     author = "Kilian Valkhof",
     author_email = "kilian@kilianvalkhof.com",
-    url = "http://fluxgui.kilianvalkhof.com",
+    url = "http://www.stereopsis.com/flux/",
     license = "MIT license",
-      package_dir={'fluxgui': 'src/fluxgui'},
-      packages=['fluxgui'],
-      package_data={'fluxgui': ['*.*']},
-      scripts=['fluxgui'],
-      data_files=[
-        ('share/icons/hicolor/scalable/apps', ['fluxgui.svg']),
-        ('share/applications', ['desktop/fluxgui.desktop']),
-        ('share/pixmaps', ['fluxgui.svg', 'fluxgui-dark.svg', 'fluxgui-light.svg']),
-        ('bin', ['xflux']),
-      ],
+    package_dir = {'fluxgui' : 'src/fluxgui'},
+    packages = ["fluxgui",],
+    package_data = {"fluxgui" : ["pixmaps/*.*"] },
+    data_files=[('share/icons/hicolor/scalable/apps', ['fluxgui.svg']),
+            ('share/applications', ['desktop/fluxgui.desktop']),
+            ('share/pixmaps', ['fluxgui.svg', 'fluxgui-light.svg', 'fluxgui-dark.svg']),
+            ('bin', ['xflux']),],
+    scripts = ["fluxgui"],
     long_description = """f.lux indicator applet is an indicator applet to
     control xflux, an application that makes the color of your computer's
     display adapt to the time of day, warm at nights and like sunlight during
     the day""",
   )
-

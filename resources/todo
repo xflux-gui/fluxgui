@@ -7,7 +7,8 @@
   x preferences pane with save lat function
   x safe and get settings from gconf
   x if no preferences, open preferences to let people enter lat/long
-  - show dialog about the above and preferences
+  x show dialog about the above and preferences
+
 1.1:
   - icon indicates state
   - 'turn off for an hour'-function

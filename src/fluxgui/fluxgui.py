@@ -115,7 +115,6 @@ class Preferences:
         self.main = main
         self.gladefile = path.join(path.dirname(path.dirname(
           path.realpath(__file__))), "fluxgui/preferences.glade")
-        print self.gladefile
         self.wTree = gtk.glade.XML(self.gladefile)
 
         self.window = self.wTree.get_widget("window1")
@@ -125,7 +124,19 @@ class Preferences:
         self.input.set_text(self.main.settings.latitude)
         self.input.connect("activate", self.delete_event)
 
-        self.window.show()
+        if self.main.settings.latitude == "":
+            print "show dialog"
+            md = gtk.MessageDialog(self.window,
+                gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
+                gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
+                "your latitude to work correctly. Please fill in your " +
+                "latitude on the next screen and then hit enter.")
+            md.set_title("f.lux indicator applet")
+            md.run()
+            md.destroy()
+            self.window.show()
+        else:
+            self.window.show()
 
     def delete_event(self, widget, data=None):
         if self.main.settings.latitude != self.input.get_text():

@@ -18,7 +18,7 @@ class Fluxgui:
         if self.settings.latitude is "":
             self.open_preferences("activate")
 
-        #self.start_xflux(self.settings.latitude)
+        self.start_xflux(self.settings.latitude)
 
     def start_xflux(self, latitude):
         self.xflux = subprocess.Popen(["xflux", "-l", latitude],

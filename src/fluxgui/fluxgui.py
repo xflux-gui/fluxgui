@@ -5,6 +5,7 @@ import gtk.glade
 import gconf
 import sys
 import subprocess
+from os import path
 
 VERSION = "1.0.0"
 
@@ -112,7 +113,8 @@ class Preferences:
 
     def __init__(self, main):
         self.main = main
-        self.gladefile = "preferences.glade"
+        self.gladefile = path.join(path.dirname(path.dirname(
+          path.realpath(__file__))), "fluxgui/preferences.glade")
         self.wTree = gtk.glade.XML(self.gladefile)
 
         self.window = self.wTree.get_widget("window1")

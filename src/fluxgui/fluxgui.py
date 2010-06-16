@@ -18,10 +18,10 @@ class Fluxgui:
         if self.settings.latitude is "":
             self.open_preferences("activate")
 
-        self.start_xflux(self.settings.latitude)
+        #self.start_xflux(self.settings.latitude)
 
     def start_xflux(self, latitude):
-        self.xflux = subprocess.Popen(["/bin/xflux", "-l", latitude],
+        self.xflux = subprocess.Popen(["xflux", "-l", latitude],
           stdout=subprocess.PIPE)
 
     def stop_xflux(self, item):
@@ -140,7 +140,7 @@ class Settings:
 
     def __init__(self, top):
         self.client = gconf.client_get_default()
-        self.prefs_key = "/schemas/apps/fluxgui"
+        self.prefs_key = "/apps/fluxgui"
         self.client.add_dir(self.prefs_key, gconf.CLIENT_PRELOAD_NONE)
         self.latitude = self.client.get_string(self.prefs_key + "/latitude")
 

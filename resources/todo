@@ -12,9 +12,10 @@
 1.1:
   - icon indicates state
   - 'turn off for an hour'-function
-  - support american zipcodes as well
+  - support american zipcodes as well -> entering zipcode gives latitude back. Only feed latitude to xflux after getting one
 
 1.1+
+  - ask
   - display current colour temp
   - set colour temp
 

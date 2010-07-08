@@ -9,16 +9,45 @@
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkHBox" id="hbox1">
+          <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
+            <property name="n_rows">2</property>
+            <property name="n_columns">2</property>
+            <child>
+              <widget class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="xpad">10</property>
+                <property name="ypad">10</property>
+                <property name="label" translatable="yes">ZIPCode (US only)</property>
+                <property name="justify">right</property>
+              </widget>
+              <packing>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
             <child>
               <widget class="GtkLabel" id="label1">
                 <property name="visible">True</property>
+                <property name="xpad">10</property>
+                <property name="ypad">10</property>
                 <property name="label" translatable="yes">Latitude</property>
+                <property name="justify">right</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="entry2">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="activates_default">True</property>
               </widget>
               <packing>
-                <property name="padding">10</property>
-                <property name="position">0</property>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">10</property>
               </packing>
             </child>
             <child>
@@ -28,13 +57,14 @@
                 <property name="activates_default">True</property>
               </widget>
               <packing>
-                <property name="padding">10</property>
-                <property name="position">1</property>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">10</property>
               </packing>
             </child>
           </widget>
           <packing>
-            <property name="padding">10</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -72,8 +102,28 @@
             <property name="position">2</property>
           </packing>
         </child>
+        <child>
+          <widget class="GtkHSeparator" id="hseparator3">
+            <property name="visible">True</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkLabel" id="label3">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Xflux Copyright Michael Herf, 
+f.lux indicator applet made by Kilian Valkhof</property>
+            <property name="justify">center</property>
+          </widget>
+          <packing>
+            <property name="padding">10</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>
 </glade-interface>
-

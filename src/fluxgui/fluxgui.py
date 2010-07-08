@@ -22,7 +22,7 @@ class Fluxgui:
         self.start_xflux(self.settings.latitude)
 
     def start_xflux(self, latitude):
-        self.xflux = subprocess.Popen(["xflux", "-l", latitude],
+        self.xflux = subprocess.Popen(["xflux", "-l", latitude, "-nofork"],
           stdout=subprocess.PIPE)
 
     def stop_xflux(self, item):
@@ -172,4 +172,3 @@ class Settings:
 if __name__ == "__main__":
     app = Fluxgui()
     app.run()
-

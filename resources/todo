@@ -9,14 +9,11 @@
   x if no preferences, open preferences to let people enter lat/long
   x show dialog about the above and preferences
   x support american zipcodes as well
+  - get attribution in order
 
-1.1:
-  - icon indicates state
-
-
-1.1+
-  - get returning latitude from zipcode and save that
+1.1
+  - get returning latitude from zipcode and save+use that
+  - get current colour temp and display that
+  - set the preferred nighttime colour temperature
   - 'turn off for an hour'-function
-  - display current colour temp
-  - set colour temp
 

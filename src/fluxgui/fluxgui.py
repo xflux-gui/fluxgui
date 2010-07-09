@@ -139,12 +139,11 @@ class Preferences:
         self.input2.connect("activate", self.delete_event)
 
         if self.main.settings.latitude is "" and self.main.settings.zipcode is "":
-            print "show dialog"
             md = gtk.MessageDialog(self.window,
                 gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
                 gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
-                "your latitude or zipcode to work correctly. Please fill in your " +
-                "latitude or zipcode on the next screen and then hit enter.")
+                "your latitude or zipcode to work correctly. Please fill either " +
+                "of them in on the next screen and then hit enter.")
             md.set_title("f.lux indicator applet")
             md.run()
             md.destroy()

@@ -31,6 +31,7 @@ class Fluxgui:
 
         args = [command, value, '-nofork']
         self.xflux = pexpect.spawn("xflux", args)
+        self.xflux.logfile = None
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()

@@ -5,8 +5,8 @@ fluxgui (1.0.0-0ubuntu1) lucid; urgency=low
   * starts xflux automatically
   * adapts icon to lucid style
   * allows on/off toggling of xflux
-  * saves the latitude settings in gconf
-  * opens preferences window if latitude is not yet set
+  * saves the latitude/zipcode settings in gconf
+  * opens preferences window if latitude/zipcode is not yet set
 
  -- Kilian Valkhof <kilian@kilianvalkhof.com>  Tue, 15 Jun 2010 22:14:58 +0200
 

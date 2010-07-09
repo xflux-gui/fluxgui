@@ -4,11 +4,11 @@ This package was debianized by:
 
 Upstream Author(s):
 
-    Kilian Valkhof
+    Kilian Valkhof, Michael and Lorna Herf
 
 Copyright:
 
-    Copyright (C) 2010 Kilian Valkhof
+    Copyright (C) 2010 Michael and Lorna Herf, Kilian Valkhof
 
 License:
 
@@ -38,4 +38,8 @@ The Debian packaging is:
     Copyright (C) 2010 Kilian Valkhof
 
 and is licensed under the MIT license, see above.
+
+The Xflux binary is:
+
+    Copyright (C) 2010 Michael and Lorna Herf
 

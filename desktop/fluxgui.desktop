@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=f.lux indicator applet
-Comment=Better lightning...for your computer
+Comment=Better lightning for your computer
 Terminal=false
 Icon=fluxgui
 Exec=fluxgui

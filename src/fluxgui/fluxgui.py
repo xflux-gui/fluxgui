@@ -27,7 +27,7 @@ class Fluxgui:
 
         if self.settings.latitude:
             command = "-l"
-            value =  latitude
+            value = latitude
 
         args = [command, value, '-nofork']
         self.xflux = pexpect.spawn("xflux", args)
@@ -138,12 +138,13 @@ class Preferences:
         self.input2.set_text(self.main.settings.zipcode)
         self.input2.connect("activate", self.delete_event)
 
-        if self.main.settings.latitude is "" and self.main.settings.zipcode is "":
+        if self.main.settings.latitude is ""\
+           and self.main.settings.zipcode is "":
             md = gtk.MessageDialog(self.window,
                 gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
                 gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
-                "your latitude or zipcode to work correctly. Please fill either " +
-                "of them in on the next screen and then hit enter.")
+                "your latitude or zipcode to work correctly. Please fill " +
+                "either of them in on the next screen and then hit enter.")
             md.set_title("f.lux indicator applet")
             md.run()
             md.destroy()
@@ -185,15 +186,18 @@ class Settings:
         self.client.set_string(self.prefs_key + "/latitude", latitude)
         self.latitude = latitude
 
-        command = "l="+latitude
+        command = "l=" + latitude
         self.main.update_xflux(command)
 
     def set_zipcode(self, zipcode):
         self.client.set_string(self.prefs_key + "/zipcode", zipcode)
         self.zipcode = zipcode
 
+        command = "z=" + zipcode
+        self.main.update_xflux(command)
+
     def main(self):
-       gtk.main()
+        gtk.main()
 
 
 if __name__ == "__main__":

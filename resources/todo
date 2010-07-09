@@ -8,14 +8,15 @@
   x safe and get settings from gconf
   x if no preferences, open preferences to let people enter lat/long
   x show dialog about the above and preferences
+  x support american zipcodes as well
 
 1.1:
   - icon indicates state
-  - 'turn off for an hour'-function
-  - support american zipcodes as well -> entering zipcode gives latitude back. Only feed latitude to xflux after getting one
+
 
 1.1+
-  - ask
+  - get returning latitude from zipcode and save that
+  - 'turn off for an hour'-function
   - display current colour temp
   - set colour temp
 

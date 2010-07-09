@@ -16,13 +16,19 @@ class Fluxgui:
         self.indicator = Indicator(self)
         self.settings = Settings(self)
 
-        if self.settings.latitude is "":
+        if self.settings.latitude is "" and self.settings.zipcode is "":
             self.open_preferences("activate")
 
-        self.start_xflux(self.settings.latitude)
+        self.start_xflux(self.settings.latitude, self.settings.zipcode)
 
-    def start_xflux(self, latitude):
-        self.xflux = subprocess.Popen(["xflux", "-l", latitude, "-nofork"],
+    def start_xflux(self, latitude, zipcode):
+
+        if self.settings.latitude:
+            command = "-l " + latitude
+        else:
+            command = "-z " + zipcode
+
+        self.xflux = subprocess.Popen(["xflux", command, "-nofork"],
           stdout=subprocess.PIPE)
 
     def stop_xflux(self, item):
@@ -124,13 +130,17 @@ class Preferences:
         self.input.set_text(self.main.settings.latitude)
         self.input.connect("activate", self.delete_event)
 
-        if self.main.settings.latitude == "":
+        self.input2 = self.wTree.get_widget("entry2")
+        self.input2.set_text(self.main.settings.zipcode)
+        self.input2.connect("activate", self.delete_event)
+
+        if self.main.settings.latitude is "" and self.main.settings.zipcode is "":
             print "show dialog"
             md = gtk.MessageDialog(self.window,
                 gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
                 gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
-                "your latitude to work correctly. Please fill in your " +
-                "latitude on the next screen and then hit enter.")
+                "your latitude or zipcode to work correctly. Please fill in your " +
+                "latitude or zipcode on the next screen and then hit enter.")
             md.set_title("f.lux indicator applet")
             md.run()
             md.destroy()
@@ -140,7 +150,14 @@ class Preferences:
 
     def delete_event(self, widget, data=None):
         if self.main.settings.latitude != self.input.get_text():
+            restart = True
             self.main.settings.set_latitude(self.input.get_text())
+
+        if self.main.settings.zipcode != self.input2.get_text():
+            restart = True
+            self.main.settings.set_zipcode(self.input2.get_text())
+
+        if restart:
             self.main.restart_xflux("activate")
 
         self.window.hide()
@@ -157,13 +174,21 @@ class Settings:
         self.prefs_key = "/apps/fluxgui"
         self.client.add_dir(self.prefs_key, gconf.CLIENT_PRELOAD_NONE)
         self.latitude = self.client.get_string(self.prefs_key + "/latitude")
+        self.zipcode = self.client.get_string(self.prefs_key + "/zipcode")
 
         if self.latitude is None:
             self.latitude = ""
 
+        if self.zipcode is None:
+            self.zipcode = ""
+
     def set_latitude(self, latitude):
         self.client.set_string(self.prefs_key + "/latitude", latitude)
         self.latitude = latitude
+
+    def set_zipcode(self, zipcode):
+        self.client.set_string(self.prefs_key + "/zipcode", zipcode)
+        self.zipcode = zipcode
 
     def main(self):
        gtk.main()

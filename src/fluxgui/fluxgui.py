@@ -4,7 +4,7 @@ import gtk
 import gtk.glade
 import gconf
 import sys
-import subprocess
+import pexpect
 from os import path
 
 VERSION = "1.0.0"
@@ -22,20 +22,21 @@ class Fluxgui:
         self.start_xflux(self.settings.latitude, self.settings.zipcode)
 
     def start_xflux(self, latitude, zipcode):
+        command = "-z"
+        value = zipcode
 
         if self.settings.latitude:
-            command = "-l " + latitude
-        else:
-            command = "-z " + zipcode
+            command = "-l"
+            value =  latitude
 
-        self.xflux = subprocess.Popen(["xflux", command, "-nofork"],
-          stdout=subprocess.PIPE)
+        args = [command, value, '-nofork']
+        self.xflux = pexpect.spawn("xflux", args)
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()
         self.indicator.item_turn_on.show()
 
-        self.xflux.terminate()
+        self.xflux.terminate(force=True)
 
     def restart_xflux(self, item):
         self.stop_xflux("activate")
@@ -43,7 +44,10 @@ class Fluxgui:
         self.indicator.item_turn_off.show()
         self.indicator.item_turn_on.hide()
 
-        self.start_xflux(self.settings.latitude)
+        self.start_xflux(self.settings.latitude, self.settings.zipcode)
+
+    def update_xflux(self, command):
+        self.xflux.send(command)
 
     def open_preferences(self, item):
         self.preferences = Preferences(self)
@@ -150,15 +154,10 @@ class Preferences:
 
     def delete_event(self, widget, data=None):
         if self.main.settings.latitude != self.input.get_text():
-            restart = True
             self.main.settings.set_latitude(self.input.get_text())
 
         if self.main.settings.zipcode != self.input2.get_text():
-            restart = True
             self.main.settings.set_zipcode(self.input2.get_text())
-
-        if restart:
-            self.main.restart_xflux("activate")
 
         self.window.hide()
         return False
@@ -169,7 +168,8 @@ class Preferences:
 
 class Settings:
 
-    def __init__(self, top):
+    def __init__(self, main):
+        self.main = main
         self.client = gconf.client_get_default()
         self.prefs_key = "/apps/fluxgui"
         self.client.add_dir(self.prefs_key, gconf.CLIENT_PRELOAD_NONE)
@@ -186,6 +186,9 @@ class Settings:
         self.client.set_string(self.prefs_key + "/latitude", latitude)
         self.latitude = latitude
 
+        command = "l="+latitude
+        self.main.update_xflux(command)
+
     def set_zipcode(self, zipcode):
         self.client.set_string(self.prefs_key + "/zipcode", zipcode)
         self.zipcode = zipcode
@@ -197,3 +200,4 @@ class Settings:
 if __name__ == "__main__":
     app = Fluxgui()
     app.run()
+

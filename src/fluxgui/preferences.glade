@@ -114,7 +114,10 @@
         <child>
           <widget class="GtkLabel" id="label3">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Xflux Copyright Michael Herf, 
+            <property name="label" translatable="yes">f.lux
+Better lightning for your computer
+Copyright 2009 - 2010 Michael and Lorna Herf
+
 f.lux indicator applet made by Kilian Valkhof</property>
             <property name="justify">center</property>
           </widget>
@@ -127,3 +130,4 @@ f.lux indicator applet made by Kilian Valkhof</property>
     </child>
   </widget>
 </glade-interface>
+

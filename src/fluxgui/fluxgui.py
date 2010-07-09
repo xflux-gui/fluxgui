@@ -19,12 +19,16 @@ class Fluxgui:
         if self.settings.latitude is "" and self.settings.zipcode is "":
             self.open_preferences("activate")
 
-        #todo add in the zipcode. If latitude use latitude, else zipcode
+        self.start_xflux(self.settings.latitude, self.settings.zipcode)
 
-        self.start_xflux(self.settings.latitude)
+    def start_xflux(self, latitude, zipcode):
 
-    def start_xflux(self, latitude):
-        self.xflux = subprocess.Popen(["xflux", "-l", latitude, "-nofork"],
+        if self.settings.latitude:
+            command = "-l " + latitude
+        else:
+            command = "-z " + zipcode
+
+        self.xflux = subprocess.Popen(["xflux", command, "-nofork"],
           stdout=subprocess.PIPE)
 
     def stop_xflux(self, item):

@@ -9,7 +9,7 @@
   x if no preferences, open preferences to let people enter lat/long
   x show dialog about the above and preferences
   x support american zipcodes as well
-  - get attribution in order
+  x get attribution in order
 
 1.1
   - get returning latitude from zipcode and save+use that

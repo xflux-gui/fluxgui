@@ -19,7 +19,8 @@ class Fluxgui:
         if self.settings.latitude is "" and self.settings.zipcode is "":
             self.open_preferences("activate")
 
-        self.start_xflux(self.settings.latitude, self.settings.zipcode, self.settings.color)
+        self.start_xflux(self.settings.latitude, self.settings.zipcode,
+                         self.settings.color)
 
     def start_xflux(self, latitude, zipcode, color):
         loccommand = "-z"
@@ -142,7 +143,7 @@ class Preferences:
         self.zipsetting.connect("activate", self.delete_event)
 
         self.colsetting = self.wTree.get_widget("combobox1")
-        self.colsetting.set_active(int(self.main.settings.colortemp));
+        self.colsetting.set_active(int(self.main.settings.colortemp))
 
         if self.main.settings.latitude is ""\
            and self.main.settings.zipcode is "":
@@ -197,7 +198,6 @@ class Settings:
         if not self.colortemp:
             self.colortemp = "1"
 
-
     def set_latitude(self, latitude):
         self.client.set_string(self.prefs_key + "/latitude", latitude)
         self.latitude = latitude
@@ -215,13 +215,13 @@ class Settings:
     def get_color(self, colortemp):
         color = "3400"
         if colortemp is "0":
-          color = "2700"
+            color = "2700"
         elif colortemp is "1":
-          color = "3400"
+            color = "3400"
         elif colortemp is "2":
-          color = "4200"
+            color = "4200"
         elif colortemp is "3":
-          color = "5000"
+            color = "5000"
 
         return color
 

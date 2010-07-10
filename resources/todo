@@ -10,10 +10,11 @@
   x show dialog about the above and preferences
   x support american zipcodes as well
   x get attribution in order
+  x set the preferred nighttime colour temperature
 
 1.1
   - get returning latitude from zipcode and save+use that
-  - get current colour temp and display that
-  - set the preferred nighttime colour temperature
+  - get current color temp and display that
   - 'turn off for an hour'-function
+  - get pretty-print for time and display that
 

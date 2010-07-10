@@ -48,7 +48,8 @@ class Fluxgui:
         self.indicator.item_turn_off.show()
         self.indicator.item_turn_on.hide()
 
-        self.start_xflux(self.settings.latitude, self.settings.zipcode)
+        self.start_xflux(self.settings.latitude, self.settings.zipcode,
+                         self.settings.color)
 
     def update_xflux(self, command):
         self.xflux.send(command)

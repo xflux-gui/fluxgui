@@ -27,7 +27,7 @@ class Fluxgui:
         locvalue = zipcode
 
         colcommand = "-k"
-        colvalue = "color"
+        colvalue = color
 
         if self.settings.latitude:
             loccommand = "-l"

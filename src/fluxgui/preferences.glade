@@ -3,7 +3,8 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="window1">
-    <property name="title" translatable="yes">f.lux preferences</property>
+    <property name="title" translatable="yes">f.lux indicator applet preferences</property>
+    <property name="resizable">False</property>
     <property name="window_position">center</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
@@ -16,7 +17,7 @@
             <child>
               <widget class="GtkLabel" id="label2">
                 <property name="visible">True</property>
-                <property name="xpad">10</property>
+                <property name="xalign">1</property>
                 <property name="ypad">10</property>
                 <property name="label" translatable="yes">ZIPCode (US only)</property>
                 <property name="single_line_mode">True</property>
@@ -30,7 +31,8 @@
             <child>
               <widget class="GtkLabel" id="label1">
                 <property name="visible">True</property>
-                <property name="xpad">10</property>
+                <property name="xalign">1</property>
+                <property name="yalign">0</property>
                 <property name="ypad">10</property>
                 <property name="label" translatable="yes">Latitude</property>
                 <property name="single_line_mode">True</property>
@@ -43,6 +45,7 @@
               <widget class="GtkEntry" id="entry2">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="tooltip" translatable="yes">Fill in your zipcode (Latitude has preference)</property>
                 <property name="activates_default">True</property>
               </widget>
               <packing>
@@ -57,7 +60,9 @@
               <widget class="GtkEntry" id="entry1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="tooltip" translatable="yes">Fill in your latitude</property>
                 <property name="activates_default">True</property>
+                <property name="caps_lock_warning">False</property>
               </widget>
               <packing>
                 <property name="left_attach">1</property>
@@ -68,6 +73,7 @@
             <child>
               <widget class="GtkLabel" id="label4">
                 <property name="visible">True</property>
+                <property name="xalign">1</property>
                 <property name="label" translatable="yes">Nighttime color temperature</property>
                 <property name="single_line_mode">True</property>
               </widget>
@@ -80,6 +86,7 @@
             <child>
               <widget class="GtkComboBox" id="combobox1">
                 <property name="visible">True</property>
+                <property name="tooltip" translatable="yes">Fill in your preferred nighttime color temperature</property>
                 <property name="items" translatable="yes">Tungsten (2700K)
 Halogen (3400K)
 Fluorescent (4200K)
@@ -122,6 +129,7 @@ Sunlight (5000K)</property>
                 <property name="relief">none</property>
                 <property name="focus_on_click">False</property>
                 <property name="uri">http://stereopsis.com/flux/map.html</property>
+                <property name="visited">True</property>
               </widget>
               <packing>
                 <property name="padding">10</property>
@@ -162,4 +170,3 @@ f.lux indicator applet made by Kilian Valkhof</property>
     </child>
   </widget>
 </glade-interface>
-

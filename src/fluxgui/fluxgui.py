@@ -42,14 +42,15 @@ class Fluxgui:
 
         self.xflux.terminate(force=True)
 
-    def restart_xflux(self, item):
-        self.stop_xflux("activate")
+    def pause_xflux(self, item):
+        self.indicator.item_turn_off.hide()
+        self.indicator.item_turn_on.show()
+        self.update_xflux("k=" + self.settings.get_color("4"))
 
+    def unpause_xflux(self, item):
         self.indicator.item_turn_off.show()
         self.indicator.item_turn_on.hide()
-
-        self.start_xflux(self.settings.latitude, self.settings.zipcode,
-                         self.settings.color)
+        self.update_xflux("k=" + self.settings.color)
 
     def update_xflux(self, command):
         self.xflux.send(command)
@@ -94,13 +95,13 @@ class Indicator:
     def setup_menu(self):
         menu = gtk.Menu()
 
-        self.item_turn_off = gtk.MenuItem("_Turn f.lux off")
-        self.item_turn_off.connect("activate", self.main.stop_xflux)
+        self.item_turn_off = gtk.MenuItem("_Pause f.lux")
+        self.item_turn_off.connect("activate", self.main.pause_xflux)
         self.item_turn_off.show()
         menu.append(self.item_turn_off)
 
-        self.item_turn_on = gtk.MenuItem("_Turn f.lux on")
-        self.item_turn_on.connect("activate", self.main.restart_xflux)
+        self.item_turn_on = gtk.MenuItem("_Unpause f.lux")
+        self.item_turn_on.connect("activate", self.main.unpause_xflux)
         self.item_turn_on.hide()
         menu.append(self.item_turn_on)
 
@@ -216,13 +217,20 @@ class Settings:
     def get_color(self, colortemp):
         color = "3400"
         if colortemp is "0":
+            #tungsten
             color = "2700"
         elif colortemp is "1":
+            #halogen
             color = "3400"
         elif colortemp is "2":
+            #fluorescent
             color = "4200"
         elif colortemp is "3":
+            #daylight
             color = "5000"
+        elif colortemp is "4":
+            #off
+            color = "6500"
 
         return color
 
@@ -231,6 +239,7 @@ class Settings:
 
         self.client.set_string(self.prefs_key + "/colortemp", colortemp)
         self.colortemp = colortemp
+        self.color = color
 
         command = "k=" + color
         self.main.update_xflux(command)

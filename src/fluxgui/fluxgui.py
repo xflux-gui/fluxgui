@@ -35,6 +35,8 @@ class Fluxgui:
 
         args = [loccommand, locvalue, colcommand, colvalue, '-nofork']
         self.xflux = pexpect.spawn("xflux", args)
+        fout = file("log.txt", "w")
+        self.xflux.logfile_read = fout
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()
@@ -53,7 +55,7 @@ class Fluxgui:
         self.update_xflux("k=" + self.settings.color)
 
     def update_xflux(self, command):
-        self.xflux.send(command)
+        test = self.xflux.send(command)
 
     def open_preferences(self, item):
         self.preferences = Preferences(self)

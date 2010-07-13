@@ -27,7 +27,7 @@ class Fluxgui:
         if latitude:
             args = ["-l", latitude, "-k", color, '-nofork']
             if longitude:
-              args = ["-l", latitude, "-g", longitude, "-k", color, '-nofork']
+                args = ["-l", latitude, "-g", longitude, "-k", color, '-nofork']
 
         self.xflux = pexpect.spawn("xflux", args)
 
@@ -49,6 +49,13 @@ class Fluxgui:
 
     def update_xflux(self, command):
         self.xflux.sendline(command)
+        self.get_colortemp()
+
+    def get_colortemp(self):
+        self.xflux.sendline("k")
+        index = self.xflux.expect("Color.*")
+        if index == 0:
+            color = self.xflux.after[10:]
 
     def open_preferences(self, item):
         self.preferences = Preferences(self)

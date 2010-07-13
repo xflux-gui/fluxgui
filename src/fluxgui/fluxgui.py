@@ -49,7 +49,6 @@ class Fluxgui:
 
     def update_xflux(self, command):
         self.xflux.sendline(command)
-        self.get_colortemp()
 
     def get_colortemp(self):
         self.xflux.sendline("k")

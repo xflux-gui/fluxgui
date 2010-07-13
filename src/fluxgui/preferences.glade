@@ -12,7 +12,7 @@
         <child>
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
-            <property name="n_rows">4</property>
+            <property name="n_rows">10</property>
             <property name="n_columns">2</property>
             <child>
               <widget class="GtkLabel" id="label2">
@@ -23,8 +23,8 @@
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -51,8 +51,8 @@
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -82,8 +82,8 @@ Sunlight (5000K)</property>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
+                <property name="top_attach">7</property>
+                <property name="bottom_attach">8</property>
                 <property name="x_padding">10</property>
                 <property name="y_padding">5</property>
               </packing>
@@ -96,8 +96,8 @@ Sunlight (5000K)</property>
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
+                <property name="top_attach">7</property>
+                <property name="bottom_attach">8</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -132,69 +132,87 @@ Sunlight (5000K)</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
-          </widget>
-          <packing>
-            <property name="padding">10</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkHSeparator" id="hseparator1">
-            <property name="visible">True</property>
-          </widget>
-          <packing>
-            <property name="expand">False</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkHBox" id="hbox2">
-            <property name="visible">True</property>
+            <child>
+              <widget class="GtkHSeparator" id="hseparator2">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">6</property>
+                <property name="bottom_attach">7</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHSeparator" id="hseparator4">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
+              </packing>
+            </child>
             <child>
               <widget class="GtkLinkButton" id="linkbutton1">
                 <property name="label" translatable="yes">Find your latitude and longitude</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="has_tooltip">True</property>
                 <property name="relief">none</property>
                 <property name="focus_on_click">False</property>
                 <property name="uri">http://stereopsis.com/flux/map.html</property>
                 <property name="visited">True</property>
               </widget>
               <packing>
-                <property name="padding">10</property>
-                <property name="position">0</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">5</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label3">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">f.lux
+Better lightning for your computer
+Copyright 2009 - 2010 Michael and Lorna Herf
+
+f.lux indicator applet made by Kilian Valkhof</property>
+                <property name="justify">center</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">9</property>
+                <property name="bottom_attach">10</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">10</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHSeparator" id="hseparator1">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">8</property>
+                <property name="bottom_attach">9</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHSeparator" id="hseparator3">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
               </packing>
             </child>
           </widget>
           <packing>
             <property name="padding">10</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkHSeparator" id="hseparator3">
-            <property name="visible">True</property>
-          </widget>
-          <packing>
-            <property name="expand">False</property>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkLabel" id="label3">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">f.lux
-Better lightning for your computer
-Copyright 2009 - 2010 Michael and Lorna Herf
-
-f.lux indicator applet made by Kilian Valkhof</property>
-            <property name="justify">center</property>
-          </widget>
-          <packing>
-            <property name="padding">10</property>
-            <property name="position">4</property>
+            <property name="position">0</property>
           </packing>
         </child>
       </widget>

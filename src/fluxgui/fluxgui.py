@@ -19,23 +19,15 @@ class Fluxgui:
         if self.settings.latitude is "" and self.settings.zipcode is "":
             self.open_preferences("activate")
 
-        self.start_xflux(self.settings.latitude, self.settings.zipcode,
-                         self.settings.color)
+        self.start_xflux(self.settings.latitude, self.settings.longitude,
+                         self.settings.zipcode, self.settings.color)
 
-    def start_xflux(self, latitude, zipcode, color):
-        loccommand = "-z"
-        locvalue = zipcode
-
-        colcommand = "-k"
-        colvalue = color
-
+    def start_xflux(self, latitude, longitude, zipcode, color):
+        args = ["-z", zipcode, "-k", color, '-nofork']
         if self.settings.latitude:
-            loccommand = "-l"
-            locvalue = latitude
+            args = ["-l", latitude, "-g", longitude, "-k", color, '-nofork']
 
-        args = [loccommand, locvalue, colcommand, colvalue, '-nofork']
         self.xflux = pexpect.spawn("xflux", args)
-        self.xflux.logfile = sys.stdout
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()
@@ -54,7 +46,7 @@ class Fluxgui:
         self.update_xflux("k=" + self.settings.color)
 
     def update_xflux(self, command):
-        test = self.xflux.send(command)
+        self.xflux.sendline(command)
 
     def open_preferences(self, item):
         self.preferences = Preferences(self)
@@ -141,6 +133,10 @@ class Preferences:
         self.latsetting.set_text(self.main.settings.latitude)
         self.latsetting.connect("activate", self.delete_event)
 
+        self.lonsetting = self.wTree.get_widget("entry3")
+        self.lonsetting.set_text(self.main.settings.longitude)
+        self.lonsetting.connect("activate", self.delete_event)
+
         self.zipsetting = self.wTree.get_widget("entry2")
         self.zipsetting.set_text(self.main.settings.zipcode)
         self.zipsetting.connect("activate", self.delete_event)
@@ -153,8 +149,8 @@ class Preferences:
             md = gtk.MessageDialog(self.window,
                 gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
                 gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
-                "your latitude or zipcode to work correctly. Please fill " +
-                "either of them in on the next screen and then hit enter.")
+                "your latitude and longitude or zipcode to work correctly. " +
+        "Please fill either of them in on the next screen and then hit enter.")
             md.set_title("f.lux indicator applet")
             md.run()
             md.destroy()
@@ -165,6 +161,9 @@ class Preferences:
     def delete_event(self, widget, data=None):
         if self.main.settings.latitude != self.latsetting.get_text():
             self.main.settings.set_latitude(self.latsetting.get_text())
+
+        if self.main.settings.longitude != self.lonsetting.get_text():
+            self.main.settings.set_longitude(self.lonsetting.get_text())
 
         if self.main.settings.zipcode != self.zipsetting.get_text():
             self.main.settings.set_zipcode(self.zipsetting.get_text())
@@ -188,12 +187,16 @@ class Settings:
         self.client.add_dir(self.prefs_key, gconf.CLIENT_PRELOAD_NONE)
 
         self.latitude = self.client.get_string(self.prefs_key + "/latitude")
+        self.longitude = self.client.get_string(self.prefs_key + "/longitude")
         self.zipcode = self.client.get_string(self.prefs_key + "/zipcode")
         self.colortemp = self.client.get_string(self.prefs_key + "/colortemp")
         self.color = self.get_color(self.colortemp)
 
         if self.latitude is None:
             self.latitude = ""
+
+        if self.longitude is None:
+            self.longitude = ""
 
         if self.zipcode is None:
             self.zipcode = ""
@@ -206,6 +209,13 @@ class Settings:
         self.latitude = latitude
 
         command = "l=" + latitude
+        self.main.update_xflux(command)
+
+    def set_longitude(self, longitude):
+        self.client.set_string(self.prefs_key + "/longitude", longitude)
+        self.longitude = longitude
+
+        command = "g=" + longitude
         self.main.update_xflux(command)
 
     def set_zipcode(self, zipcode):

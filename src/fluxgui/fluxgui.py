@@ -24,8 +24,10 @@ class Fluxgui:
 
     def start_xflux(self, latitude, longitude, zipcode, color):
         args = ["-z", zipcode, "-k", color, '-nofork']
-        if self.settings.latitude:
-            args = ["-l", latitude, "-g", longitude, "-k", color, '-nofork']
+        if latitude:
+            args = ["-l", latitude, "-k", color, '-nofork']
+            if longitude:
+              args = ["-l", latitude, "-g", longitude, "-k", color, '-nofork']
 
         self.xflux = pexpect.spawn("xflux", args)
 

@@ -22,12 +22,12 @@ class Fluxgui:
         self.start_xflux(self.settings.latitude, self.settings.longitude,
                          self.settings.zipcode, self.settings.color)
 
-    def start_xflux(self, latitude, longitude, zipcode, color):
+    def start_xflux(self, lat, lon, zipcode, color):
         args = ["-z", zipcode, "-k", color, '-nofork']
-        if latitude:
-            args = ["-l", latitude, "-k", color, '-nofork']
-            if longitude:
-                args = ["-l", latitude, "-g", longitude, "-k", color, '-nofork']
+        if lat:
+            args = ["-l", lat, "-k", color, '-nofork']
+            if lon:
+                args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
 
         self.xflux = pexpect.spawn("xflux", args)
 

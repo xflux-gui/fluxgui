@@ -14,7 +14,7 @@
 
 1.1
   - get returning latitude from zipcode and save+use that
-  - get current color temp and display that
+  x get current color temp and display that
   - 'turn off for an hour'-function
   - get pretty-print for time and display that
 

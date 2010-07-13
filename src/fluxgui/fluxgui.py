@@ -54,9 +54,10 @@ class Fluxgui:
         self.xflux.sendline("k")
         index = self.xflux.expect("Color.*")
         if index == 0:
-            color = self.xflux.after[10:]
+            self.color = self.xflux.after[10:14]
 
     def open_preferences(self, item):
+        self.get_colortemp()
         self.preferences = Preferences(self)
 
     def run(self):
@@ -151,6 +152,9 @@ class Preferences:
 
         self.colsetting = self.wTree.get_widget("combobox1")
         self.colsetting.set_active(int(self.main.settings.colortemp))
+
+        self.colordisplay = self.wTree.get_widget("label6")
+        self.colordisplay.set_text("Current color temperature: " + self.main.color)
 
         if self.main.settings.latitude is ""\
            and self.main.settings.zipcode is "":

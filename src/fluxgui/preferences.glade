@@ -12,7 +12,7 @@
         <child>
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
-            <property name="n_rows">10</property>
+            <property name="n_rows">11</property>
             <property name="n_columns">2</property>
             <child>
               <widget class="GtkLabel" id="label2">
@@ -183,8 +183,8 @@ f.lux indicator applet made by Kilian Valkhof</property>
               </widget>
               <packing>
                 <property name="right_attach">2</property>
-                <property name="top_attach">9</property>
-                <property name="bottom_attach">10</property>
+                <property name="top_attach">10</property>
+                <property name="bottom_attach">11</property>
                 <property name="x_padding">10</property>
                 <property name="y_padding">10</property>
               </packing>
@@ -195,8 +195,8 @@ f.lux indicator applet made by Kilian Valkhof</property>
               </widget>
               <packing>
                 <property name="right_attach">2</property>
-                <property name="top_attach">8</property>
-                <property name="bottom_attach">9</property>
+                <property name="top_attach">9</property>
+                <property name="bottom_attach">10</property>
               </packing>
             </child>
             <child>
@@ -207,6 +207,19 @@ f.lux indicator applet made by Kilian Valkhof</property>
                 <property name="right_attach">2</property>
                 <property name="top_attach">2</property>
                 <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label6">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Current color temperature: unknown</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">8</property>
+                <property name="bottom_attach">9</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">10</property>
               </packing>
             </child>
           </widget>

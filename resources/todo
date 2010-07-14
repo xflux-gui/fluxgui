@@ -16,6 +16,7 @@
 1.1
   - implement preview
   - implement adding to startup applications
+  - only allow one instance
 
 1.2
   - get returning latitude from zipcode and save+use that
@@ -23,4 +24,5 @@
 
 1.x
   - get pretty-print for time and display that
+  - enter location, use httprequest to get lat/long
 

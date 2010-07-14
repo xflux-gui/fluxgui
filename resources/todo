@@ -11,10 +11,16 @@
   x support american zipcodes as well
   x get attribution in order
   x set the preferred nighttime colour temperature
+  x get current color temp and display that
 
 1.1
+  - implement preview
+  - implement adding to startup applications
+
+1.2
   - get returning latitude from zipcode and save+use that
-  x get current color temp and display that
   - 'turn off for an hour'-function
+
+1.x
   - get pretty-print for time and display that
 

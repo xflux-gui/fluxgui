@@ -1,5 +1,5 @@
 Source: fluxgui
-Section: accessories
+Section: utils
 Priority: optional
 Maintainer: Kilian Valkhof <kilian@kilianvalkhof.com>
 Build-Depends: debhelper (>=7), python-support (>=0.8.7), python

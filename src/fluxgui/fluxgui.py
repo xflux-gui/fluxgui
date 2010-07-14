@@ -154,7 +154,7 @@ class Preferences:
         self.colsetting.set_active(int(self.main.settings.colortemp))
 
         self.colordisplay = self.wTree.get_widget("label6")
-        self.colordisplay.set_text("Current color temperature: " + self.main.color)
+        self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
 
         if self.main.settings.latitude is ""\
            and self.main.settings.zipcode is "":

@@ -12,7 +12,7 @@
         <child>
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
-            <property name="n_rows">11</property>
+            <property name="n_rows">13</property>
             <property name="n_columns">2</property>
             <child>
               <widget class="GtkLabel" id="label2">
@@ -71,24 +71,6 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkComboBox" id="combobox1">
-                <property name="visible">True</property>
-                <property name="tooltip" translatable="yes">Fill in your preferred nighttime color temperature</property>
-                <property name="items" translatable="yes">Tungsten (2700K)
-Halogen (3400K)
-Fluorescent (4200K)
-Sunlight (5000K)</property>
-              </widget>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">7</property>
-                <property name="bottom_attach">8</property>
-                <property name="x_padding">10</property>
-                <property name="y_padding">5</property>
-              </packing>
-            </child>
-            <child>
               <widget class="GtkLabel" id="label4">
                 <property name="visible">True</property>
                 <property name="xalign">1</property>
@@ -96,8 +78,8 @@ Sunlight (5000K)</property>
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
-                <property name="top_attach">7</property>
-                <property name="bottom_attach">8</property>
+                <property name="top_attach">9</property>
+                <property name="bottom_attach">10</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -183,20 +165,10 @@ f.lux indicator applet made by Kilian Valkhof</property>
               </widget>
               <packing>
                 <property name="right_attach">2</property>
-                <property name="top_attach">10</property>
-                <property name="bottom_attach">11</property>
+                <property name="top_attach">12</property>
+                <property name="bottom_attach">13</property>
                 <property name="x_padding">10</property>
                 <property name="y_padding">10</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkHSeparator" id="hseparator1">
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="right_attach">2</property>
-                <property name="top_attach">9</property>
-                <property name="bottom_attach">10</property>
               </packing>
             </child>
             <child>
@@ -216,10 +188,90 @@ f.lux indicator applet made by Kilian Valkhof</property>
               </widget>
               <packing>
                 <property name="right_attach">2</property>
-                <property name="top_attach">8</property>
-                <property name="bottom_attach">9</property>
+                <property name="top_attach">10</property>
+                <property name="bottom_attach">11</property>
                 <property name="x_padding">10</property>
                 <property name="y_padding">10</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHBox" id="hbox1">
+                <property name="visible">True</property>
+                <property name="spacing">10</property>
+                <child>
+                  <widget class="GtkComboBox" id="combobox1">
+                    <property name="visible">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip" translatable="yes">Fill in your preferred nighttime color temperature</property>
+                    <property name="items" translatable="yes">Tungsten (2700K)
+Halogen (3400K)
+Fluorescent (4200K)
+Sunlight (5000K)</property>
+                  </widget>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="button1">
+                    <property name="label" translatable="yes">Preview</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip" translatable="yes">Preview the color temperature</property>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">9</property>
+                <property name="bottom_attach">10</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">5</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHSeparator" id="hseparator1">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">11</property>
+                <property name="bottom_attach">12</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkCheckButton" id="checkbutton1">
+                <property name="label" translatable="yes">Autostart f.lux indicator applet</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip" translatable="yes">Start f.lux indicator applet when the computer starts</property>
+                <property name="relief">none</property>
+                <property name="focus_on_click">False</property>
+                <property name="draw_indicator">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">7</property>
+                <property name="bottom_attach">8</property>
+                <property name="x_padding">10</property>
+                <property name="y_padding">10</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHSeparator" id="hseparator5">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="right_attach">2</property>
+                <property name="top_attach">8</property>
+                <property name="bottom_attach">9</property>
               </packing>
             </child>
           </widget>

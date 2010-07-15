@@ -5,14 +5,21 @@ import gtk.glade
 import gconf
 import sys
 import pexpect
-from os import path
+import os
 
 VERSION = "1.0.0"
 
 
 class Fluxgui:
-
     def __init__(self):
+        pid = str(os.getpid())
+        self.pidfile = "/tmp/fluxgui.pid"
+
+        if os.path.isfile(self.pidfile):
+          print "fluxgui is already running, exiting"
+          sys.exit()
+        else:
+          file(self.pidfile, 'w').write(pid)
 
         self.indicator = Indicator(self)
         self.settings = Settings(self)
@@ -66,6 +73,7 @@ class Fluxgui:
 
     def exit(self, widget, data=None):
         self.stop_xflux("activate")
+        os.unlink(self.pidfile)
         gtk.main_quit()
         sys.exit(0)
 
@@ -132,8 +140,8 @@ class Preferences:
 
     def __init__(self, main):
         self.main = main
-        self.gladefile = path.join(path.dirname(path.dirname(
-          path.realpath(__file__))), "fluxgui/preferences.glade")
+        self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
+          os.path.realpath(__file__))), "fluxgui/preferences.glade")
         self.wTree = gtk.glade.XML(self.gladefile)
 
         self.window = self.wTree.get_widget("window1")

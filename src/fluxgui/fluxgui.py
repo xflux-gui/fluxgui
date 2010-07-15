@@ -30,6 +30,7 @@ class Fluxgui:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
 
         self.xflux = pexpect.spawn("xflux", args)
+        self.xflux.logfile = sys.stdout
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()
@@ -156,6 +157,9 @@ class Preferences:
         self.colordisplay = self.wTree.get_widget("label6")
         self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
 
+        self.previewbutton = self.wTree.get_widget("button1")
+        self.previewbutton.connect("clicked", self.preview)
+
         if self.main.settings.latitude is ""\
            and self.main.settings.zipcode is "":
             md = gtk.MessageDialog(self.window,
@@ -185,6 +189,10 @@ class Preferences:
 
         self.window.hide()
         return False
+
+    def preview(self, item):
+      print "yay"
+      self.main.update_xflux("p")
 
     def main(self):
         gtk.main()

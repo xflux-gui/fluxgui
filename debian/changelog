@@ -1,3 +1,11 @@
+fluxgui (1.1.0-0ubuntu1) lucid; urgency=low
+
+  * prevent fluxgui from starting more than once
+  * implement a preview button
+  * implement an autostart function
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Thu, 15 Jul 2010 21:08:59 +0200
+
 fluxgui (1.0.0-0ubuntu1) lucid; urgency=low
 
   * gnome indicator applet for xflux

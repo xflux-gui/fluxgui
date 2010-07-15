@@ -76,7 +76,7 @@ class Fluxgui:
 
     #autostart code copied from AWN
     def get_autostart_file_path(self):
-        autostart_dir = is.path.join(os.environ['HOME'], '.config', 'autostart')
+        autostart_dir = os.path.join(os.environ['HOME'], '.config', 'autostart')
         return os.path.join(autostart_dir, 'fluxgui.desktop')
 
     def create_autostarter(self):
@@ -87,9 +87,9 @@ class Fluxgui:
             #create autostart dir
             try:
                 os.mkdir(autostart_dir)
-        except Exeption, e:
-            print "creation of autostart dir failed, please make it yourself: %s" $ autostart_dir
-            raise e
+            except Exeption, e:
+                print "creation of autostart dir failed, please make it yourself: %s" % autostart_dir
+                raise e
 
         if not os.path.isfile(autostart_file):
             #create autostart entry
@@ -204,7 +204,7 @@ class Preferences:
         self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
 
         self.previewbutton = self.wTree.get_widget("button1")
-        self.previewbutton.connect("clicked", self.main.preview)
+        self.previewbutton.connect("clicked", self.main.preview_xflux)
 
         self.autostart = self.wTree.get_widget("checkbutton1")
         if self.main.settings.autostart is "1":
@@ -238,6 +238,11 @@ class Preferences:
 
         if self.main.settings.colortemp != str(self.colsetting.get_active()):
             self.main.settings.set_colortemp(str(self.colsetting.get_active()))
+
+        if self.autostart.get_active():
+            self.main.create_autostarter()
+        else:
+            self.main.delete_autostarter()
 
         self.window.hide()
         return False
@@ -330,8 +335,10 @@ class Settings:
     def set_autostart(self, autostart):
         if autostart:
             self.client.set_string(self.prefs_key + "/autostart", "1")
+            self.autostart = "1"
         else:
             self.client.set_string(self.prefs_key + "/autostart", "0")
+            self.autostart = "0"
 
     def main(self):
         gtk.main()
@@ -340,3 +347,4 @@ class Settings:
 if __name__ == "__main__":
     app = Fluxgui()
     app.run()
+

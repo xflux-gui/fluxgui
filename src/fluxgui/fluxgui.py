@@ -6,21 +6,14 @@ import gconf
 import sys
 import pexpect
 import os
+from xdg.DesktopEntry import DesktopEntry
 
 VERSION = "1.0.0"
 
 
 class Fluxgui:
     def __init__(self):
-        pid = str(os.getpid())
-        self.pidfile = "/tmp/fluxgui.pid"
-
-        if os.path.isfile(self.pidfile):
-          print "fluxgui is already running, exiting"
-          sys.exit()
-        else:
-          file(self.pidfile, 'w').write(pid)
-
+        self.check_pid()
         self.indicator = Indicator(self)
         self.settings = Settings(self)
 
@@ -29,6 +22,16 @@ class Fluxgui:
 
         self.start_xflux(self.settings.latitude, self.settings.longitude,
                          self.settings.zipcode, self.settings.color)
+
+    def check_pid(self):
+        pid = str(os.getpid())
+        self.pidfile = "/tmp/fluxgui.pid"
+
+        if os.path.isfile(self.pidfile):
+          print "fluxgui is already running, exiting"
+          sys.exit()
+        else:
+          file(self.pidfile, 'w').write(pid)
 
     def start_xflux(self, lat, lon, zipcode, color):
         args = ["-z", zipcode, "-k", color, '-nofork']
@@ -64,9 +67,45 @@ class Fluxgui:
         if index == 0:
             self.color = self.xflux.after[10:14]
 
+    def preview_xflux(self, item):
+      self.update_xflux("p")
+
     def open_preferences(self, item):
         self.get_colortemp()
         self.preferences = Preferences(self)
+
+    #autostart code copied from AWN
+    def get_autostart_file_path(self):
+        autostart_dir = is.path.join(os.environ['HOME'], '.config', 'autostart')
+        return os.path.join(autostart_dir, 'fluxgui.desktop')
+
+    def create_autostarter(self):
+        autostart_file = self.get_autostart_file_path()
+        autostart_dir = os.path.dirname(autostart_file)
+
+        if not os.path.isdir(autostart_dir):
+            #create autostart dir
+            try:
+                os.mkdir(autostart_dir)
+        except Exeption, e:
+            print "creation of autostart dir failed, please make it yourself: %s" $ autostart_dir
+            raise e
+
+        if not os.path.isfile(autostart_file):
+            #create autostart entry
+            starter_item = DesktopEntry(autostart_file)
+            starter_item.set('Name', 'f.lux indicator applet')
+            starter_item.set('Exec', 'fluxgui')
+            starter_item.set('Icon', 'fluxgui')
+            starter_item.set('X-GNOME-Autostart-enabled', 'true')
+            starter_item.write()
+            self.settings.set_autostart(True)
+
+    def delete_autostarter(self):
+        autostart_file = self.get_autostart_file_path()
+        if os.path.isfile(autostart_file):
+            os.remove(autostart_file)
+            self.settings.set_autostart(False)
 
     def run(self):
         gtk.main()
@@ -76,7 +115,6 @@ class Fluxgui:
         os.unlink(self.pidfile)
         gtk.main_quit()
         sys.exit(0)
-
 
 class Indicator:
 
@@ -166,7 +204,13 @@ class Preferences:
         self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
 
         self.previewbutton = self.wTree.get_widget("button1")
-        self.previewbutton.connect("clicked", self.preview)
+        self.previewbutton.connect("clicked", self.main.preview)
+
+        self.autostart = self.wTree.get_widget("checkbutton1")
+        if self.main.settings.autostart is "1":
+            self.autostart.set_active(True)
+        else:
+            self.autostart.set_active(False)
 
         if self.main.settings.latitude is ""\
            and self.main.settings.zipcode is "":
@@ -198,9 +242,6 @@ class Preferences:
         self.window.hide()
         return False
 
-    def preview(self, item):
-      self.main.update_xflux("p")
-
     def main(self):
         gtk.main()
 
@@ -213,6 +254,7 @@ class Settings:
         self.prefs_key = "/apps/fluxgui"
         self.client.add_dir(self.prefs_key, gconf.CLIENT_PRELOAD_NONE)
 
+        self.autostart = self.client.get_string(self.prefs_key + "/autostart")
         self.latitude = self.client.get_string(self.prefs_key + "/latitude")
         self.longitude = self.client.get_string(self.prefs_key + "/longitude")
         self.zipcode = self.client.get_string(self.prefs_key + "/zipcode")
@@ -230,6 +272,9 @@ class Settings:
 
         if not self.colortemp:
             self.colortemp = "1"
+
+        if not self.autostart:
+            self.autostart = "0"
 
     def set_latitude(self, latitude):
         self.client.set_string(self.prefs_key + "/latitude", latitude)
@@ -282,6 +327,12 @@ class Settings:
         command = "k=" + color
         self.main.update_xflux(command)
 
+    def set_autostart(self, autostart):
+        if autostart:
+            self.client.set_string(self.prefs_key + "/autostart", "1")
+        else:
+            self.client.set_string(self.prefs_key + "/autostart", "0")
+
     def main(self):
         gtk.main()
 
@@ -289,4 +340,3 @@ class Settings:
 if __name__ == "__main__":
     app = Fluxgui()
     app.run()
-

@@ -16,7 +16,7 @@
 1.1
   x implement preview
   - implement adding to startup applications
-  - only allow one instance
+  x only allow one instance
 
 1.2
   - get returning latitude from zipcode and save+use that

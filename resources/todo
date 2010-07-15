@@ -14,7 +14,7 @@
   x get current color temp and display that
 
 1.1
-  - implement preview
+  x implement preview
   - implement adding to startup applications
   - only allow one instance
 

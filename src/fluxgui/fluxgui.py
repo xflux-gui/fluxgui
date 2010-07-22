@@ -41,8 +41,6 @@ class Fluxgui:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
 
         self.xflux = pexpect.spawn("xflux", args)
-        fout = file('log.txt', 'w')
-        self.xflux.logfile = fout
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()

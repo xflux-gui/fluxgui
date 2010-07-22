@@ -41,7 +41,8 @@ class Fluxgui:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
 
         self.xflux = pexpect.spawn("xflux", args)
-        self.xflux.logfile = sys.stdout
+        fout = file('log.txt', 'w')
+        self.xflux.logfile = fout
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()
@@ -63,7 +64,7 @@ class Fluxgui:
         self.xflux.sendline(command)
 
     def get_colortemp(self):
-        self.xflux.sendline("k")
+        self.xflux.sendline("c")
         index = self.xflux.expect("Color.*")
         if index == 0:
             self.color = self.xflux.after[10:14]

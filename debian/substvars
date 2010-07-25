@@ -1,0 +1,1 @@
+shlibs:Depends=ia32-libs (>= 2.4), lib32gcc1 (>= 1:4.1.1), lib32stdc++6 (>= 4.1.1), libc6-i386 (>= 2.0)

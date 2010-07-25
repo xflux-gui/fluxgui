@@ -1,6 +1,6 @@
-fluxgui (1.1.1) lucid; urgency=low
+fluxgui (1.1.1-0ubuntu1) lucid; urgency=low
 
-  * update some debian settings  
+  * update some debian settings
 
  -- Kilian Valkhof <kilian@kilianvalkhof.com>  Sun, 25 Jul 2010 14:18:19 +0200
 

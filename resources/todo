@@ -18,11 +18,14 @@
   x implement adding to startup applications
   x only allow one instance
 
+1.1.3
+  x correctly clean up at keyboardinterrupt
+
 1.2
   - get returning latitude from zipcode and save+use that
   - 'turn off for an hour'-function
 
 1.x
-  - get pretty-print for time and display that
+  - get pretty-print for sunset/sunrise and display that
   - enter location, use httprequest to get lat/long
 

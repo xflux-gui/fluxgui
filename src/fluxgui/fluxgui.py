@@ -8,7 +8,7 @@ import pexpect
 import os
 from xdg.DesktopEntry import DesktopEntry
 
-VERSION = "1.1.2"
+VERSION = "1.1.3"
 
 
 class Fluxgui:
@@ -348,6 +348,10 @@ class Settings:
 
 
 if __name__ == "__main__":
-    app = Fluxgui()
-    app.run()
+    try:
+        app = Fluxgui()
+        app.run()
+    except KeyboardInterrupt:
+        app.stop_xflux("activate")
+        os.unlink(app.pidfile)
 

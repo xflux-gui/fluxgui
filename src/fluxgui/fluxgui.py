@@ -8,7 +8,7 @@ import pexpect
 import os
 from xdg.DesktopEntry import DesktopEntry
 
-VERSION = "1.0.0"
+VERSION = "1.1.2"
 
 
 class Fluxgui:
@@ -39,7 +39,6 @@ class Fluxgui:
             args = ["-l", lat, "-k", color, '-nofork']
             if lon:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
-
         self.xflux = pexpect.spawn("xflux", args)
 
     def stop_xflux(self, item):
@@ -205,6 +204,10 @@ class Preferences:
 
         self.previewbutton = self.wTree.get_widget("button1")
         self.previewbutton.connect("clicked", self.main.preview_xflux)
+
+
+        self.closebutton = self.wTree.get_widget("button2")
+        self.closebutton.connect("clicked", self.delete_event)
 
         self.autostart = self.wTree.get_widget("checkbutton1")
         if self.main.settings.autostart is "1":

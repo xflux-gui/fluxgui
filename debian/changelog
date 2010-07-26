@@ -1,3 +1,9 @@
+fluxgui (1.1.2-0ubuntu1) lucid; urgency=low
+
+  * add a close button to the preferences pane 
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Mon, 26 Jul 2010 12:08:10 +0200
+
 fluxgui (1.1.1-0ubuntu1) lucid; urgency=low
 
   * update some debian settings

@@ -12,8 +12,8 @@
         <child>
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
-            <property name="n_rows">13</property>
-            <property name="n_columns">2</property>
+            <property name="n_rows">14</property>
+            <property name="n_columns">3</property>
             <child>
               <widget class="GtkLabel" id="label2">
                 <property name="visible">True</property>
@@ -23,6 +23,7 @@
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
+                <property name="right_attach">2</property>
                 <property name="top_attach">5</property>
                 <property name="bottom_attach">6</property>
                 <property name="x_padding">10</property>
@@ -38,6 +39,7 @@
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
+                <property name="right_attach">2</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -49,8 +51,8 @@
                 <property name="activates_default">True</property>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">5</property>
                 <property name="bottom_attach">6</property>
                 <property name="x_padding">10</property>
@@ -65,8 +67,8 @@
                 <property name="caps_lock_warning">False</property>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="x_padding">10</property>
               </packing>
             </child>
@@ -78,6 +80,8 @@
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
                 <property name="top_attach">9</property>
                 <property name="bottom_attach">10</property>
                 <property name="x_padding">10</property>
@@ -93,6 +97,7 @@
                 <property name="single_line_mode">True</property>
               </widget>
               <packing>
+                <property name="right_attach">2</property>
                 <property name="top_attach">1</property>
                 <property name="bottom_attach">2</property>
                 <property name="x_padding">10</property>
@@ -107,8 +112,8 @@
                 <property name="caps_lock_warning">False</property>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">1</property>
                 <property name="bottom_attach">2</property>
                 <property name="x_padding">10</property>
@@ -119,7 +124,7 @@
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">6</property>
                 <property name="bottom_attach">7</property>
               </packing>
@@ -129,7 +134,7 @@
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">4</property>
                 <property name="bottom_attach">5</property>
               </packing>
@@ -146,7 +151,7 @@
                 <property name="visited">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">3</property>
                 <property name="bottom_attach">4</property>
                 <property name="x_padding">10</property>
@@ -164,7 +169,7 @@ f.lux indicator applet made by Kilian Valkhof</property>
                 <property name="justify">center</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">12</property>
                 <property name="bottom_attach">13</property>
                 <property name="x_padding">10</property>
@@ -176,7 +181,7 @@ f.lux indicator applet made by Kilian Valkhof</property>
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">2</property>
                 <property name="bottom_attach">3</property>
               </packing>
@@ -187,7 +192,7 @@ f.lux indicator applet made by Kilian Valkhof</property>
                 <property name="label" translatable="yes">Current color temperature: unknown</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">10</property>
                 <property name="bottom_attach">11</property>
                 <property name="x_padding">10</property>
@@ -226,8 +231,8 @@ Sunlight (5000K)</property>
                 </child>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
+                <property name="left_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">9</property>
                 <property name="bottom_attach">10</property>
                 <property name="x_padding">10</property>
@@ -239,7 +244,7 @@ Sunlight (5000K)</property>
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">11</property>
                 <property name="bottom_attach">12</property>
               </packing>
@@ -257,7 +262,7 @@ Sunlight (5000K)</property>
                 <property name="draw_indicator">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">7</property>
                 <property name="bottom_attach">8</property>
                 <property name="x_padding">10</property>
@@ -269,10 +274,46 @@ Sunlight (5000K)</property>
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="right_attach">2</property>
+                <property name="right_attach">3</property>
                 <property name="top_attach">8</property>
                 <property name="bottom_attach">9</property>
               </packing>
+            </child>
+            <child>
+              <widget class="GtkHBox" id="hbox2">
+                <property name="visible">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="button2">
+                    <property name="label">gtk-close</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="use_stock">True</property>
+                    <property name="xalign">1</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="right_attach">3</property>
+                <property name="top_attach">13</property>
+                <property name="bottom_attach">14</property>
+                <property name="x_padding">10</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </widget>
           <packing>

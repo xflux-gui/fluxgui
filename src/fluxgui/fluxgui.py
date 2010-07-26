@@ -146,14 +146,14 @@ class Indicator:
         self.indicator.set_status(appindicator.STATUS_ACTIVE)
 
         # Check for special Ubuntu themes. copied from lookit
-        theme = gtk.gdk.screen_get_default().get_setting(
-                'gtk-icon-theme-name')
-        if theme == 'ubuntu-mono-dark':
-            self.indicator.set_icon('fluxgui-dark')
-        elif theme == 'ubuntu-mono-light':
-            self.indicator.set_icon('fluxgui-light')
-        else:
-            self.indicator.set_icon('fluxgui')
+        self.indicator.set_icon('fluxgui')
+        if gtk.gdk.screen_get_default():
+          theme = gtk.gdk.screen_get_default().get_setting(
+                  'gtk-icon-theme-name')
+          if theme == 'ubuntu-mono-dark':
+              self.indicator.set_icon('fluxgui-dark')
+          elif theme == 'ubuntu-mono-light':
+              self.indicator.set_icon('fluxgui-light')
 
         self.indicator.set_menu(self.setup_menu())
 
@@ -372,3 +372,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         app.stop_xflux("activate")
         os.unlink(app.pidfile)
+

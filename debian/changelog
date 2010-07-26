@@ -1,3 +1,9 @@
+fluxgui (1.1.5-0ubuntu1) lucid; urgency=low
+
+  * remove any stray lock files if xflux can't be started (by seancron) 
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Mon, 26 Jul 2010 23:15:51 +0200
+
 fluxgui (1.1.4-0ubuntu1) lucid; urgency=low
 
   * fix problems with the first start of the application when there are no settings yet 

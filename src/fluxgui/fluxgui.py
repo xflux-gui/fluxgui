@@ -39,7 +39,7 @@ class Fluxgui:
             args = ["-l", lat, "-k", color, '-nofork']
             if lon:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
-        self.xflux = pexpect.spawn("xflux", args)
+        self.xflux = pexpect.spawn("/usr/bin/xflux", args)
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()

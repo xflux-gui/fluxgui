@@ -8,20 +8,21 @@ import pexpect
 import os
 from xdg.DesktopEntry import DesktopEntry
 
-VERSION = "1.1.3"
+VERSION = "1.1.4"
 
 
 class Fluxgui:
     def __init__(self):
         self.check_pid()
         self.indicator = Indicator(self)
+
+        self.color = None;
         self.settings = Settings(self)
+        self.start_xflux(self.settings.latitude, self.settings.longitude,
+                         self.settings.zipcode, self.settings.color)
 
         if self.settings.latitude is "" and self.settings.zipcode is "":
             self.open_preferences("activate")
-
-        self.start_xflux(self.settings.latitude, self.settings.longitude,
-                         self.settings.zipcode, self.settings.color)
 
     def check_pid(self):
         pid = str(os.getpid())
@@ -34,12 +35,18 @@ class Fluxgui:
           file(self.pidfile, 'w').write(pid)
 
     def start_xflux(self, lat, lon, zipcode, color):
-        args = ["-z", zipcode, "-k", color, '-nofork']
+        args = []
+        if zipcode:
+            args = ["-z", zipcode, "-k", color, '-nofork']
         if lat:
             args = ["-l", lat, "-k", color, '-nofork']
             if lon:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
-        self.xflux = pexpect.spawn("/usr/bin/xflux", args)
+
+        if args:
+            self.xflux = pexpect.spawn("/usr/bin/xflux", args)
+        else:
+            self.xflux = None
 
     def stop_xflux(self, item):
         self.indicator.item_turn_off.hide()
@@ -58,13 +65,18 @@ class Fluxgui:
         self.update_xflux("k=" + self.settings.color)
 
     def update_xflux(self, command):
-        self.xflux.sendline(command)
+        if self.xflux is None:
+            self.start_xflux(self.settings.latitude, self.settings.longitude,
+                         self.settings.zipcode, self.settings.color)
+        else:
+            self.xflux.sendline(command)
 
     def get_colortemp(self):
-        self.xflux.sendline("c")
-        index = self.xflux.expect("Color.*")
-        if index == 0:
-            self.color = self.xflux.after[10:14]
+        if self.xflux:
+            self.xflux.sendline("c")
+            index = self.xflux.expect("Color.*")
+            if index == 0:
+                self.color = self.xflux.after[10:14]
 
     def preview_xflux(self, item):
       self.update_xflux("p")
@@ -200,7 +212,8 @@ class Preferences:
         self.colsetting.set_active(int(self.main.settings.colortemp))
 
         self.colordisplay = self.wTree.get_widget("label6")
-        self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
+        if self.main.color:
+            self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
 
         self.previewbutton = self.wTree.get_widget("button1")
         self.previewbutton.connect("clicked", self.main.preview_xflux)

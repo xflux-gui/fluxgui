@@ -1,3 +1,9 @@
+fluxgui (1.1.4-0ubuntu1) lucid; urgency=low
+
+  * fix problems with the first start of the application when there are no settings yet 
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Mon, 26 Jul 2010 17:46:41 +0200
+
 fluxgui (1.1.3-0ubuntu1) lucid; urgency=low
 
   * clean up properly after a keyboardinterrupt 

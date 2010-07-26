@@ -21,6 +21,9 @@
 1.1.3
   x correctly clean up at keyboardinterrupt
 
+1.1.4
+  - fix issues with the first startup
+
 1.2
   - get returning latitude from zipcode and save+use that
   - 'turn off for an hour'-function

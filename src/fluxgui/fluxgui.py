@@ -44,7 +44,12 @@ class Fluxgui:
                 args = ["-l", lat, "-g", lon, "-k", color, '-nofork']
 
         if args:
-            self.xflux = pexpect.spawn("/usr/bin/xflux", args)
+            try:
+                self.xflux = pexpect.spawn("/usr/bin/xflux", args)
+            except pexpect.ExceptionPexpect:
+                print "\nError: Please install xflux in /usr/bin/ \n"
+                os.unlink(self.pidfile)
+                sys.exit(2)
         else:
             self.xflux = None
 
@@ -367,4 +372,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         app.stop_xflux("activate")
         os.unlink(app.pidfile)
-

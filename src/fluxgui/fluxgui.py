@@ -85,7 +85,6 @@ class Fluxgui:
                 self.color = self.xflux.after[10:14]
 
     def preview_xflux(self, item):
-      colortemp =
       self.settings.set_colortemp(str(self.preferences.colsetting.get_active()))
       self.update_xflux("p")
 

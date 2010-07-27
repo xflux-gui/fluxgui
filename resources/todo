@@ -22,7 +22,18 @@
   x correctly clean up at keyboardinterrupt
 
 1.1.4
-  - fix issues with the first startup
+  x fix issues with the first startup
+
+1.1.5
+  x remove pid if xflux can't run
+
+1.1.6
+  x make the preview button preview the selected value instead of current
+  - update xflux
+  x improved KDE support (needs testing)
+
+1.1.7
+  - handle xflux closing more gracefully
 
 1.2
   - get returning latitude from zipcode and save+use that
@@ -31,4 +42,11 @@
 1.x
   - get pretty-print for sunset/sunrise and display that
   - enter location, use httprequest to get lat/long
+
+feature requests:
+  - turn off xflux for fullscreen apps
+  - have icon display state
+
+possible bugs
+  - previewing more than once doesn't seem to work
 

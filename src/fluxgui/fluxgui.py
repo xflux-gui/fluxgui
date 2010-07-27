@@ -50,6 +50,7 @@ class Fluxgui:
                 print "\nError: Please install xflux in /usr/bin/ \n"
                 os.unlink(self.pidfile)
                 sys.exit(2)
+            self.xflux.logfile = sys.stdout
         else:
             self.xflux = None
 
@@ -84,6 +85,8 @@ class Fluxgui:
                 self.color = self.xflux.after[10:14]
 
     def preview_xflux(self, item):
+      colortemp =
+      self.settings.set_colortemp(str(self.preferences.colsetting.get_active()))
       self.update_xflux("p")
 
     def open_preferences(self, item):
@@ -92,7 +95,8 @@ class Fluxgui:
 
     #autostart code copied from AWN
     def get_autostart_file_path(self):
-        autostart_dir = os.path.join(os.environ['HOME'], '.config', 'autostart')
+        autostart_dir = os.path.join(os.environ['HOME'], '.config',
+                                     'autostart')
         return os.path.join(autostart_dir, 'fluxgui.desktop')
 
     def create_autostarter(self):
@@ -218,7 +222,8 @@ class Preferences:
 
         self.colordisplay = self.wTree.get_widget("label6")
         if self.main.color:
-            self.colordisplay.set_text("Current color temperature: " + self.main.color + "K")
+            self.colordisplay.set_text("Current color temperature: "
+                                       + self.main.color + "K")
 
         self.previewbutton = self.wTree.get_widget("button1")
         self.previewbutton.connect("clicked", self.main.preview_xflux)

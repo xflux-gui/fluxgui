@@ -1,3 +1,11 @@
+fluxgui (1.1.6-0ubuntu1) lucid; urgency=low
+
+  * make the preview button preview the selected value instead of current
+  * update xflux
+  * improved KDE support (needs testing)
+
+ -- Kilian Valkhof <kilian@ktop3>  Thu, 29 Jul 2010 14:32:55 +0200
+
 fluxgui (1.1.5-0ubuntu1) lucid; urgency=low
 
   * remove any stray lock files if xflux can't be started (by seancron) 

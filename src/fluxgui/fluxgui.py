@@ -26,7 +26,7 @@ class Fluxgui:
 
     def check_pid(self):
         pid = str(os.getpid())
-        self.pidfile = "/tmp/fluxgui.pid"
+        self.pidfile = "/tmp/fluxgui_%s.pid" % os.environ['USER']
 
         if os.path.isfile(self.pidfile):
           print "fluxgui is already running, exiting"
@@ -58,7 +58,13 @@ class Fluxgui:
         self.indicator.item_turn_off.hide()
         self.indicator.item_turn_on.show()
 
-        self.xflux.terminate(force=True)
+        if self.xflux:
+            # xflux is not running
+            try:
+                self.xflux.terminate(force=True)
+            except Exception, e:
+                # xflux has crashed in the meantime?
+                pass
 
     def pause_xflux(self, item):
         self.indicator.item_turn_off.hide()

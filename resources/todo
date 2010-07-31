@@ -33,7 +33,7 @@
   x improved KDE support (needs testing)
 
 1.1.7
-  - handle xflux closing more gracefully
+  x handle xflux closing more gracefully
 
 1.2
   - get returning latitude from zipcode and save+use that

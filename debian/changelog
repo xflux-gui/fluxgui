@@ -1,3 +1,9 @@
+fluxgui (1.1.7-0ubuntu1) lucid; urgency=low
+
+  * handle xflux closing more gracefully (thanks to axonxorz) 
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Sat, 31 Jul 2010 15:29:01 +0200
+
 fluxgui (1.1.6-0ubuntu1) lucid; urgency=low
 
   * make the preview button preview the selected value instead of current

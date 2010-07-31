@@ -8,7 +8,7 @@ import pexpect
 import os
 from xdg.DesktopEntry import DesktopEntry
 
-VERSION = "1.1.6"
+VERSION = "1.1.7"
 
 
 class Fluxgui:
@@ -50,7 +50,6 @@ class Fluxgui:
                 print "\nError: Please install xflux in /usr/bin/ \n"
                 os.unlink(self.pidfile)
                 sys.exit(2)
-            self.xflux.logfile = sys.stdout
         else:
             self.xflux = None
 

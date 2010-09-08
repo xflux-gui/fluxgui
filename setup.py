@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name = "f.lux indicator applet",
-    version = "1.0.0",
+    version = "1.1.8",
     description = "f.lux indicator applet - better lightning for your computer",
     author = "Kilian Valkhof, Michael and Lorna Herf",
     author_email = "kilian@kilianvalkhof.com",

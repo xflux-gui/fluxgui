@@ -8,7 +8,7 @@ import pexpect
 import os
 from xdg.DesktopEntry import DesktopEntry
 
-VERSION = "1.1.7"
+VERSION = "1.1.8"
 
 
 class Fluxgui:

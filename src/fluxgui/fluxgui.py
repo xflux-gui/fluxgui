@@ -46,6 +46,8 @@ class Fluxgui:
         if args:
             try:
                 self.xflux = pexpect.spawn("/usr/bin/xflux", args)
+                fout = file('/tmp/fluxlog.txt', 'w')
+                self.xflux.logfile = fout
             except pexpect.ExceptionPexpect:
                 print "\nError: Please install xflux in /usr/bin/ \n"
                 os.unlink(self.pidfile)

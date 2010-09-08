@@ -1,3 +1,9 @@
+fluxgui (1.1.8) lucid; urgency=low
+
+  * add in python-pexpect as a dependency 
+
+ -- Kilian Valkhof <kilian@kilianvalkhof.com>  Wed, 08 Sep 2010 12:12:16 +0200
+
 fluxgui (1.1.7-0ubuntu1) lucid; urgency=low
 
   * handle xflux closing more gracefully (thanks to axonxorz) 

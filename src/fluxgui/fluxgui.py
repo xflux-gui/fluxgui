@@ -157,13 +157,18 @@ class Indicator:
 
         # Check for special Ubuntu themes. copied from lookit
         self.indicator.set_icon('fluxgui')
-        if gtk.gdk.screen_get_default():
-          theme = gtk.gdk.screen_get_default().get_setting(
-                  'gtk-icon-theme-name')
+
+        try:
+            theme = gtk.gdk.screen_get_default().get_setting('gtk-icon-theme-name')
+        except:
+            self.indicator.set_icon('fluxgui')
+        else:
           if theme == 'ubuntu-mono-dark':
               self.indicator.set_icon('fluxgui-dark')
           elif theme == 'ubuntu-mono-light':
               self.indicator.set_icon('fluxgui-light')
+          else:
+              self.indicator.set_icon('fluxgui')
 
         self.indicator.set_menu(self.setup_menu())
 

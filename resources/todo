@@ -35,6 +35,13 @@
 1.1.7
   x handle xflux closing more gracefully
 
+1.1.8
+  x add python pexpect to dependencies
+
+1.1.9
+  - get KDE support proper
+  - fix errors with pexpect
+
 1.2
   - get returning latitude from zipcode and save+use that
   - 'turn off for an hour'-function

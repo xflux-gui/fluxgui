@@ -39,7 +39,7 @@
   x add python pexpect to dependencies
 
 1.1.9
-  - get KDE support proper
+  x get KDE support proper
   - fix errors with pexpect
 
 1.2

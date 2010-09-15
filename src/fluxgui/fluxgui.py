@@ -156,7 +156,6 @@ class Indicator:
         self.indicator.set_status(appindicator.STATUS_ACTIVE)
 
         # Check for special Ubuntu themes. copied from lookit
-        self.indicator.set_icon('fluxgui')
 
         try:
             theme = gtk.gdk.screen_get_default().get_setting('gtk-icon-theme-name')

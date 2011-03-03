@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import appindicator
+import errno
 import gtk
 import gtk.glade
 import gconf
@@ -25,14 +26,28 @@ class Fluxgui:
             self.open_preferences("activate")
 
     def check_pid(self):
-        pid = str(os.getpid())
-        self.pidfile = "/tmp/fluxgui_%s.pid" % os.environ['USER']
+        pid = os.getpid()
+        self.pidfile = os.path.expanduser("~/.fluxgui.pid")
 
+        running = False # Innocent...
         if os.path.isfile(self.pidfile):
+          try:
+            oldpid = int(open(self.pidfile).readline().rstrip())
+            try:
+              os.kill(oldpid, 0)
+              running = True # ...until proven guilty
+            except OSError as err:
+              if err.errno == errno.ESRCH:
+                # OSError: [Errno 3] No such process
+                print "stale pidfile, old pid: ", oldpid
+          except ValueError:
+            # Corrupt pidfile, empty or not an int on first line
+            pass
+        if running:
           print "fluxgui is already running, exiting"
           sys.exit()
         else:
-          file(self.pidfile, 'w').write(pid)
+          file(self.pidfile, 'w').write("%d\n" % pid)
 
     def start_xflux(self, lat, lon, zipcode, color):
         args = []

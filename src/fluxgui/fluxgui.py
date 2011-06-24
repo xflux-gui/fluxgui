@@ -7,6 +7,7 @@ import gconf
 import sys
 import pexpect
 import os
+import signal
 from xdg.DesktopEntry import DesktopEntry
 
 VERSION = "1.1.8"
@@ -152,6 +153,14 @@ class Fluxgui:
 
     def run(self):
         gtk.main()
+
+    def signal_exit(self, signum, frame):
+        print 'Recieved signal: ', signum
+        print 'Quitting...'
+        self.stop_xflux("activate")
+        os.unlink(self.pidfile)
+        gtk.main_quit()
+        sys.exit()
 
     def exit(self, widget, data=None):
         self.stop_xflux("activate")
@@ -400,6 +409,7 @@ class Settings:
 if __name__ == "__main__":
     try:
         app = Fluxgui()
+        signal.signal(signal.SIGTERM, app.signal_exit)
         app.run()
     except KeyboardInterrupt:
         app.stop_xflux("activate")

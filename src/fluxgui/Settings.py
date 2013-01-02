@@ -1,4 +1,5 @@
 from GConfClient import GConfClient
+import gtk # get out
 
 class Settings:
     _temperatureKeys={
@@ -7,15 +8,17 @@ class Settings:
                 2:  4200,
                 3:  5000,
                 4:  6500,
+                "off": 6500,
             }
+    off_color=_temperatureKeys["off"]
 
     def _get_color(self):
         return self._color
     def _set_color(self,value):
         self._color=temperatureKeys[value]
 
-        command = "k=" + self._color
-        self.main.update_xflux(command)
+        #command = "k=" + self._color
+        #self.main.update_xflux(command)
 
     def _get_colortemp(self):
         return self._colortemp
@@ -31,8 +34,8 @@ class Settings:
 
         # these should probably be moved
         self.client.set_client_string("latitude",value)
-        command = "l=" + value
-        self.main.update_xflux(command)
+        #command = "l=" + value
+        #self.main.update_xflux(command)
 
     def _get_longitude(self):
         return self._longitude
@@ -40,8 +43,8 @@ class Settings:
         self._longitude=value
 
         self.client.set_client_string("longitude",value)
-        command = "g=" + value
-        self.main.update_xflux(command)
+        #command = "g=" + value
+        #self.main.update_xflux(command)
 
     def _get_zipcode(self):
         return self._zipcode
@@ -49,8 +52,8 @@ class Settings:
         self._zipcode=value
 
         self.client.set_client_string("zipcode",value)
-        command = "z=" + value
-        self.main.update_xflux(command)
+        #command = "z=" + value
+        #self.main.update_xflux(command)
 
     def _get_autostart(self):
         return self._autostart
@@ -62,7 +65,7 @@ class Settings:
 
     def __init__(self, main):
         self.main = main
-        self.client=GConfClient()
+        self.client=GConfClient("/apps/fluxgui")
 
         self._colortemp=self.client.get_client_string("colortemp",1)
         self._autostart=self.client.get_client_string("autostart",0)

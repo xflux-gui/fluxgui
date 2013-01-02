@@ -2,9 +2,9 @@ import gconf
 
 class GConfClient(object):
 
-    def __init__(self):
+    def __init__(self,prefs_key):
         self.client = gconf.client_get_default()
-        self.prefs_key = "/apps/fluxgui"
+        self.prefs_key = prefs_key
         self.client.add_dir(self.prefs_key, gconf.CLIENT_PRELOAD_NONE)
 
     def get_client_string(self,propertyName,default=""):

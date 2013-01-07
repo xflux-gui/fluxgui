@@ -3,7 +3,8 @@ import gtk
 
 class Indicator:
 
-    def __init__(self, xflux_controller):
+    def __init__(self, fluxgui, xflux_controller):
+        self.fluxgui=fluxgui
         self.xflux_controller=xflux_controller
         self.setup_indicator()
 
@@ -64,9 +65,4 @@ class Indicator:
         pass
 
     def _quit(self, item):
-        pass
-
-    #def main(self):
-    #   gtk.main()
-    #def destroy(self):
-    #   gtk.main_quit()
+        self.fluxgui.exit()

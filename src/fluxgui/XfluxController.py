@@ -17,7 +17,7 @@ class XfluxController(object):
 
     def __del__(self):
         if self.state not in ["INIT","TERMINATED"]:
-            self._stop()
+            self.stop()
 
     def set_xflux_latitude(self,latitude):
         self._xflux.sendline("l="+str(latitude))
@@ -96,11 +96,9 @@ class XfluxController(object):
             self._xflux.logfile_send=file("tmp/xfluxout_send.txt","w")
 
         except pexpect.ExceptionPexpect:
-            print "\nError: Please install xflux in /usr/bin/ \n"
+            raise Exception("\nError: Please install xflux in /usr/bin/ \n")
 
-            sys.exit(2)
-
-    def _stop(self):
+    def stop(self):
         try:
             if self._xflux.terminate(force=True):
                 self.state="TERMINATED"

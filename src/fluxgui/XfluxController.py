@@ -1,6 +1,7 @@
 import pexpect
 import sys
 import time
+import weakref
 
 class XfluxController(object):
 
@@ -14,46 +15,45 @@ class XfluxController(object):
         #
         self._current_color=str(color)
         self._pause_color=str(pause_color)
-        self.state='INIT' # TODO: replace state with better design
         self.startup_args=self._create_startup_arg_list(color,**kwargs)
 
-    def __del__(self):
-        if self.state not in ["INIT","TERMINATED"]:
-            self.stop()
+        self.states={
+            "INIT": InitState(self),
+            "RUNNING": RunningState(self),
+            "PAUSED": PauseState(self),
+            "TERMINATED": TerminatedState(self),
+        }
+        self.state=self.states["INIT"]
 
-    def set_xflux_latitude(self,latitude):
-        self._xflux.sendline("l="+str(latitude))
+    def start(self, startup_args=None):
+        self.state.start(startup_args)
 
-    def set_xflux_longitude(self,longitude):
-        self._xflux.sendline("g="+str(longitude))
+    def stop(self):
+        self.state.stop()
 
-    def set_xflux_zipcode(self,zipcode):
-        self._xflux.sendline("z="+str(zipcode))
-
-    def preview_color(self,preview_color):
-        # could probably be implemented better
-
-        preview_color=str(preview_color)
-        self._set_xflux_screen_color(preview_color)
-        self._c()
-        while self.color != preview_color:
-            time.sleep(.5)
-        time.sleep(2)
-        if self.state=="RUNNING":
-            self._set_xflux_screen_color(self._current_color)
-        elif self.state=="PAUSED":
-            self._set_xflux_screen_color(self._pause_color)
-        self._c()
+    def preview_color(self, preview_color):
+        self.state.preview(preview_color)
 
     def toggle_pause(self):
-        if self.state=='RUNNING':
-            self.state='PAUSED'
-            self._set_xflux_screen_color(self._pause_color)
-            self._c()
-        elif self.state=='PAUSED':
-            self.state='RUNNING'
-            self._set_xflux_screen_color(self._current_color)
-            self._c()
+        self.state.toggle_pause()
+
+    def set_xflux_latitude(self,latitude):
+        if self.state.can_change_settings:
+            self._xflux.sendline("l="+str(latitude))
+        else:
+            raise Exception("Cannot currently update xflux")
+
+    def set_xflux_longitude(self,longitude):
+        if self.state.can_change_settings:
+            self._xflux.sendline("g="+str(longitude))
+        else:
+            raise Exception("Cannot currently update xflux")
+
+    def set_xflux_zipcode(self,zipcode):
+        if self.state.can_change_settings:
+            self._xflux.sendline("z="+str(zipcode))
+        else:
+            raise Exception("Cannot currently update xflux")
 
     def _get_xflux_color(self):
         self._c()
@@ -64,19 +64,22 @@ class XfluxController(object):
         return color
 
     def _set_xflux_color(self,color):
-        self._set_xflux_screen_color(color)
-        self._current_color=str(color)
-        if self.state=="PAUSED":
-            self.state=="RUNNING"
+        if self.state.can_change_settings:
+            self._set_xflux_screen_color(color)
+            self._current_color=str(color)
+
+            # hackish
+            if self.state==self.states["PAUSED"]:
+                self.state==self.states["RUNNING"]
+        else:
+            raise Exception("Cannot currently update xflux")
 
     color=property(_get_xflux_color,_set_xflux_color)
 
-    def start(self,startup_args=None):
-        if self.state=="RUNNING":
-            raise Exception("xflux is already running.")
+
+    def _start(self,startup_args=None):
         if not startup_args:
             startup_args=self.startup_args
-        self.state='RUNNING'
         try:
             self._xflux = pexpect.spawn("/usr/bin/xflux", startup_args,\
                     logfile=file("tmp/xfluxout.txt",'w'))
@@ -88,10 +91,10 @@ class XfluxController(object):
         except pexpect.ExceptionPexpect:
             raise Exception("\nError: Please install xflux in /usr/bin/ \n")
 
-    def stop(self):
+
+    def _stop(self):
         try:
             if self._xflux.terminate(force=True):
-                self.state="TERMINATED"
                 return True
             else:
                 return False
@@ -99,19 +102,38 @@ class XfluxController(object):
             # xflux has crashed in the meantime?
             return True
 
+    def _preview_color(self,preview_color, return_color):
+        # could probably be implemented better
+
+        preview_color=str(preview_color)
+        self._set_xflux_screen_color(preview_color)
+        self._c()
+        while self.color != preview_color:
+            time.sleep(.5)
+        time.sleep(2)
+        self._set_xflux_screen_color(return_color)
+
+        #if self.state=="RUNNING":
+            #self._set_xflux_screen_color(self._current_color)
+        #elif self.state=="PAUSED":
+            #self._set_xflux_screen_color(self._pause_color)
+        #self._c()
 
     def _create_startup_arg_list(self, color='3400', **kwargs):
         startup_args=[]
         if "zipcode" in kwargs:
             startup_args+=["-z",str(kwargs["zipcode"])]
         if "latitude" in kwargs:
-            # by default xflux seems to use latitude even if zipcode is given
+            # by default xflux uses latitude even if zipcode is given
             startup_args+=["-l",str(kwargs["latitude"])]
             if "longitude" in kwargs:
                 startup_args+=["-g",str(kwargs["longitude"])]
         startup_args+=["-k",str(color),"-nofork"] # nofork is vital
 
         return startup_args
+    def _change_color_immediately(self, new_color):
+        self._set_xflux_screen_color(new_color)
+        self._c()
 
     def _p(self):
         # seems to bring color up to "off" then transitions back down (at night)
@@ -131,3 +153,57 @@ class XfluxController(object):
         self._xflux.sendline("k="+str(color))
 
 
+class XfluxState(object):
+    can_change_settings=False
+
+    def __init__(self, controller_instance):
+        self.controller_ref=weakref.ref(controller_instance)
+    def start(self, startup_args):
+        pass
+    def stop(self):
+        pass
+    def preview(self, preview_color):
+        pass
+    def toggle_pause(self):
+        pass
+
+class InitState(XfluxState):
+    def start(self, startup_args):
+        self.controller_ref()._start(startup_args)
+        self.controller_ref().state=self.controller_ref().states["RUNNING"]
+    def stop(self):
+        return True
+
+class TerminatedState(XfluxState):
+    def start(self, startup_args):
+        pass
+    def stop(self):
+        return True
+
+class AliveState(XfluxState):
+    can_change_settings=True
+    def start(self, startup_args):
+        raise Exception("xflux is already running.")
+    def stop(self):
+        success=self.controller_ref()._stop()
+        if success:
+            self.controller_ref().state=self.controller_ref().states["TERMINATED"]
+        return success
+
+class RunningState(AliveState):
+    def toggle_pause(self):
+        self.controller_ref()._change_color_immediately(\
+                self.controller_ref()._pause_color)
+        self.controller_ref().state=self.controller_ref().states["PAUSED"]
+    def preview(self, preview_color):
+        self.controller_ref()._preview_color(preview_color,\
+                self.controller_ref()._current_color)
+
+class PauseState(AliveState):
+    def toggle_pause(self):
+        self.controller_ref()._change_color_immediately(\
+                self.controller_ref()._current_color)
+        self.controller_ref().state=self.controller_ref().states["RUNNING"]
+    def preview(self, preview_color):
+        self.controller_ref()._preview_color(preview_color,\
+                self.controller_ref()._pause_color)

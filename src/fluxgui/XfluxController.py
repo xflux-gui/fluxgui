@@ -8,12 +8,14 @@ class XfluxController(object):
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
             # one of these should be passed in, error otherwise
             raise Exception("Required key not found (either zipcode or latitude)")
-        args=self._create_startup_arg_list(color,**kwargs)
-        self.state='INIT' # TODO: replace state with better design
-        self._start(args)
-        self.state='RUNNING'
+        if 'longitude' not in kwargs:
+            kwargs['longitude']=0
+        self.init_kwargs=kwargs
+        #
         self._current_color=str(color)
         self._pause_color=str(pause_color)
+        self.state='INIT' # TODO: replace state with better design
+        self.startup_args=self._create_startup_arg_list(color,**kwargs)
 
     def __del__(self):
         if self.state not in ["INIT","TERMINATED"]:
@@ -69,24 +71,12 @@ class XfluxController(object):
 
     color=property(_get_xflux_color,_set_xflux_color)
 
-
-
-    def _create_startup_arg_list(self, color='3400', **kwargs):
-        startup_args=[]
-        if "zipcode" in kwargs:
-            startup_args+=["-z",str(kwargs["zipcode"])]
-        if "latitude" in kwargs:
-            # by default xflux seems to use latitude even if zipcode is given
-            startup_args+=["-l",str(kwargs["latitude"])]
-            if "longitude" in kwargs:
-                startup_args+=["-g",str(kwargs["longitude"])]
-        startup_args+=["-k",str(color),"-nofork"] # nofork is vital
-
-        return startup_args
-
-    def _start(self,startup_args):
+    def start(self,startup_args=None):
         if self.state=="RUNNING":
             raise Exception("xflux is already running.")
+        if not startup_args:
+            startup_args=self.startup_args
+        self.state='RUNNING'
         try:
             self._xflux = pexpect.spawn("/usr/bin/xflux", startup_args,\
                     logfile=file("tmp/xfluxout.txt",'w'))
@@ -109,9 +99,25 @@ class XfluxController(object):
             # xflux has crashed in the meantime?
             return True
 
+
+    def _create_startup_arg_list(self, color='3400', **kwargs):
+        startup_args=[]
+        if "zipcode" in kwargs:
+            startup_args+=["-z",str(kwargs["zipcode"])]
+        if "latitude" in kwargs:
+            # by default xflux seems to use latitude even if zipcode is given
+            startup_args+=["-l",str(kwargs["latitude"])]
+            if "longitude" in kwargs:
+                startup_args+=["-g",str(kwargs["longitude"])]
+        startup_args+=["-k",str(color),"-nofork"] # nofork is vital
+
+        return startup_args
+
     def _p(self):
-        # seems to bring color up to "off" then transitions back down
-        # not sure what this is supposed to be used for
+        # seems to bring color up to "off" then transitions back down (at night)
+        # takes color down to night color then back up to off (during day)
+        # I assume this is supposed to be "preview" or something like it
+        # but it doesn't work the way it should for a preview so it isn't used
         self._xflux.sendline("p")
 
     def _c(self):

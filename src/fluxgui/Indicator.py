@@ -17,6 +17,7 @@ class Indicator:
 
         # Check for special Ubuntu themes. copied from lookit
 
+        #TODO: Fix this
         try:
             theme = gtk.gdk.screen_get_default().get_setting('gtk-icon-theme-name')
         except:
@@ -62,7 +63,7 @@ class Indicator:
         self.xflux_controller.toggle_pause()
 
     def _open_preferences(self, item):
-        pass
+        self.fluxgui.open_preferences()
 
     def _quit(self, item):
         self.fluxgui.exit()

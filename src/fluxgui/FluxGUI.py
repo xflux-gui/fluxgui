@@ -1,9 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python2.7
 
 import FluxController
 import Settings
 import Indicator
-#import Preferences
+import Preferences
 import gtk
 import sys, os
 import signal
@@ -16,6 +16,8 @@ class FluxGUI(object):
             self.settings=Settings.Settings()
             self.xflux_controller=FluxController.FluxController(self.settings)
             self.indicator=Indicator.Indicator(self, self.xflux_controller)
+            self.preferences=Preferences.Preferences(self.settings, self.xflux_controller)
+            self.xflux_controller.start()
         except Exception as e:
             print e
             print "Critical error. Exiting."
@@ -23,6 +25,9 @@ class FluxGUI(object):
 
     def __del__(self):
         self.exit()
+
+    def open_preferences(self):
+        self.preferences.show()
 
     def signal_exit(self, signum, frame):
         print 'Recieved signal: ', signum

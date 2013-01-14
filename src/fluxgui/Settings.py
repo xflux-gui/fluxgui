@@ -6,13 +6,12 @@ class Settings(object):
     def __init__(self):
         self.client=GConfClient("/apps/fluxgui")
 
-        self._colortemp=self.client.get_client_string("colortemp",1)
+        # TODO: colortemp
+        self._color=self.client.get_client_string("color",3400)
         self._autostart=self.client.get_client_string("autostart",0)
         self._latitude=self.client.get_client_string("latitude")
         self._longitude=self.client.get_client_string("longitude")
         self._zipcode=self.client.get_client_string("zipcode")
-        self._color=3400
-        #self._color=self._temperatureKeys[self.colortemp]
 
     def xflux_settings_dict(self):
         d={
@@ -24,6 +23,7 @@ class Settings(object):
         }
         return d
 
+    # TODO: remove
     _temperatureKeys={
                 0:  2700,
                 1:  3400,
@@ -35,7 +35,7 @@ class Settings(object):
     off_color=_temperatureKeys["off"]
 
     def _get_color(self):
-        return self._color
+        return str(self._color)
     def _set_color(self,value):
         self._color=color
     #    self.client.set_client_string("color",value)
@@ -53,19 +53,19 @@ class Settings(object):
 
 
     def _get_latitude(self):
-        return self._latitude
+        return str(self._latitude)
     def _set_latitude(self,value):
         self._latitude=value
         self.client.set_client_string("latitude",value)
 
     def _get_longitude(self):
-        return self._longitude
+        return str(self._longitude)
     def _set_longitude(self,value):
         self._longitude=value
         self.client.set_client_string("longitude",value)
 
     def _get_zipcode(self):
-        return self._zipcode
+        return str(self._zipcode)
     def _set_zipcode(self,value):
         self._zipcode=value
         self.client.set_client_string("zipcode",value)

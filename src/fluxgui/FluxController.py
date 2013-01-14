@@ -10,22 +10,28 @@ class FluxController(XfluxController.XfluxController):
         self.settings=settings
         super(FluxController, self).__init__(**self.settings.xflux_settings_dict())
 
-    # xflux methods that update settings
-    def set_xflux_latitude(self,latitude):
-        self.settings.latitude=latitude
-        super(FluxController, self).set_xflux_latitude(latitude)
+    def start(self):
+        if self.settings.zipcode=="" and self.settings.latitude=="":
+            raise ValueError("Cannot start xflux, missing zipcode and latitude")
+        super(FluxController, self).start()
 
-    def set_xflux_longitude(self,longitude):
-        self.settings.longitude=longitude
-        super(FluxController, self).set_xflux_longitude(longitude)
 
-    def set_xflux_zipcode(self,zipcode):
-        self.settings.zipcode=zipcode
-        super(FluxController, self).set_xflux_zipcode(zipcode)
+    # xflux methods that should also update settings
+    def set_xflux_latitude(self,lat):
+        self.settings.latitude=lat
+        super(FluxController, self).set_xflux_latitude(lat)
 
-    def _set_xflux_color(self,color):
-        self.settings.color=color
-        super(FluxController, self)._set_xflux_color(color)
+    def set_xflux_longitude(self,longit):
+        self.settings.longitude=longit
+        super(FluxController, self).set_xflux_longitude(longit)
+
+    def set_xflux_zipcode(self,zipc):
+        self.settings.zipcode=zipc
+        super(FluxController, self).set_xflux_zipcode(zipc)
+
+    def _set_xflux_color(self,col):
+        self.settings.color=col
+        super(FluxController, self)._set_xflux_color(col)
 
 
 

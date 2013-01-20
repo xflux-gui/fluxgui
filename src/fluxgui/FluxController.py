@@ -8,6 +8,9 @@ class FluxController(XfluxController.XfluxController):
 
     def __init__(self, settings):
         self.settings=settings
+        #TODO: tmp
+        self.settings.latitude=35
+        self.settings.longitude=0
         super(FluxController, self).__init__(**self.settings.xflux_settings_dict())
 
     def start(self):

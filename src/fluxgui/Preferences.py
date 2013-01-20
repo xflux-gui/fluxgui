@@ -72,10 +72,10 @@ class Preferences:
         self.window.show()
 
     def display_no_zipcode_or_latitude_error_box(self):
-        md = gtk.MessageDialog(self.window,\
-                gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,\
-                gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +\
-                "your latitude or zipcode to work correctly. " +\
+        md = gtk.MessageDialog(self.window,
+                gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
+                gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
+                "your latitude or zipcode to work correctly. " +
                 "Please fill either of them in on the preferences screen and then hit enter.")
         md.set_title("f.lux indicator applet")
         md.run()

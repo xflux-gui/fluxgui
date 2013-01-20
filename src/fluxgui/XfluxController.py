@@ -7,12 +7,10 @@ class XfluxController(object):
 
     def __init__(self, color='3400', pause_color='6500', **kwargs):
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
-            # one of these should be passed in, error otherwise
             raise Exception("Required key not found (either zipcode or latitude)")
         if 'longitude' not in kwargs:
             kwargs['longitude']=0
         self.init_kwargs=kwargs
-        #
         self._current_color=str(color)
         self._pause_color=str(pause_color)
 
@@ -60,10 +58,10 @@ class XfluxController(object):
 
     def _start(self,startup_args=None):
         if not startup_args:
-            startup_args=self._create_startup_arg_list(self._current_color,\
+            startup_args=self._create_startup_arg_list(self._current_color,
                 **self.init_kwargs)
         try:
-            self._xflux = pexpect.spawn("/usr/bin/xflux", startup_args,\
+            self._xflux = pexpect.spawn("/usr/bin/xflux", startup_args,
                     logfile=file("tmp/xfluxout.txt",'w'))
 
             # TODO: remove xflux logging
@@ -110,7 +108,8 @@ class XfluxController(object):
                 if k=='color':
                     self._set_xflux_screen_color(v)
                     self._current_color=str(v)
-                    # hackish
+                    # hackish - changing the current color unpauses xflux,
+                    # must reflect that with state change
                     if self.state==self.states["PAUSED"]:
                         self.state==self.states["RUNNING"]
                 else:
@@ -141,7 +140,7 @@ class XfluxController(object):
         self._xflux.sendline("p")
 
     def _c(self):
-        # prints Colortemp=####
+        # prints Colortemp=#### in xflux process
         # Also: When called after a color change (sendline(k=#)) makes changes immediate
         #   (see use in toggle_pause() and preview_color())
         self._xflux.sendline("c")
@@ -198,18 +197,18 @@ class AliveState(XfluxState):
 
 class RunningState(AliveState):
     def toggle_pause(self):
-        self.controller_ref()._change_color_immediately(\
+        self.controller_ref()._change_color_immediately(
                 self.controller_ref()._pause_color)
         self.controller_ref().state=self.controller_ref().states["PAUSED"]
     def preview(self, preview_color):
-        self.controller_ref()._preview_color(preview_color,\
+        self.controller_ref()._preview_color(preview_color,
                 self.controller_ref()._current_color)
 
 class PauseState(AliveState):
     def toggle_pause(self):
-        self.controller_ref()._change_color_immediately(\
+        self.controller_ref()._change_color_immediately(
                 self.controller_ref()._current_color)
         self.controller_ref().state=self.controller_ref().states["RUNNING"]
     def preview(self, preview_color):
-        self.controller_ref()._preview_color(preview_color,\
+        self.controller_ref()._preview_color(preview_color,
                 self.controller_ref()._pause_color)

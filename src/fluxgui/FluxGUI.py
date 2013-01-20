@@ -17,6 +17,7 @@ class FluxGUI(object):
             self.xflux_controller=FluxController.FluxController(self.settings)
             self.indicator=Indicator.Indicator(self, self.xflux_controller)
             self.preferences=Preferences.Preferences(self.settings, self.xflux_controller)
+
             self.xflux_controller.start()
         except Exception as e:
             print e

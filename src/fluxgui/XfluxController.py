@@ -6,6 +6,7 @@ import weakref
 class XfluxController(object):
 
     def __init__(self, color='3400', pause_color='6500', **kwargs):
+        
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
             raise Exception("Required key not found (either zipcode or latitude)")
         if 'longitude' not in kwargs:
@@ -104,7 +105,6 @@ class XfluxController(object):
     def _set_xflux_setting(self, **kwargs):
         for k,v in kwargs.items():
             if k in self._settings_map:
-                print self._settings_map[k]+str(v)
                 if k=='color':
                     self._set_xflux_screen_color(v)
                     self._current_color=str(v)
@@ -173,7 +173,6 @@ class InitState(XfluxState):
     def stop(self):
         return True
     def set_setting(self,**kwargs):
-        print kwargs
         for k,v in kwargs.items():
             self.controller_ref().init_kwargs[k]=str(v)
 

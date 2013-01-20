@@ -8,15 +8,16 @@ class FluxController(XfluxController.XfluxController):
 
     def __init__(self, settings):
         self.settings=settings
-        #TODO: tmp
-        self.settings.latitude=35
-        self.settings.longitude=0
         super(FluxController, self).__init__(**self.settings.xflux_settings_dict())
 
     def start(self):
         if self.settings.zipcode=="" and self.settings.latitude=="":
             raise ValueError("Cannot start xflux, missing zipcode and latitude")
         super(FluxController, self).start()
+
+    # Controller methods that don't touch xflux
+    def set_autostart(self, autos):
+        self.settings.autostart=autos
 
 
     # xflux methods that should also update settings
@@ -36,5 +37,9 @@ class FluxController(XfluxController.XfluxController):
         self.settings.color=col
         super(FluxController, self)._set_xflux_color(col)
 
+    def _get_xflux_color(self):
+        return super(FluxController, self)._get_xflux_color()
+
+    color=property(_get_xflux_color,_set_xflux_color)
 
 

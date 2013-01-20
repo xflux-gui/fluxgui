@@ -1,5 +1,4 @@
 from GConfClient import GConfClient
-import gtk # get out
 
 class Settings(object):
 
@@ -7,11 +6,11 @@ class Settings(object):
         self.client=GConfClient("/apps/fluxgui")
 
         # TODO: colortemp
-        self._color=self.client.get_client_string("color",3400)
-        self._autostart=self.client.get_client_string("autostart",0)
-        self._latitude=self.client.get_client_string("latitude")
-        self._longitude=self.client.get_client_string("longitude")
-        self._zipcode=self.client.get_client_string("zipcode")
+        self._color = self.client.get_client_string("colortemp",3400)
+        self._autostart = self.client.get_client_bool("autostart")
+        self._latitude = self.client.get_client_string("latitude")
+        self._longitude = self.client.get_client_string("longitude")
+        self._zipcode = self.client.get_client_string("zipcode")
 
     def xflux_settings_dict(self):
         d={
@@ -37,7 +36,8 @@ class Settings(object):
     def _get_color(self):
         return str(self._color)
     def _set_color(self,value):
-        self._color=color
+        self._color=value
+        self.client.set_client_string("colortemp",value)
     #    self.client.set_client_string("color",value)
     #def _set_color_by_index(self,index):
     #    self._color=_temperatureKeys[value]
@@ -71,17 +71,17 @@ class Settings(object):
         self.client.set_client_string("zipcode",value)
 
     def _get_autostart(self):
-        return self._autostart
-    def _toggle_autostart(self,value):
-        self._autostart=not self._autostart
-        self.client.set_client_string("autostart", 1 if self._autostart else 0)
+        return bool(self._autostart)
+    def _set_autostart(self,value):
+        self._autostart=value
+        self.client.set_client_bool("autostart", self._autostart)
 
-    color=property(_get_color, _set_color)
+    color=property(_get_color,_set_color)
     #colortemp=property(self._get_colortemp, self._set_colortemp)
     latitude=property(_get_latitude,_set_latitude)
     longitude=property(_get_longitude,_set_longitude)
     zipcode=property(_get_zipcode,_set_zipcode)
-    autostart=property(_get_autostart,_toggle_autostart)
+    autostart=property(_get_autostart,_set_autostart)
 
 
 

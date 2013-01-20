@@ -1,22 +1,26 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="window1">
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">f.lux indicator applet preferences</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
+        <property name="can_focus">False</property>
         <child>
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
+            <property name="can_focus">False</property>
             <property name="n_rows">15</property>
             <property name="n_columns">3</property>
             <child>
               <widget class="GtkLabel" id="label2">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="ypad">10</property>
                 <property name="label" translatable="yes">ZIPCode (US only)</property>
@@ -32,6 +36,7 @@
             <child>
               <widget class="GtkLabel" id="label1">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0</property>
                 <property name="ypad">10</property>
@@ -44,11 +49,15 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="entry2">
+              <widget class="GtkEntry" id="entryZipcode">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip" translatable="yes">Fill in your zipcode (Latitude has preference)</property>
                 <property name="activates_default">True</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
               </widget>
               <packing>
                 <property name="left_attach">2</property>
@@ -59,12 +68,16 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="entry1">
+              <widget class="GtkEntry" id="entryLatitude">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip" translatable="yes">Fill in your latitude</property>
                 <property name="activates_default">True</property>
                 <property name="caps_lock_warning">False</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
               </widget>
               <packing>
                 <property name="left_attach">2</property>
@@ -75,6 +88,7 @@
             <child>
               <widget class="GtkLabel" id="label4">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="label" translatable="yes">Nighttime color temperature</property>
                 <property name="single_line_mode">True</property>
@@ -90,6 +104,7 @@
             <child>
               <widget class="GtkLabel" id="label5">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0</property>
                 <property name="ypad">10</property>
@@ -104,12 +119,16 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="entry3">
+              <widget class="GtkEntry" id="entryLongitude">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip" translatable="yes">Fill in your latitude</property>
                 <property name="activates_default">True</property>
                 <property name="caps_lock_warning">False</property>
+                <property name="primary_icon_activatable">False</property>
+                <property name="secondary_icon_activatable">False</property>
+                <property name="primary_icon_sensitive">True</property>
+                <property name="secondary_icon_sensitive">True</property>
               </widget>
               <packing>
                 <property name="left_attach">2</property>
@@ -122,6 +141,7 @@
             <child>
               <widget class="GtkHSeparator" id="hseparator2">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
               </widget>
               <packing>
                 <property name="right_attach">3</property>
@@ -132,6 +152,7 @@
             <child>
               <widget class="GtkHSeparator" id="hseparator4">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
               </widget>
               <packing>
                 <property name="right_attach">3</property>
@@ -145,6 +166,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="use_action_appearance">False</property>
                 <property name="relief">none</property>
                 <property name="focus_on_click">False</property>
                 <property name="uri">http://stereopsis.com/flux/map.html</property>
@@ -161,6 +183,7 @@
             <child>
               <widget class="GtkLabel" id="label3">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">f.lux
 Better lightning for your computer
 Copyright 2009 - 2010 Michael and Lorna Herf
@@ -178,6 +201,7 @@ f.lux indicator applet made by Kilian Valkhof</property>
             <child>
               <widget class="GtkHSeparator" id="hseparator3">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
               </widget>
               <packing>
                 <property name="right_attach">3</property>
@@ -186,8 +210,9 @@ f.lux indicator applet made by Kilian Valkhof</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label6">
+              <widget class="GtkLabel" id="labelCurrentColorTemperature">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="label" translatable="yes">Current color temperature: unknown</property>
               </widget>
               <packing>
@@ -200,10 +225,12 @@ f.lux indicator applet made by Kilian Valkhof</property>
             <child>
               <widget class="GtkHBox" id="hbox1">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <property name="spacing">10</property>
                 <child>
-                  <widget class="GtkComboBox" id="combobox1">
+                  <widget class="GtkComboBox" id="comboColor">
                     <property name="visible">True</property>
+                    <property name="can_focus">False</property>
                     <property name="has_tooltip">True</property>
                     <property name="tooltip" translatable="yes">Fill in your preferred nighttime color temperature</property>
                     <property name="items" translatable="yes">Tungsten (2700K)
@@ -212,18 +239,23 @@ Fluorescent (4200K)
 Sunlight (5000K)</property>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkButton" id="button1">
+                  <widget class="GtkButton" id="buttonPreview">
                     <property name="label" translatable="yes">Preview</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="tooltip" translatable="yes">Preview the color temperature</property>
+                    <property name="use_action_appearance">False</property>
                   </widget>
                   <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -240,6 +272,7 @@ Sunlight (5000K)</property>
             <child>
               <widget class="GtkHSeparator" id="hseparator1">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
               </widget>
               <packing>
                 <property name="right_attach">3</property>
@@ -249,13 +282,14 @@ Sunlight (5000K)</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkCheckButton" id="checkbutton1">
+              <widget class="GtkCheckButton" id="checkAutostart">
                 <property name="label" translatable="yes">Autostart f.lux indicator applet</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip" translatable="yes">Start f.lux indicator applet when the computer starts</property>
+                <property name="use_action_appearance">False</property>
                 <property name="relief">none</property>
                 <property name="focus_on_click">False</property>
                 <property name="draw_indicator">True</property>
@@ -271,6 +305,7 @@ Sunlight (5000K)</property>
             <child>
               <widget class="GtkHSeparator" id="hseparator5">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
               </widget>
               <packing>
                 <property name="right_attach">3</property>
@@ -281,6 +316,7 @@ Sunlight (5000K)</property>
             <child>
               <widget class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -288,11 +324,12 @@ Sunlight (5000K)</property>
                   <placeholder/>
                 </child>
                 <child>
-                  <widget class="GtkButton" id="button2">
+                  <widget class="GtkButton" id="buttonClose">
                     <property name="label">gtk-close</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="use_stock">True</property>
                     <property name="xalign">1</property>
                   </widget>
@@ -314,6 +351,7 @@ Sunlight (5000K)</property>
             <child>
               <widget class="GtkHSeparator" id="hseparator6">
                 <property name="visible">True</property>
+                <property name="can_focus">False</property>
               </widget>
               <packing>
                 <property name="right_attach">3</property>
@@ -327,6 +365,8 @@ Sunlight (5000K)</property>
             </child>
           </widget>
           <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
             <property name="padding">10</property>
             <property name="position">0</property>
           </packing>

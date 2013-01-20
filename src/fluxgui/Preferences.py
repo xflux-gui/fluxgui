@@ -29,36 +29,36 @@ class Preferences:
         self.window = self.wTree.get_widget("window1")
         self.window.connect("destroy", self.delete_event)
 
-        self.latsetting = self.wTree.get_widget("entry1")
+        self.latsetting = self.wTree.get_widget("entryLatitude")
         self.latsetting.set_text(self.settings.latitude)
         self.latsetting.connect("activate", self.delete_event)
 
-        self.lonsetting = self.wTree.get_widget("entry3")
+        self.lonsetting = self.wTree.get_widget("entryLongitude")
         self.lonsetting.set_text(self.settings.longitude)
         self.lonsetting.connect("activate", self.delete_event)
 
-        self.zipsetting = self.wTree.get_widget("entry2")
+        self.zipsetting = self.wTree.get_widget("entryZipcode")
         self.zipsetting.set_text(self.settings.zipcode)
         self.zipsetting.connect("activate", self.delete_event)
 
-        self.colsetting = self.wTree.get_widget("combobox1")
+        self.colsetting = self.wTree.get_widget("comboColor")
         colsetting_index=self.temperature_to_key(int(self.settings.color))
         self.colsetting.set_active(colsetting_index)
         # TODO? connect colsetting
 
-        self.colordisplay = self.wTree.get_widget("label6")
+        self.colordisplay = self.wTree.get_widget("labelCurrentColorTemperature")
         self.colordisplay.set_text("Current color temperature: "
                                        + str(self.settings.color) + "K")
 
-        self.previewbutton = self.wTree.get_widget("button1")
+        self.previewbutton = self.wTree.get_widget("buttonPreview")
         #TODO: wat
         self.previewbutton.connect("clicked", self.xflux_controller.preview_color)
 
 
-        self.closebutton = self.wTree.get_widget("button2")
+        self.closebutton = self.wTree.get_widget("buttonClose")
         self.closebutton.connect("clicked", self.delete_event)
 
-        self.autostart = self.wTree.get_widget("checkbutton1")
+        self.autostart = self.wTree.get_widget("checkAutostart")
         if self.settings.autostart is "1":
             self.autostart.set_active(True)
         else:
@@ -98,7 +98,7 @@ class Preferences:
         if str(self.settings.color) != colsetting_temperature:
             self.xflux_controller.color=colsetting_temperature
 
-        #TODOL autostarter
+        #TODO: autostarter
         #if self.autostart.get_active():
             #self.main.create_autostarter()
         #else:

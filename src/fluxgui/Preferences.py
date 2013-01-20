@@ -95,13 +95,10 @@ class Preferences:
         if self.settings.color != colsetting_temperature:
             self.xflux_controller.color=colsetting_temperature
 
-        #TODO: autostarter
         if self.autostart.get_active():
             self.xflux_controller.set_autostart(True)
-            #self.main.create_autostarter()
         else:
             self.xflux_controller.set_autostart(False)
-            #self.main.delete_autostarter()
         if self.latsetting.get_text()=="" and self.zipsetting.get_text()=="":
             self.display_no_zipcode_or_latitude_error_box()
             return True

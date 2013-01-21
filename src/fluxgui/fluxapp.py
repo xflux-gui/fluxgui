@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 
 from fluxgui import fluxcontroller, settings
+from fluxgui.exceptions import MethodUnavailableError
 import gtk
 import gtk.glade
 import appindicator
@@ -24,7 +25,7 @@ class FluxGUI(object):
         except Exception as e:
             print e
             print "Critical error. Exiting."
-            sys.exit(1)
+            self.exit(1)
 
     def __del__(self):
         self.exit()
@@ -37,15 +38,23 @@ class FluxGUI(object):
         print 'Quitting...'
         self.exit()
 
-    def exit(self):
-        self.xflux_controller.stop()
+    def exit(self, code=0):
+        try:
+            self.xflux_controller.stop()
+        except MethodUnavailableError:
+            pass
         os.unlink(self.pidfile)
         gtk.main_quit()
-        sys.exit()
+        sys.exit(code)
 
     def run(self):
-        self.xflux_controller.start()
         gtk.main()
+        try:
+            self.xflux_controller.start()
+        except Exception, err:
+            print err
+            print "Unable to start xflux. Exiting."
+            self.exit(1)
 
     def check_pid(self):
         pid = os.getpid()
@@ -145,7 +154,12 @@ class Preferences:
     """
     Information and methods related to the preferences window.
     Executes FluxController methods and gets data from Settings.
+
     """
+    #TODO feature: If xflux has not been started when
+    # the user tries to use preview,
+    # start xflux and preview the color.
+    # Currently does nothing but raise an error
 
     temperatureKeys = {
                 0:  '2700',
@@ -216,15 +230,16 @@ class Preferences:
         md = gtk.MessageDialog(self.window,
                 gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
                 gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
-                "your latitude or zipcode to work correctly. " +
-                "Please fill either of them in on the preferences screen.")
+                "your latitude or zipcode to run. " +
+                "Please fill either of them in on the preferences screen "+
+                "and click 'Close'.")
         md.set_title("f.lux indicator applet")
         md.run()
         md.destroy()
 
     def preview_click_event(self, widget, data=None):
         colsetting_temperature = self.temperatureKeys[
-                self.colsetting.get_active()]
+            self.colsetting.get_active()]
         self.xflux_controller.preview_color(colsetting_temperature)
 
     def delete_event(self, widget, data=None):

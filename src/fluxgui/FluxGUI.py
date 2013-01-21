@@ -1,9 +1,7 @@
 #!/usr/bin/python2.7
 
-import FluxController
-import Settings
-import Indicator
-import Preferences
+from fluxgui import FluxController, Settings
+from fluxgui import Indicator, Preferences
 import gtk
 import sys, os
 import signal

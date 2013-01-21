@@ -1,7 +1,7 @@
 import pexpect
 import time
 import weakref
-from Exceptions import XfluxError, MethodUnavailableError, FileNotFoundError
+from fluxgui.Exceptions import *
 
 class XfluxController(object):
     """

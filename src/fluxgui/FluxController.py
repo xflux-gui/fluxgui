@@ -1,4 +1,4 @@
-import XfluxController
+from fluxgui import XfluxController
 
 class FluxController(XfluxController.XfluxController):
     """

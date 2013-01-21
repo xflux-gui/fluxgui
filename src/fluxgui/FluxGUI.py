@@ -10,15 +10,18 @@ import signal
 import errno
 
 class FluxGUI(object):
+    """
+    FluxGUI initializes/destroys the app
+    """
     def __init__(self):
+        self.pidfile = os.path.expanduser("~/.fluxgui.pid")
         self.check_pid()
         try:
-            self.settings=Settings.Settings()
-            self.xflux_controller=FluxController.FluxController(self.settings)
-            self.indicator=Indicator.Indicator(self, self.xflux_controller)
-            self.preferences=Preferences.Preferences(self.settings, self.xflux_controller)
-
-            self.xflux_controller.start()
+            self.settings = Settings.Settings()
+            self.xflux_controller = FluxController.FluxController(self.settings)
+            self.indicator = Indicator.Indicator(self, self.xflux_controller)
+            self.preferences = Preferences.Preferences(self.settings,
+                    self.xflux_controller)
         except Exception as e:
             print e
             print "Critical error. Exiting."
@@ -42,36 +45,36 @@ class FluxGUI(object):
         sys.exit()
 
     def run(self):
+        self.xflux_controller.start()
         gtk.main()
 
     def check_pid(self):
         pid = os.getpid()
-        self.pidfile = os.path.expanduser("~/.fluxgui.pid")
 
         running = False # Innocent...
         if os.path.isfile(self.pidfile):
-          try:
-            oldpid = int(open(self.pidfile).readline().rstrip())
             try:
-              os.kill(oldpid, 0)
-              running = True # ...until proven guilty
-            except OSError as err:
-              if err.errno == errno.ESRCH:
-                # OSError: [Errno 3] No such process
-                print "stale pidfile, old pid: ", oldpid
-          except ValueError:
-            # Corrupt pidfile, empty or not an int on first line
-            pass
+                oldpid = int(open(self.pidfile).readline().rstrip())
+                try:
+                    os.kill(oldpid, 0)
+                    running = True # ...until proven guilty
+                except OSError as err:
+                    if err.errno == errno.ESRCH:
+                        # OSError: [Errno 3] No such process
+                        print "stale pidfile, old pid: ", oldpid
+            except ValueError:
+                # Corrupt pidfile, empty or not an int on first line
+                pass
         if running:
-          print "fluxgui is already running, exiting"
-          sys.exit()
+            print "fluxgui is already running, exiting"
+            sys.exit()
         else:
-          file(self.pidfile, 'w').write("%d\n" % pid)
+            file(self.pidfile, 'w').write("%d\n" % pid)
 
 
 if __name__ == '__main__':
     try:
-        app=FluxGUI()
+        app = FluxGUI()
         signal.signal(signal.SIGTERM, app.signal_exit)
         app.run()
     except KeyboardInterrupt:

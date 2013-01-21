@@ -1,15 +1,18 @@
 import pexpect
-import sys
 import time
 import weakref
 from Exceptions import XfluxError, MethodUnavailableError, FileNotFoundError
 
 class XfluxController(object):
+    """
+    A controller that starts and interacts with an xflux process.
+    """
+
 
     def __init__(self, color='3400', pause_color='6500', **kwargs):
-        
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
-            raise XfluxError("Required key not found (either zipcode or latitude)")
+            raise XfluxError(
+                    "Required key not found (either zipcode or latitude)")
         if 'longitude' not in kwargs:
             kwargs['longitude'] = 0
         self.init_kwargs = kwargs
@@ -67,8 +70,8 @@ class XfluxController(object):
                     #logfile=file("tmp/xfluxout.txt",'w'))
 
         except pexpect.ExceptionPexpect:
-            raise FileNotFoundError("\nError: Please install xflux in /usr/bin/ \n")
-
+            raise FileNotFoundError(
+                    "\nError: Please install xflux in /usr/bin/ \n")
 
     def _stop(self):
         try:
@@ -100,17 +103,17 @@ class XfluxController(object):
     }
 
     def _set_xflux_setting(self, **kwargs):
-        for k, v in kwargs.items():
-            if k in self._settings_map:
-                if k == 'color':
-                    self._set_xflux_screen_color(v)
-                    self._current_color = str(v)
+        for key, value in kwargs.items():
+            if key in self._settings_map:
+                if key == 'color':
+                    self._set_xflux_screen_color(value)
+                    self._current_color = str(value)
                     # hackish - changing the current color unpauses xflux,
                     # must reflect that with state change
                     if self.state == self.states["PAUSED"]:
                         self.state = self.states["RUNNING"]
                 else:
-                    self._xflux.sendline(self._settings_map[k]+str(v))
+                    self._xflux.sendline(self._settings_map[key]+str(value))
                 self._c()
 
     def _create_startup_arg_list(self, color='3400', **kwargs):
@@ -125,6 +128,7 @@ class XfluxController(object):
         startup_args += ["-k", str(color), "-nofork"] # nofork is vital
 
         return startup_args
+
     def _change_color_immediately(self, new_color):
         self._set_xflux_screen_color(new_color)
         self._c()
@@ -138,12 +142,14 @@ class XfluxController(object):
 
     def _c(self):
         # prints Colortemp=#### in xflux process
-        # Also: When called after a color change (sendline(k=#)) makes changes immediate
+        # Also: When called after a color change (sendline(k=#))
+        #   makes changes immediate
         #   (see use in toggle_pause() and preview_color())
         self._xflux.sendline("c")
 
     def _set_xflux_screen_color(self, color):
-        # use _set_xflux_color unless keeping self._current_color the same is necessary
+        # use _set_xflux_color unless keeping
+        # self._current_color the same is necessary
         self._xflux.sendline("k="+str(color))
 
 
@@ -153,15 +159,20 @@ class XfluxState(object):
     def __init__(self, controller_instance):
         self.controller_ref = weakref.ref(controller_instance)
     def start(self, startup_args):
-        raise MethodUnavailableError("Xflux cannot use this method in its current state")
+        raise MethodUnavailableError(
+                "Xflux cannot use this method in its current state")
     def stop(self):
-        raise MethodUnavailableError("Xflux cannot use this method in its current state")
+        raise MethodUnavailableError(
+                "Xflux cannot use this method in its current state")
     def preview(self, preview_color):
-        raise MethodUnavailableError("Xflux cannot use this method in its current state")
+        raise MethodUnavailableError(
+                "Xflux cannot use this method in its current state")
     def toggle_pause(self):
-        raise MethodUnavailableError("Xflux cannot use this method in its current state")
+        raise MethodUnavailableError(
+                "Xflux cannot use this method in its current state")
     def set_setting(self, **kwargs):
-        raise MethodUnavailableError("Xflux cannot use this method in its current state")
+        raise MethodUnavailableError(
+                "Xflux cannot use this method in its current state")
 
 class InitState(XfluxState):
     def start(self, startup_args):
@@ -170,8 +181,8 @@ class InitState(XfluxState):
     def stop(self):
         return True
     def set_setting(self, **kwargs):
-        for k, v in kwargs.items():
-            self.controller_ref().init_kwargs[k] = str(v)
+        for key, value in kwargs.items():
+            self.controller_ref().init_kwargs[key] = str(value)
 
 class TerminatedState(XfluxState):
     def stop(self):
@@ -182,7 +193,8 @@ class AliveState(XfluxState):
     def stop(self):
         success = self.controller_ref()._stop()
         if success:
-            self.controller_ref().state = self.controller_ref().states["TERMINATED"]
+            self.controller_ref().state = \
+                self.controller_ref().states["TERMINATED"]
         return success
     def set_setting(self, **kwargs):
         self.controller_ref()._set_xflux_setting(**kwargs)

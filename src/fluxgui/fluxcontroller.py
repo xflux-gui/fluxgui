@@ -1,6 +1,6 @@
-from fluxgui import XfluxController
+from fluxgui import xfluxcontroller
 
-class FluxController(XfluxController.XfluxController):
+class FluxController(xfluxcontroller.XfluxController):
     """
     FluxController is the same as XfluxController except that it
     requires a Settings instance and updates that instance when

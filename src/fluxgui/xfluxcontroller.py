@@ -1,7 +1,7 @@
 import pexpect
 import time
 import weakref
-from fluxgui.Exceptions import *
+from fluxgui.exceptions import *
 
 class XfluxController(object):
     """

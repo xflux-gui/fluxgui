@@ -1,6 +1,145 @@
+#!/usr/bin/python2.7
+
+from fluxgui import fluxcontroller, settings
 import gtk
 import gtk.glade
-import os
+import appindicator
+import sys, os
+import signal
+import errno
+
+class FluxGUI(object):
+    """
+    FluxGUI initializes/destroys the app
+    """
+    def __init__(self):
+        self.pidfile = os.path.expanduser("~/.fluxgui.pid")
+        self.check_pid()
+        try:
+            self.settings = settings.Settings()
+            self.xflux_controller = fluxcontroller.FluxController(self.settings)
+            self.indicator = Indicator(self, self.xflux_controller)
+            self.preferences = Preferences(self.settings,
+                    self.xflux_controller)
+        except Exception as e:
+            print e
+            print "Critical error. Exiting."
+            sys.exit(1)
+
+    def __del__(self):
+        self.exit()
+
+    def open_preferences(self):
+        self.preferences.show()
+
+    def signal_exit(self, signum, frame):
+        print 'Recieved signal: ', signum
+        print 'Quitting...'
+        self.exit()
+
+    def exit(self):
+        self.xflux_controller.stop()
+        os.unlink(self.pidfile)
+        gtk.main_quit()
+        sys.exit()
+
+    def run(self):
+        self.xflux_controller.start()
+        gtk.main()
+
+    def check_pid(self):
+        pid = os.getpid()
+
+        running = False # Innocent...
+        if os.path.isfile(self.pidfile):
+            try:
+                oldpid = int(open(self.pidfile).readline().rstrip())
+                try:
+                    os.kill(oldpid, 0)
+                    running = True # ...until proven guilty
+                except OSError as err:
+                    if err.errno == errno.ESRCH:
+                        # OSError: [Errno 3] No such process
+                        print "stale pidfile, old pid: ", oldpid
+            except ValueError:
+                # Corrupt pidfile, empty or not an int on first line
+                pass
+        if running:
+            print "fluxgui is already running, exiting"
+            sys.exit()
+        else:
+            file(self.pidfile, 'w').write("%d\n" % pid)
+
+class Indicator:
+    """
+    Information and methods related to the indicator applet.
+    Executes FluxController and FluxGUI methods.
+    """
+
+    def __init__(self, fluxgui, xflux_controller):
+        self.fluxgui = fluxgui
+        self.xflux_controller = xflux_controller
+        self.indicator = appindicator.Indicator(
+          "fluxgui-indicator",
+          "fluxgui",
+          appindicator.CATEGORY_APPLICATION_STATUS)
+
+        self.setup_indicator()
+
+    def setup_indicator(self):
+        self.indicator.set_status(appindicator.STATUS_ACTIVE)
+
+        # Check for special Ubuntu themes. copied from lookit
+
+        try:
+            theme = \
+                gtk.gdk.screen_get_default().get_setting('gtk-icon-theme-name')
+        except:
+            self.indicator.set_icon('fluxgui')
+        else:
+            if theme == 'ubuntu-mono-dark':
+                self.indicator.set_icon('fluxgui-dark')
+            elif theme == 'ubuntu-mono-light':
+                self.indicator.set_icon('fluxgui-light')
+            else:
+                self.indicator.set_icon('fluxgui')
+
+        self.indicator.set_menu(self.create_menu())
+
+    def create_menu(self):
+        menu = gtk.Menu()
+
+        self.add_menu_item("_Pause f.lux", self._toggle_pause,
+                menu, MenuItem=gtk.CheckMenuItem)
+        self.add_menu_item("_Preferences", self._open_preferences, menu)
+        self.add_menu_separator(menu)
+        self.add_menu_item("Quit", self._quit, menu)
+
+        return menu
+
+    def add_menu_item(self, label, handler, menu,
+            event="activate", MenuItem=gtk.MenuItem, show=True):
+        item = MenuItem(label)
+        item.connect(event, handler)
+        menu.append(item)
+        if show:
+            item.show()
+        return item
+
+    def add_menu_separator(self, menu, show=True):
+        item = gtk.SeparatorMenuItem()
+        menu.append(item)
+        if show:
+            item.show()
+
+    def _toggle_pause(self, item):
+        self.xflux_controller.toggle_pause()
+
+    def _open_preferences(self, item):
+        self.fluxgui.open_preferences()
+
+    def _quit(self, item):
+        self.fluxgui.exit()
 
 class Preferences:
     """
@@ -57,7 +196,6 @@ class Preferences:
         if self.settings.latitude is "" and self.settings.zipcode is "":
             self.show()
             self.display_no_zipcode_or_latitude_error_box()
-
 
     def show(self):
 
@@ -118,4 +256,13 @@ class Preferences:
 
         self.window.hide()
         return False
+
+
+if __name__ == '__main__':
+    try:
+        app = FluxGUI()
+        signal.signal(signal.SIGTERM, app.signal_exit)
+        app.run()
+    except KeyboardInterrupt:
+        app.exit()
 

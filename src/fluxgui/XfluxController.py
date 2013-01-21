@@ -20,10 +20,10 @@ class XfluxController(object):
         self._pause_color = str(pause_color)
 
         self.states = {
-            "INIT": InitState(self),
-            "RUNNING": RunningState(self),
-            "PAUSED": PauseState(self),
-            "TERMINATED": TerminatedState(self),
+            "INIT": _InitState(self),
+            "RUNNING": _RunningState(self),
+            "PAUSED": _PauseState(self),
+            "TERMINATED": _TerminatedState(self),
         }
         self.state = self.states["INIT"]
 
@@ -153,7 +153,7 @@ class XfluxController(object):
         self._xflux.sendline("k="+str(color))
 
 
-class XfluxState(object):
+class _XfluxState(object):
     can_change_settings = False
 
     def __init__(self, controller_instance):
@@ -174,7 +174,7 @@ class XfluxState(object):
         raise MethodUnavailableError(
                 "Xflux cannot use this method in its current state")
 
-class InitState(XfluxState):
+class _InitState(_XfluxState):
     def start(self, startup_args):
         self.controller_ref()._start(startup_args)
         self.controller_ref().state = self.controller_ref().states["RUNNING"]
@@ -184,11 +184,11 @@ class InitState(XfluxState):
         for key, value in kwargs.items():
             self.controller_ref().init_kwargs[key] = str(value)
 
-class TerminatedState(XfluxState):
+class _TerminatedState(_XfluxState):
     def stop(self):
         return True
 
-class AliveState(XfluxState):
+class _AliveState(_XfluxState):
     can_change_settings = True
     def stop(self):
         success = self.controller_ref()._stop()
@@ -199,7 +199,7 @@ class AliveState(XfluxState):
     def set_setting(self, **kwargs):
         self.controller_ref()._set_xflux_setting(**kwargs)
 
-class RunningState(AliveState):
+class _RunningState(_AliveState):
     def toggle_pause(self):
         self.controller_ref()._change_color_immediately(
                 self.controller_ref()._pause_color)
@@ -208,7 +208,7 @@ class RunningState(AliveState):
         self.controller_ref()._preview_color(preview_color,
                 self.controller_ref()._current_color)
 
-class PauseState(AliveState):
+class _PauseState(_AliveState):
     def toggle_pause(self):
         self.controller_ref()._change_color_immediately(
                 self.controller_ref()._current_color)

@@ -28,12 +28,14 @@ class XfluxController(object):
         self.state = self.states["INIT"]
 
     def start(self, startup_args=None):
+        print 'starting'
         self.state.start(startup_args)
 
     def stop(self):
         self.state.stop()
 
     def preview_color(self, preview_color):
+        print self.state
         self.state.preview(preview_color)
 
     def toggle_pause(self):
@@ -160,19 +162,19 @@ class _XfluxState(object):
         self.controller_ref = weakref.ref(controller_instance)
     def start(self, startup_args):
         raise MethodUnavailableError(
-                "Xflux cannot use this method in its current state")
+                "Xflux cannot start in its current state")
     def stop(self):
         raise MethodUnavailableError(
-                "Xflux cannot use this method in its current state")
+                "Xflux cannot stop in its current state")
     def preview(self, preview_color):
         raise MethodUnavailableError(
-                "Xflux cannot use this method in its current state")
+                "Xflux cannot preview in its current state")
     def toggle_pause(self):
         raise MethodUnavailableError(
-                "Xflux cannot use this method in its current state")
+                "Xflux cannot pause/unpause in its current state")
     def set_setting(self, **kwargs):
         raise MethodUnavailableError(
-                "Xflux cannot use this method in its current state")
+                "Xflux cannot alter settings in its current state")
 
 class _InitState(_XfluxState):
     def start(self, startup_args):

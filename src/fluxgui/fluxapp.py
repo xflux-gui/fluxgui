@@ -22,6 +22,8 @@ class FluxGUI(object):
             self.indicator = Indicator(self, self.xflux_controller)
             self.preferences = Preferences(self.settings,
                     self.xflux_controller)
+            self.xflux_controller.start()
+
         except Exception as e:
             print e
             print "Critical error. Exiting."
@@ -49,12 +51,6 @@ class FluxGUI(object):
 
     def run(self):
         gtk.main()
-        try:
-            self.xflux_controller.start()
-        except Exception, err:
-            print err
-            print "Unable to start xflux. Exiting."
-            self.exit(1)
 
     def check_pid(self):
         pid = os.getpid()
@@ -156,10 +152,6 @@ class Preferences:
     Executes FluxController methods and gets data from Settings.
 
     """
-    #TODO feature: If xflux has not been started when
-    # the user tries to use preview,
-    # start xflux and preview the color.
-    # Currently does nothing but raise an error
 
     temperatureKeys = {
                 0:  '2700',
@@ -207,7 +199,8 @@ class Preferences:
                 self.delete_event, "clicked")
         self.autostart = self.connect_widget("checkAutostart")
 
-        if self.settings.latitude is "" and self.settings.zipcode is "":
+        if (self.settings.latitude is "" and self.settings.zipcode is "")\
+                or not self.settings.has_set_prefs:
             self.show()
             self.display_no_zipcode_or_latitude_error_box()
 

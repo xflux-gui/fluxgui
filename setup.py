@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(name = "f.lux indicator applet",
     version = "1.1.8",
     description = "f.lux indicator applet - better lightning for your computer",
-    author = "Kilian Valkhof, Michael and Lorna Herf",
+    author = "Kilian Valkhof, Michael and Lorna Herf, Josh Winters",
     author_email = "kilian@kilianvalkhof.com",
     url = "http://www.stereopsis.com/flux/",
     license = "MIT license",

@@ -15,6 +15,14 @@ class Settings(object):
         self._longitude = self.client.get_client_string("longitude")
         self._zipcode = self.client.get_client_string("zipcode")
 
+        self.has_set_prefs = True
+        if not self.latitude and not self.zipcode:
+            self.has_set_prefs = False
+            self._zipcode = '90210'
+            self.autostart=True
+        if not self.color:
+            self.color = '3400'
+
     def xflux_settings_dict(self):
         d = {
                 'color': self.color,

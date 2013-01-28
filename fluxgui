@@ -19,6 +19,6 @@ import subprocess
 import fluxgui
 
 if __name__ == "__main__":
-    path = os.path.join(os.path.dirname(fluxgui.__file__), "fluxgui.py")
+    path = os.path.join(os.path.dirname(fluxgui.__file__), "fluxapp.py")
     subprocess.call([sys.executable, path] + sys.argv[1:])
 

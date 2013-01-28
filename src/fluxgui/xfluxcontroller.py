@@ -28,14 +28,12 @@ class XfluxController(object):
         self.state = self.states["INIT"]
 
     def start(self, startup_args=None):
-        print 'starting'
         self.state.start(startup_args)
 
     def stop(self):
         self.state.stop()
 
     def preview_color(self, preview_color):
-        print self.state
         self.state.preview(preview_color)
 
     def toggle_pause(self):

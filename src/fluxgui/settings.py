@@ -128,7 +128,20 @@ class GConfClient(object):
         self.client.set_string(self.prefs_key + "/" + property_name, str(value))
 
     def get_client_bool(self, property_name, default=False):
-        client_bool = self.client.get_bool(self.prefs_key+"/"+property_name)
+        gconf_type = self.client.get(self.prefs_key + "/" + property_name).type
+        client_bool = None
+        if gconf_type != gconf.VALUE_BOOL:
+            # previous release used strings for autostart, handle here
+            client_string = self.get_client_string(property_name).lower()
+            if client_string == 'true':
+                self.set_client_bool(property_name, True)
+                client_bool = True
+            elif client_string == 'false':
+                self.set_client_bool(property_name, False)
+                client_bool = False
+        else:
+            client_bool = self.client.get_bool(self.prefs_key
+                                        + "/"+property_name)
         if client_bool is None:
             client_bool = default
         return client_bool

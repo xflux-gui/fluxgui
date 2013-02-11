@@ -75,7 +75,7 @@ class FluxGUI(object):
         else:
             file(self.pidfile, 'w').write("%d\n" % pid)
 
-class Indicator:
+class Indicator(object):
     """
     Information and methods related to the indicator applet.
     Executes FluxController and FluxGUI methods.
@@ -146,7 +146,7 @@ class Indicator:
     def _quit(self, item):
         self.fluxgui.exit()
 
-class Preferences:
+class Preferences(object):
     """
     Information and methods related to the preferences window.
     Executes FluxController methods and gets data from Settings.

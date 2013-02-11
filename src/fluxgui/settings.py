@@ -127,7 +127,7 @@ class GConfClient(object):
     def set_client_string(self, property_name, value):
         self.client.set_string(self.prefs_key + "/" + property_name, str(value))
 
-    def get_client_bool(self, property_name, default=False):
+    def get_client_bool(self, property_name, default=True):
         try:
             gconf_type = self.client.get(self.prefs_key + "/"
                                             + property_name).type
@@ -141,10 +141,10 @@ class GConfClient(object):
         if gconf_type != gconf.VALUE_BOOL:
             # previous release used strings for autostart, handle here
             client_string = self.get_client_string(property_name).lower()
-            if client_string == 'true':
+            if client_string == '1':
                 self.set_client_bool(property_name, True)
                 client_bool = True
-            elif client_string == 'false':
+            elif client_string == '0':
                 self.set_client_bool(property_name, False)
                 client_bool = False
         else:

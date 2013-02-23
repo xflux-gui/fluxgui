@@ -16,12 +16,23 @@ class Settings(object):
         self._zipcode = self.client.get_client_string("zipcode")
 
         self.has_set_prefs = True
-        if not self.latitude and not self.zipcode:
+        if not self._latitude and not self._zipcode:
             self.has_set_prefs = False
             self._zipcode = '90210'
             self.autostart=True
-        if not self.color:
-            self.color = '3400'
+        if int(self._color) < 2700 or not self._color:
+            # upgrade from previous version
+            temperature_keys = {
+                    '0':  '2700',
+                    '1':  '3400',
+                    '2':  '4200',
+                    '3':  '5000',
+                    '4':  '6500',
+            }
+            if self._color in temperature_keys:
+                self.color = temperature_keys[self._color]
+            else:
+                self.color = '3400'
 
     def xflux_settings_dict(self):
         d = {

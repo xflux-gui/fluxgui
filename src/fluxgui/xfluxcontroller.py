@@ -66,12 +66,12 @@ class XfluxController(object):
             startup_args = self._create_startup_arg_list(self._current_color,
                 **self.init_kwargs)
         try:
-            self._xflux = pexpect.spawn("/usr/bin/xflux", startup_args)
+            self._xflux = pexpect.spawn("xflux", startup_args)
                     #logfile=file("tmp/xfluxout.txt",'w'))
 
         except pexpect.ExceptionPexpect:
             raise FileNotFoundError(
-                    "\nError: Please install xflux in /usr/bin/ \n")
+                    "\nError: Please install xflux in the PATH \n")
 
     def _stop(self):
         try:

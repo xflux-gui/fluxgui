@@ -116,7 +116,7 @@ class Indicator(object):
 
         self.add_menu_item("_Pause f.lux", self._toggle_pause,
                 menu, MenuItem=gtk.CheckMenuItem)
-        self.add_menu_item("_Preferences", self._open_preferences, menu)
+        self.add_menu_item("Prefere_nces", self._open_preferences, menu)
         self.add_menu_separator(menu)
         self.add_menu_item("Quit", self._quit, menu)
 

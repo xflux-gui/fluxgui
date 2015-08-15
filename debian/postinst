@@ -1,0 +1,53 @@
+#!/bin/sh
+set -e
+
+exit_with_error() {
+	echo
+	echo $1
+	echo "fluxgui is NOT installed."
+	exit 1
+}
+
+case $(dpkg --print-architecture) in
+	i386|i586|i686)
+		URL=https://justgetflux.com/linux/xflux-pre.tgz
+		FILENAME=xflux-pre.tgz
+	;;
+	amd64)
+		URL=https://justgetflux.com/linux/xflux64.tgz
+		FILENAME=xflux64.tgz
+	;;
+	*)
+		exit_with_arror "Unsupported platform: '$(dpkg --print-architecture)'"
+esac
+
+APT_PROXIES=$(apt-config shell http_proxy Acquire::http::proxy https_proxy Acquire::https::Proxy ftp_proxy Acquire::ftp::Proxy dl_direct Acquire::http::Proxy::justgetflux.com)
+if [ -n "$APT_PROXIES" ]; then
+	eval export $APT_PROXIES
+fi
+
+if [ "$dl_direct" = "DIRECT" ]; then
+	unset http_proxy
+	unset https_proxy
+	unset ftp_proxy
+fi
+
+mkdir -p /var/cache/fluxgui
+cd /var/cache/fluxgui
+
+echo
+echo "Downloading xflux..."
+wget -v -N $URL || exit_with_error "Download failed"
+echo "Download done."
+echo
+
+tar xzf $FILENAME || exit_with_error "Cannot unpack $FILENAME"
+
+if [ "$1" != "upgrade" ] || dpkg --compare-versions "$2" lt 1.1.10; then
+	dpkg-divert --package fluxgui --rename --add /usr/bin/xflux
+fi
+
+mv xflux /usr/bin/xflux
+
+
+#DEBHELPER#

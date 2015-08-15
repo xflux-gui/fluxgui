@@ -1,0 +1,12 @@
+#!/bin/sh
+
+case "$1" in
+	purge|remove|abort-install|disappear|abort-upgrade)
+		if ! ([ "$1" = "abort-upgrade" ] && dpkg --compare-versions "$2" lt 1.1.10); then
+			rm -f /usr/bin/xflux
+			dpkg-divert --package fluxgui --remove --rename /usr/bin/xflux
+		fi
+	;;
+esac
+
+#DEBHELPER#

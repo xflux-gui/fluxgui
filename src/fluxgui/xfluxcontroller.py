@@ -66,6 +66,11 @@ class XfluxController(object):
             startup_args = self._create_startup_arg_list(self._current_color,
                 **self.init_kwargs)
         try:
+            previous_instances = pexpect.run('pgrep -d, -u %s xflux' % pexpect.run('whoami')).strip()
+            if previous_instances != "":
+                for process in previous_instances.split(","):
+                    pexpect.run('kill -9 %s' % process)
+                   
             self._xflux = pexpect.spawn("xflux", startup_args)
                     #logfile=file("tmp/xfluxout.txt",'w'))
 

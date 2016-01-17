@@ -54,21 +54,20 @@ class FluxGUI(object):
 
     def check_pid(self):
         pid = os.getpid()
+        oldpid = -1
 
         running = False # Innocent...
         if os.path.isfile(self.pidfile):
             try:
                 oldpid = int(open(self.pidfile).readline().rstrip())
-                try:
-                    os.kill(oldpid, 0)
+                if os.system("ps -q %i -o comm= | grep -i python > /dev/null" % oldpid) == 0:
                     running = True # ...until proven guilty
-                except OSError as err:
-                    if err.errno == errno.ESRCH:
-                        # OSError: [Errno 3] No such process
-                        print "stale pidfile, old pid: ", oldpid
+                else: print "stale pidfile, old pid: ", oldpid
             except ValueError:
                 # Corrupt pidfile, empty or not an int on first line
                 pass
+        if pid == oldpid: # For the hypothetical case where it reuse the same PID
+            running = False
         if running:
             print "fluxgui is already running, exiting"
             sys.exit()

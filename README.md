@@ -9,7 +9,15 @@ at nights and like sunlight during the day
 Install Instructions
 --------------------
 
-### Ubuntu/Debian
+### Ubuntu PPA Package Manager Install
+
+There is an updated PPA here:
+
+https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux
+
+See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details on using the PPA to install xflux using the package manager
+
+### Ubuntu/Debian Manual Install
 
 ```bash
 # Install dependencies

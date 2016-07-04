@@ -21,7 +21,7 @@ See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/0
 
 ```bash
 # Install dependencies
-sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 -y
+sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1 -y
 
 # Download and install xflux-gui
 cd /tmp

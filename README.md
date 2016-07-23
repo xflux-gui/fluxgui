@@ -2,9 +2,19 @@ f.lux indicator applet
 ======================
 Better lighting for your computer
 
-f.lux indicator applet is an indicator applet to control xflux, an application
-that makes the color of your computer's display adapt to the time of day, warm
-at nights and like sunlight during the day
+The f.lux indicator applet `fluxgui` is an indicator applet to control
+`xflux`, an application that makes the color of your computer's
+display adapt to the time of day, warm at nights and like sunlight
+during the day. Reducing blue light exposure in the evening can help
+you fall asleep at night. See https://justgetflux.com/research.html
+for more details.
+
+This project -- https://github.com/xflux-gui/xflux-gui -- is only
+concerned with the `fluxgui` indicator applet program, not with the
+underlying `xflux` program the indicator applet controls. The `xflux`
+program is responsible for actually changing the color of your
+screen. See https://justgetflux.com/linux.html for more information
+about `xflux`.
 
 Install Instructions
 --------------------
@@ -37,3 +47,13 @@ License
 -------
 
 The f.lux indicator applet is released under the **MIT License**.
+
+Developing
+----------
+
+When working on `fluxgui`, you can use
+```bash
+cd <path to your xflux-gui.git clone>
+ PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
+```
+to test your local copy of `fluxgui` without installing anything.

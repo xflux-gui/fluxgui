@@ -2,6 +2,7 @@ import pexpect
 import time
 import weakref
 from fluxgui.exceptions import *
+from fluxgui import settings
 
 class XfluxController(object):
     """
@@ -9,7 +10,7 @@ class XfluxController(object):
     """
 
 
-    def __init__(self, color='3400', pause_color='6500', **kwargs):
+    def __init__(self, color=settings.default_temperature, pause_color=settings.off_temperature, **kwargs):
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
             raise XfluxError(
                     "Required key not found (either zipcode or latitude)")
@@ -89,16 +90,15 @@ class XfluxController(object):
             return True
 
     def _preview_color(self, preview_color, return_color):
-        # could probably be implemented better
-
-        preview_color = str(preview_color)
-        self._set_xflux_screen_color(preview_color)
-        self._c()
-        #while self.color != preview_color:
-            #time.sleep(.5)
+        # WIthout first setting the color to the off color, the
+        # preview does nothing when the preview_color and return_color
+        # are equal, which happens in daytime when you try to preview
+        # your currently chosen nighttime color. Don't know if this is
+        # a fluxgui bug or an xflux bug.
+        self._change_color_immediately(settings.off_temperature)
+        self._change_color_immediately(preview_color)
         time.sleep(5)
-        self._set_xflux_screen_color(return_color)
-        self._c()
+        self._change_color_immediately(return_color)
 
     _settings_map = {
             'latitude':'l=',

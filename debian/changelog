@@ -4,6 +4,11 @@ fluxgui (1.1.9) wily; urgency=low
     failing to start due to stale pid files, but I doubt anyone has the problem
     of accidentally starting multiple copies of fluxgui. We can revisit this
     if it turns out not having the pid file causes problems.
+  * fix bug where preview did not work for already chosen temperature.
+  * add more color options to the preferences GUI. Some of these options
+    used to be supported in older versions, but had gone away at some point.
+
+ -- Nathan Collins <nathan.collins@gmail.com>  Sat, 23 Jul 2016 16:28:45 -0700
 
 fluxgui (1.1.8) lucid; urgency=low
 

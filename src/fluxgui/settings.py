@@ -3,10 +3,66 @@ import gconf
 from xdg.DesktopEntry import DesktopEntry
 from fluxgui.exceptions import DirectoryCreationError
 
+################################################################
+# Color temperatures.
+
+# The color options available in the color preferences dropdown in the
+# "Preferences" GUI are defined in ./preferences.glade. Choosing a
+# preference in the GUI returns a number, with 0 for the first choice,
+# 1 for the second choice, etc.
+default_temperature = '3400'
+off_temperature = '6500'
+temperatures = [
+    '1700',
+    '1850',
+    '2300',
+    '2700',
+    '3400', # The 'default_temperature' needs to be one of the options!
+    '4200',
+    '5000',
+    # The "off temperature" is not one of the menu choices, but
+    # the previous code included it, so @ntc2 is leaving it in
+    # without understanding why ...
+    #
+    # TODO(ntc2): understand why this entry is in the list, and remove
+    # it if possible.
+    off_temperature ]
+
+def key_to_temperature(key):
+    """The inverse of 'temperature_to_key'.
+
+    """
+    # The old version of this code supported a special key "off". We
+    # now map all unknown keys to "off", but I don't understand what
+    # the "off" value is for.
+    #
+    # TODO(ntc2): figure out what the "off" value is for.
+    try:
+        return temperatures[key]
+    except IndexError:
+        return off_temperature
+
+def temperature_to_key(temperature):
+    """Convert a temperature like "3400" to a Glade/GTK menu value like
+    "1" or "off".
+
+    """
+    for i, t in enumerate(temperatures):
+        if t == temperature:
+            return i
+    # For invalid temperatures -- which should be impossible ? --
+    # return the number corresponding to the off temperature. Perhaps
+    # we could also return "off" here? But I have no idea how this
+    # code is even triggered.
+    return len(temperatures) - 1
+
+################################################################
 
 class Settings(object):
 
     def __init__(self):
+        # You can use 'gconftool --dump /apps/fluxgui' to see current
+        # settings on command line.
         self.client = GConfClient("/apps/fluxgui")
 
         self._color = self.client.get_client_string("colortemp", 3400)
@@ -20,19 +76,15 @@ class Settings(object):
             self.has_set_prefs = False
             self._zipcode = '90210'
             self.autostart=True
-        if int(self._color) < 2700 or not self._color:
-            # upgrade from previous version
-            temperature_keys = {
-                    '0':  '2700',
-                    '1':  '3400',
-                    '2':  '4200',
-                    '3':  '5000',
-                    '4':  '6500',
-            }
-            if self._color in temperature_keys:
-                self.color = temperature_keys[self._color]
-            else:
-                self.color = '3400'
+
+        # After an upgrade to fluxgui where the color options change,
+        # the color setting may no longer be one of the menu
+        # options. In this case, we reset to the default night time
+        # temp.
+        if self._color not in temperatures:
+            self.color = default_temperature
+        else:
+            self.color = self._color
 
     def xflux_settings_dict(self):
         d = {
@@ -40,7 +92,7 @@ class Settings(object):
                 'latitude': self.latitude,
                 'longitude': self.longitude,
                 'zipcode': self.zipcode,
-                'pause_color': '6500'
+                'pause_color': off_temperature
         }
         return d
 

@@ -127,20 +127,6 @@ class Preferences(object):
 
     """
 
-    temperatureKeys = {
-                0:  '2700',
-                1:  '3400',
-                2:  '4200',
-                3:  '5000',
-                4:  '6500',
-                "off": '6500',
-    }
-
-    def temperature_to_key(self, temperature):
-        for i, t in self.temperatureKeys.items():
-            if t == temperature:
-                return i
-
     def connect_widget(self, widget_name, connect_target=None,
             connect_event="activate"):
         widget = self.wTree.get_widget(widget_name)
@@ -183,7 +169,7 @@ class Preferences(object):
         self.latsetting.set_text(self.settings.latitude)
         self.lonsetting.set_text(self.settings.longitude)
         self.zipsetting.set_text(self.settings.zipcode)
-        self.colsetting.set_active(self.temperature_to_key(self.settings.color))
+        self.colsetting.set_active(settings.temperature_to_key(self.settings.color))
         self.colordisplay.set_text("Current color temperature: %sK"
                                     % (self.settings.color))
         if self.settings.autostart:
@@ -205,8 +191,8 @@ class Preferences(object):
         md.destroy()
 
     def preview_click_event(self, widget, data=None):
-        colsetting_temperature = self.temperatureKeys[
-            self.colsetting.get_active()]
+        colsetting_temperature = settings.key_to_temperature(
+            self.colsetting.get_active())
         self.xflux_controller.preview_color(colsetting_temperature)
 
     def delete_event(self, widget, data=None):
@@ -222,8 +208,8 @@ class Preferences(object):
             self.xflux_controller.set_xflux_zipcode(
                     self.zipsetting.get_text())
 
-        colsetting_temperature = self.temperatureKeys[
-                self.colsetting.get_active()]
+        colsetting_temperature = settings.key_to_temperature(
+                self.colsetting.get_active())
         if self.settings.color != colsetting_temperature:
             self.xflux_controller.color = colsetting_temperature
 

@@ -1,3 +1,10 @@
+fluxgui (1.1.9) wily; urgency=low
+
+  * remove pid file / lock file. We have several bug reports about fluxgui
+    failing to start due to stale pid files, but I doubt anyone has the problem
+    of accidentally starting multiple copies of fluxgui. We can revisit this
+    if it turns out not having the pid file causes problems.
+
 fluxgui (1.1.8) lucid; urgency=low
 
   * add in python-pexpect as a dependency 

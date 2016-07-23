@@ -14,8 +14,6 @@ class FluxGUI(object):
     FluxGUI initializes/destroys the app
     """
     def __init__(self):
-        self.pidfile = os.path.expanduser("~/.fluxgui.pid")
-        self.check_pid()
         try:
             self.settings = settings.Settings()
             self.xflux_controller = fluxcontroller.FluxController(self.settings)
@@ -45,34 +43,11 @@ class FluxGUI(object):
             self.xflux_controller.stop()
         except MethodUnavailableError:
             pass
-        os.unlink(self.pidfile)
         gtk.main_quit()
         sys.exit(code)
 
     def run(self):
         gtk.main()
-
-    def check_pid(self):
-        pid = os.getpid()
-        oldpid = -1
-
-        running = False # Innocent...
-        if os.path.isfile(self.pidfile):
-            try:
-                oldpid = int(open(self.pidfile).readline().rstrip())
-                if os.system("ps -q %i -o comm= | grep -i python > /dev/null" % oldpid) == 0:
-                    running = True # ...until proven guilty
-                else: print "stale pidfile, old pid: ", oldpid
-            except ValueError:
-                # Corrupt pidfile, empty or not an int on first line
-                pass
-        if pid == oldpid: # For the hypothetical case where it reuse the same PID
-            running = False
-        if running:
-            print "fluxgui is already running, exiting"
-            sys.exit()
-        else:
-            file(self.pidfile, 'w').write("%d\n" % pid)
 
 class Indicator(object):
     """

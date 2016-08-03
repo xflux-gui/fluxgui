@@ -1,22 +1,21 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-from sys import maxsize
-from shutil import copy
 import os
 
 data_files = [('share/icons/hicolor/scalable/apps', ['fluxgui.svg', 'fluxgui-light.svg', 'fluxgui-dark.svg']),
 ('share/applications', ['desktop/fluxgui.desktop'])]
 
-if (os.path.exists("xflux32") or os.path.exists("xflux64")):
-    # Determines which is the appropriate executable for 32-bit
-    if maxsize == 2147483647:
-        copy("xflux32", "xflux")
-    # ... or 64-bit processors
-    elif maxsize == 9223372036854775807:
-        copy("xflux64", "xflux")
+if (os.path.exists("xflux")):
     data_files.append( ('bin', ['xflux']) )
+else:
+    print("""WARNING: if you are running 'python setup.py' manually, and not as
+part of Debian package creation, then you need to install the 'xflux'
+binary separately. You can do this by running
 
+    python ./download-xflux.py
+
+before running 'setup.py'.""")
 
 setup(name = "f.lux indicator applet",
     version = "1.1.8",

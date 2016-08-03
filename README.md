@@ -37,7 +37,8 @@ sudo apt-get install git python-appindicator python-xdg python-pexpect python-gc
 cd /tmp
 git clone "https://github.com/xflux-gui/xflux-gui.git"
 cd xflux-gui
-sudo python ./setup.py install
+python download-xflux.py
+sudo python setup.py install # OR: python setup.py install --local
 
 # Run flux
 fluxgui

@@ -1,4 +1,4 @@
-#!/bin/sh
+n#!/bin/sh
 set -e
 
 exit_with_error() {
@@ -7,6 +7,10 @@ exit_with_error() {
 	echo "fluxgui is NOT installed."
 	exit 1
 }
+
+# There is similar code for downloading 'xflux' in
+# ../download-xflux.py. If you are changing this you probably want to
+# change that too.
 
 case $(dpkg --print-architecture) in
 	i386|i586|i686)

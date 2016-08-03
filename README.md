@@ -25,7 +25,9 @@ There is a PPA here:
 
 https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux
 
-See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details on using the PPA to install xflux using the package manager. *Until the PPA is updated to `xflux-gui` version 1.1.9, it's probably better to install from source.*
+See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details on using the PPA to install xflux using the package manager.
+
+If you have trouble with the PPA version try the manual install below.
 
 ### Ubuntu/Debian Manual Install
 

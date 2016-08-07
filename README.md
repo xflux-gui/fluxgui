@@ -33,7 +33,7 @@ If you have trouble with the PPA version try the manual install below.
 
 ```bash
 # Install dependencies
-sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1 -y
+sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
 
 # Download and install xflux-gui
 cd /tmp

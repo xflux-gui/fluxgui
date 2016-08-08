@@ -22,7 +22,7 @@ case $(dpkg --print-architecture) in
 		FILENAME=xflux64.tgz
 	;;
 	*)
-		exit_with_arror "Unsupported platform: '$(dpkg --print-architecture)'"
+		exit_with_error "Unsupported platform: '$(dpkg --print-architecture)'"
 esac
 
 APT_PROXIES=$(apt-config shell http_proxy Acquire::http::proxy https_proxy Acquire::https::Proxy ftp_proxy Acquire::ftp::Proxy dl_direct Acquire::http::Proxy::justgetflux.com)

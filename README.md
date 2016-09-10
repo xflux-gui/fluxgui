@@ -57,7 +57,7 @@ sudo rm /usr/local/bin/fluxgui
 License
 -------
 
-The f.lux indicator applet is released under the **MIT License**.
+The f.lux indicator applet is released under the [MIT License](https://github.com/xflux-gui/xflux-gui/blob/master/LICENSE).
 
 Developing
 ----------

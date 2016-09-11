@@ -50,8 +50,7 @@ sudo rm -rf /usr/local/lib/python2.7/dist-packages/fluxgui
 sudo rm /usr/local/lib/python2.7/dist-packages/f.lux_indicator*
 sudo rm /usr/local/share/icons/hicolor/scalable/apps/fluxgui.*
 sudo rm /usr/share/applications/fluxgui.desktop
-sudo rm /usr/local/bin/xflux
-sudo rm /usr/local/bin/fluxgui
+sudo rm /usr/local/bin/{xflux,fluxgui}
 ```
 
 License

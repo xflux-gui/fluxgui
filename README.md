@@ -44,12 +44,19 @@ sudo python setup.py install # OR: python setup.py install --local
 
 # Run flux
 fluxgui
+
+# To uninstall:
+sudo rm -rf /usr/local/lib/python2.7/dist-packages/{fluxgui/,f.lux_indicator*}
+sudo rm /usr/local/share/icons/hicolor/scalable/apps/fluxgui.*
+sudo rm /usr/local/share/applications/fluxgui.desktop
+sudo rm /usr/local/bin/{xflux,fluxgui}
+rm -rf ~/.gconf/apps/fluxgui/
 ```
 
 License
 -------
 
-The f.lux indicator applet is released under the **MIT License**.
+The f.lux indicator applet is released under the [MIT License](https://github.com/xflux-gui/xflux-gui/blob/master/LICENSE).
 
 Developing
 ----------

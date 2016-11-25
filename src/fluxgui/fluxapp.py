@@ -225,12 +225,16 @@ class Preferences(object):
         self.window.hide()
         return False
 
-
-if __name__ == '__main__':
+def main():
     try:
         app = FluxGUI()
         signal.signal(signal.SIGTERM, app.signal_exit)
+        signal.signal(signal.SIGINT, app.signal_exit)
         app.run()
     except KeyboardInterrupt:
-        app.exit()
+        # No idea why we consistently get a keyboard interrupt here
+        # after killing fluxgui with SIGINT or SIGTERM ...
+        pass
 
+if __name__ == '__main__':
+    main()

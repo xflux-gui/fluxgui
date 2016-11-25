@@ -9,7 +9,6 @@ class XfluxController(object):
     A controller that starts and interacts with an xflux process.
     """
 
-
     def __init__(self, color=settings.default_temperature, pause_color=settings.off_temperature, **kwargs):
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
             raise XfluxError(
@@ -81,12 +80,21 @@ class XfluxController(object):
 
     def _stop(self):
         try:
-            if self._xflux.terminate(force=True):
-                return True
-            else:
-                return False
+            self._change_color_immediately(settings.off_temperature)
+            # If we terminate xflux below too soon then the color
+            # change doesn't take effect. Perhaps there's a more
+            # gentle way to terminate xflux below -- the 'force=True'
+            # means 'kill -9' ...
+            time.sleep(1)
+        except Exception as e:
+            print 'XfluxController._stop: unexpected exception when resetting color:'
+            print e
+        try:
+            return self._xflux.terminate(force=True)
         except Exception:
             # xflux has crashed in the meantime?
+            print 'XfluxController._stop: unexpected exception when terminating xflux:'
+            print e
             return True
 
     def _preview_color(self, preview_color, return_color):

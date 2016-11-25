@@ -152,7 +152,6 @@ class Preferences(object):
         self.zipsetting = self.connect_widget("entryZipcode",
                 self.delete_event)
         self.colsetting = self.connect_widget("comboColor")
-        self.colordisplay = self.connect_widget("labelCurrentColorTemperature")
         self.previewbutton = self.connect_widget("buttonPreview",
                 self.preview_click_event, "clicked")
         self.closebutton = self.connect_widget("buttonClose",
@@ -170,8 +169,7 @@ class Preferences(object):
         self.lonsetting.set_text(self.settings.longitude)
         self.zipsetting.set_text(self.settings.zipcode)
         self.colsetting.set_active(settings.temperature_to_key(self.settings.color))
-        self.colordisplay.set_text("Current color temperature: %sK"
-                                    % (self.settings.color))
+
         if self.settings.autostart:
             self.autostart.set_active(True)
         else:

@@ -67,22 +67,7 @@ class Indicator(object):
 
     def setup_indicator(self):
         self.indicator.set_status(appindicator.STATUS_ACTIVE)
-
-        # Check for special Ubuntu themes. copied from lookit
-
-        try:
-            theme = \
-                gtk.gdk.screen_get_default().get_setting('gtk-icon-theme-name')
-        except:
-            self.indicator.set_icon('fluxgui')
-        else:
-            if theme == 'ubuntu-mono-dark':
-                self.indicator.set_icon('fluxgui-dark')
-            elif theme == 'ubuntu-mono-light':
-                self.indicator.set_icon('fluxgui-light')
-            else:
-                self.indicator.set_icon('fluxgui')
-
+        self.indicator.set_icon('fluxgui')
         self.indicator.set_menu(self.create_menu())
 
     def create_menu(self):

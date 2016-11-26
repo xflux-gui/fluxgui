@@ -3,8 +3,11 @@
 from distutils.core import setup
 import os
 
-data_files = [('share/icons/hicolor/scalable/apps', ['fluxgui.svg', 'fluxgui-light.svg', 'fluxgui-dark.svg']),
-('share/applications', ['desktop/fluxgui.desktop'])]
+data_files = [
+    ('share/icons/hicolor/scalable/apps', ['icons/hicolor/fluxgui.svg']),
+    ('share/icons/ubuntu-mono-dark/scalable/apps', ['icons/ubuntu-mono-dark/fluxgui.svg']),
+    ('share/icons/ubuntu-mono-light/scalable/apps', ['icons/ubuntu-mono-light/fluxgui.svg']),
+    ('share/applications', ['desktop/fluxgui.desktop'])]
 
 if (os.path.exists("xflux")):
     data_files.append( ('bin', ['xflux']) )

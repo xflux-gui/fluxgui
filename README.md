@@ -68,6 +68,8 @@ Developing
 When working on `fluxgui`, you can use
 ```bash
 cd <path to your xflux-gui.git clone>
-PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
+# You only need to download xflux once.
+python download-xflux.py
+PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
 ```
 to test your local copy of `fluxgui` without installing anything.

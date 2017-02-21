@@ -1,3 +1,18 @@
+fluxgui (1.1.10) wily; urgency=low
+
+  * fix https://github.com/xflux-gui/xflux-gui/issues/51: some of
+    the the color temps I added in 1.1.9 were not actually supported :P
+  * fix gtk-icon-theme related warnings. These were innocuous, but
+    mentioned in most bug reports.
+  * fix https://github.com/xflux-gui/xflux-gui/issues/35: screen color
+    was not reset to normal when closing fluxgui.
+  * fix https://github.com/xflux-gui/xflux-gui/issues/38: remove confusing
+    GUI element.
+  * fix https://github.com/xflux-gui/xflux-gui/issues/16: previewing the
+    already chosen color during the daytime didn't work.
+
+ -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
+
 fluxgui (1.1.9) wily; urgency=low
 
   * remove pid file / lock file. We have several bug reports about fluxgui

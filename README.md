@@ -73,3 +73,5 @@ python download-xflux.py
 PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
 ```
 to test your local copy of `fluxgui` without installing anything.
+
+Note changes in `./debian/changelog`.

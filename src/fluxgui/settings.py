@@ -13,8 +13,7 @@ from fluxgui.exceptions import DirectoryCreationError
 default_temperature = '3400'
 off_temperature = '6500'
 temperatures = [
-    '1700',
-    '1850',
+    '2000', # The minimum supported by flux; see https://github.com/xflux-gui/xflux-gui/issues/51
     '2300',
     '2700',
     '3400', # The 'default_temperature' needs to be one of the options!

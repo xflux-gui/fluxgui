@@ -224,8 +224,7 @@ f.lux indicator applet made by Kilian Valkhof</property>
                          also to change
                          'fluxgui.settings.temperatures' accordingly
                          -->
-                    <property name="items" translatable="yes">Match Flame (1700K)
-Sunset / Sunrise (1850K)
+                    <property name="items" translatable="yes">Min Supported By Flux (2000K)
 Dim Incandescent (2300K)
 Tungsten (2700K)
 Halogen (3400K)

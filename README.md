@@ -43,18 +43,28 @@ python download-xflux.py
 
 # EITHER install globally
 sudo python setup.py install
-# OR, install in your home directory
+# EXCLUSIVE OR, install in your home directory. The binary installs
+# into ~/.local/bin, so be sure to add that to your PATH if installing locally.
 python setup.py install --user
 
 # Run flux
 fluxgui
+```
 
-# To uninstall:
-sudo rm -rf /usr/local/lib/python2.7/dist-packages/{fluxgui/,f.lux_indicator*}
-sudo rm /usr/local/share/icons/hicolor/scalable/apps/fluxgui.*
-sudo rm /usr/local/share/applications/fluxgui.desktop
-sudo rm /usr/local/bin/{xflux,fluxgui}
-rm -rf ~/.gconf/apps/fluxgui/
+### Ubuntu/Debian Manual Uninstall
+
+If you manually installed instead of using the PPA, you can uninstall
+by making `setup.py` tell you where it installed files and then
+removing the installed files.
+
+```bash
+# EITHER uninstall globally
+sudo python setup.py install --record installed.txt
+sudo xargs rm -vr < installed.txt
+
+# EXCLUSIVE OR uinstall in your home directory
+python setup.py install --user --record installed.txt
+xargs rm -vr < installed.txt
 ```
 
 License

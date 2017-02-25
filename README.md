@@ -75,6 +75,8 @@ The f.lux indicator applet is released under the [MIT License](https://github.co
 Developing
 ----------
 
+### Running `fluxgui` Without Installing
+
 When working on `fluxgui`, you can use
 ```bash
 cd <path to your xflux-gui.git clone>
@@ -84,4 +86,14 @@ PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
 ```
 to test your local copy of `fluxgui` without installing anything.
 
+### Change Logs, Versions, Releases
+
 Note changes in `./debian/changelog`.
+
+Use version `<ver>~pre` until ready to release a version. When
+releasing a version make branch, remove the `~pre` suffix from the
+version strings in the branch, and tag the branch `v<ver>`.
+
+When releasing the version string needs to be changed in
+`debian/changelog` and `setup.py`, and the release dates needs to be
+added in `debian/changelog`.

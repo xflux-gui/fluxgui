@@ -22,7 +22,7 @@ binary separately. You can do this by running
 before running 'setup.py'.""")
 
 setup(name = "f.lux indicator applet",
-    version = "1.1.10~pre",
+    version = "1.1.10",
     description = "f.lux indicator applet - better lighting for your computer",
     author = "Kilian Valkhof, Michael and Lorna Herf, Josh Winters",
     author_email = "kilian@kilianvalkhof.com",

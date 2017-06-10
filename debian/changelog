@@ -1,4 +1,4 @@
-fluxgui (1.1.10~pre) wily; urgency=low
+fluxgui (1.1.10) wily; urgency=low
 
   * fix https://github.com/xflux-gui/xflux-gui/issues/51: some of
     the the color temps I added in 1.1.9 were not actually supported :P
@@ -11,7 +11,7 @@ fluxgui (1.1.10~pre) wily; urgency=low
   * fix https://github.com/xflux-gui/xflux-gui/issues/16: previewing the
     already chosen color during the daytime didn't work.
 
- -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
+ -- Nathan Collins <nathan.collins@gmail.com>  Fri, 09 Jun 2017 17:17:32 -0700
 
 fluxgui (1.1.9) wily; urgency=low
 

@@ -92,7 +92,7 @@ Note changes in `./debian/changelog`.
 
 Use version `<ver>~pre` until ready to release a version. When
 releasing a version make branch, remove the `~pre` suffix from the
-version strings in the branch, and tag the branch `v<ver>`.
+version strings in the branch, and `git tag -a` the branch `v<ver>`.
 
 When releasing the version string needs to be changed in
 `debian/changelog` and `setup.py`, and the release dates needs to be

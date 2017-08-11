@@ -21,11 +21,15 @@ Install Instructions
 
 ### Ubuntu PPA Package Manager Install
 
-There is a PPA here:
+To install via apt:
 
-https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux
+```bash
+sudo add-apt-repository ppa:nathan-renniewaldock/flux
+sudo apt-get update
+sudo apt-get install fluxgui
+```
 
-See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details on using the PPA to install xflux using the package manager.
+See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details.
 
 If you have trouble with the PPA version try the manual install below.
 

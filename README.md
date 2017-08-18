@@ -19,6 +19,10 @@ about `xflux`.
 Install Instructions
 --------------------
 
+### Only Python 2 is Supported
+
+The `fluxgui` is only known to work with Python 2, so use `python2` instead of `python` for the commands in this README if Python 3 is the default on your system.
+
 ### Ubuntu PPA Package Manager Install
 
 To install via apt:

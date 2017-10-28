@@ -34,7 +34,7 @@ class FluxGUI(object):
         self.preferences.show()
 
     def signal_exit(self, signum, frame):
-        print 'Recieved signal: ', signum
+        print 'Received signal: ', signum
         print 'Quitting...'
         self.exit()
 
@@ -100,7 +100,7 @@ class Indicator(object):
         self.xflux_controller.toggle_pause()
 
     def _open_preferences(self, item):
-        self.fluxgui.open_preferences()
+            self.fluxgui.open_preferences()
 
     def _quit(self, item):
         self.fluxgui.exit()

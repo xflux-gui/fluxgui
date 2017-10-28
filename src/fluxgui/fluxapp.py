@@ -100,10 +100,7 @@ class Indicator(object):
         self.xflux_controller.toggle_pause()
 
     def _open_preferences(self, item):
-        try:
             self.fluxgui.open_preferences()
-        except AttributeError:
-            print "Preferences window already opened."
 
     def _quit(self, item):
         self.fluxgui.exit()

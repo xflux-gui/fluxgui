@@ -5,8 +5,8 @@ import os
 
 data_files = [
     ('share/icons/hicolor/scalable/apps', ['icons/hicolor/fluxgui.svg']),
-    ('share/icons/ubuntu-mono-dark/scalable/apps', ['icons/ubuntu-mono-dark/fluxgui.svg']),
-    ('share/icons/ubuntu-mono-light/scalable/apps', ['icons/ubuntu-mono-light/fluxgui.svg']),
+    ('share/icons/ubuntu-mono-dark/scalable/apps', ['icons/ubuntu-mono-dark/fluxgui-panel.svg']),
+    ('share/icons/ubuntu-mono-light/scalable/apps', ['icons/ubuntu-mono-light/fluxgui-panel.svg']),
     ('share/applications', ['desktop/fluxgui.desktop'])]
 
 scripts = ['fluxgui']

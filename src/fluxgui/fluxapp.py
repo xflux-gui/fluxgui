@@ -67,7 +67,7 @@ class Indicator(object):
 
     def setup_indicator(self):
         self.indicator.set_status(appindicator.STATUS_ACTIVE)
-        self.indicator.set_icon('fluxgui')
+        self.indicator.set_icon('fluxgui-panel')
         self.indicator.set_menu(self.create_menu())
 
     def create_menu(self):

@@ -9,7 +9,7 @@ during the day. Reducing blue light exposure in the evening can help
 you fall asleep at night. See https://justgetflux.com/research.html
 for more details.
 
-This project -- https://github.com/xflux-gui/xflux-gui -- is only
+This project -- https://github.com/xflux-gui/fluxgui -- is only
 concerned with the `fluxgui` indicator applet program, not with the
 underlying `xflux` program the indicator applet controls. The `xflux`
 program is responsible for actually changing the color of your
@@ -43,10 +43,10 @@ If you have trouble with the PPA version try the manual install below.
 # Install dependencies
 sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
 
-# Download xflux-gui
+# Download fluxgui
 cd /tmp
-git clone "https://github.com/xflux-gui/xflux-gui.git"
-cd xflux-gui
+git clone "https://github.com/xflux-gui/fluxgui.git"
+cd fluxgui
 python download-xflux.py
 
 # EITHER install globally
@@ -78,7 +78,7 @@ xargs rm -vr < installed.txt
 License
 -------
 
-The f.lux indicator applet is released under the [MIT License](https://github.com/xflux-gui/xflux-gui/blob/master/LICENSE).
+The f.lux indicator applet is released under the [MIT License](https://github.com/xflux-gui/fluxgui/blob/master/LICENSE).
 
 Developing
 ----------
@@ -87,7 +87,7 @@ Developing
 
 When working on `fluxgui`, you can use
 ```bash
-cd <path to your xflux-gui.git clone>
+cd <path to your fluxgui.git clone>
 # You only need to download xflux once.
 python download-xflux.py
 PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &

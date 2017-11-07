@@ -1,5 +1,8 @@
 fluxgui (1.1.11~pre) wily; urgency=low
 
+  * fix https:/github.com/xflux-gui/fluxgui/issues/79: tray icon
+    name was incorrect for some desktop environments.
+
  -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
 
 fluxgui (1.1.10) wily; urgency=low

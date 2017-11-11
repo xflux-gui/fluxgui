@@ -4,9 +4,15 @@ from distutils.core import setup
 import os
 
 data_files = [
-    ('share/icons/hicolor/scalable/apps', ['icons/hicolor/fluxgui-panel.svg']),
+    ('share/icons/hicolor/scalable/apps', ['icons/hicolor/fluxgui.svg']),
     ('share/icons/ubuntu-mono-dark/scalable/apps', ['icons/ubuntu-mono-dark/fluxgui-panel.svg']),
     ('share/icons/ubuntu-mono-light/scalable/apps', ['icons/ubuntu-mono-light/fluxgui-panel.svg']),
+    ('share/icons/Adwaita/16x16/status', ['icons/Adwaita/16x16/status/fluxgui-panel.svg']),
+    ('share/icons/breeze/status/22', ['icons/breeze/status/22/fluxgui-panel.svg']),
+    ('share/icons/breeze-dark/status/22', ['icons/breeze-dark/status/22/fluxgui-panel.svg']),
+    ('share/icons/elementary/status/24', ['icons/elementary/status/24/fluxgui-panel.svg']),
+    ('share/icons/elementary-xfce/panel/22', ['icons/elementary-xfce/panel/22/fluxgui-panel.svg']),
+    ('share/icons/elementary-xfce-dark/panel/22', ['icons/elementary-xfce-dark/panel/22/fluxgui-panel.svg']),
     ('share/applications', ['desktop/fluxgui.desktop'])]
 
 scripts = ['fluxgui']

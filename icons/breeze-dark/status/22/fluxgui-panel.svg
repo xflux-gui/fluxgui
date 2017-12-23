@@ -1,6 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="svg2888" width="24" height="24" version="1.1">
- <g id="layer1" transform="translate(0,-40)">
-  <rect style="fill:#bbdafd;fill-opacity:0;stroke:none" id="rect2901" width="64.17" height="63.993" x="0" y=".01" ry="0"/>
-  <path style="fill:#eff0f1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.73095834;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" id="path4142" d="M 12 4 A 8 8 0 0 0 4 12 A 8 8 0 0 0 12 20 A 8 8 0 0 0 20 12 A 8 8 0 0 0 12 4 z M 12 5 A 7 7 0 0 1 19 12 A 7 7 0 0 1 17.888672 15.771484 C 17.433984 15.403372 16.403621 14.584837 14.902344 13.583984 C 13.001742 12.316917 10.777778 11 9 11 C 7.3043616 11 5.9707172 11.82976 5.0351562 12.648438 A 7 7 0 0 1 5 12 A 7 7 0 0 1 12 5 z M 15 8 A 2 2 0 0 0 13 10 A 2 2 0 0 0 15 12 A 2 2 0 0 0 17 10 A 2 2 0 0 0 15 8 z" transform="translate(0,40)"/>
- </g>
+<svg xmlns="http://www.w3.org/2000/svg" id="svg2888" width="22" height="22" version="1.1">
+  <defs id="defs3051">
+    <style type="text/css" id="current-color-scheme">
+      .ColorScheme-Text {
+        color:#eff0f1;
+      }
+      </style>
+  </defs>
+ <path id="path4142" d="m 11,3 a 8,8 0 0 0 -8,8 8,8 0 0 0 8,8 8,8 0 0 0 8,-8 8,8 0 0 0 -8,-8 z m 0,1 a 7,7 0 0 1 7,7 7,7 0 0 1 -1.111328,3.771484 C 16.433984,14.403372 15.403621,13.584837 13.902344,12.583984 12.001742,11.316917 9.777778,10 8,10 6.3043616,10 4.9707172,10.82976 4.0351562,11.648438 A 7,7 0 0 1 4,11 7,7 0 0 1 11,4 Z m 3,3 a 2,2 0 0 0 -2,2 2,2 0 0 0 2,2 2,2 0 0 0 2,-2 2,2 0 0 0 -2,-2 z" style="fill:currentColor" class="ColorScheme-Text"/>
 </svg>

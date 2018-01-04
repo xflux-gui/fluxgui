@@ -1,4 +1,6 @@
+import os
 import pexpect
+import sys
 import time
 import weakref
 from fluxgui.exceptions import *
@@ -59,24 +61,32 @@ class XfluxController(object):
             color = self._xflux.after[10:14]
         return color
 
-    color=property(_get_xflux_color, _set_xflux_color)
+    color = property(_get_xflux_color, _set_xflux_color)
 
     def _start(self, startup_args=None):
         if not startup_args:
             startup_args = self._create_startup_arg_list(self._current_color,
-                **self.init_kwargs)
+                                                         **self.init_kwargs)
+
         try:
             previous_instances = pexpect.run('pgrep -d, -u %s xflux' % pexpect.run('whoami')).strip()
             if previous_instances != "":
                 for process in previous_instances.split(","):
                     pexpect.run('kill -9 %s' % process)
-                   
-            self._xflux = pexpect.spawn("xflux", startup_args)
-                    #logfile=file("tmp/xfluxout.txt",'w'))
+        except pexpect.ExceptionPexpect as e:
+            raise Error(e)
 
-        except pexpect.ExceptionPexpect:
-            raise FileNotFoundError(
-                    "\nError: Please install xflux in the PATH \n")
+        xflux_local_path = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "xflux")
+        for xflux_path in ("xflux", xflux_local_path):
+            try:
+                self._xflux = pexpect.spawn(xflux_path, startup_args)
+                # logfile = file("tmp/xfluxout.txt",'w'))
+                return
+            except pexpect.ExceptionPexpect:
+                continue
+
+        raise FileNotFoundError(
+            "\nError: Please install xflux in the PATH\n")
 
     def _stop(self):
         try:

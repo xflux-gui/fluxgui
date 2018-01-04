@@ -1,4 +1,5 @@
 import os
+import sys
 import gconf
 from xdg.DesktopEntry import DesktopEntry
 from fluxgui.exceptions import DirectoryCreationError
@@ -158,7 +159,7 @@ class Settings(object):
             #create autostart entry
             starter_item = DesktopEntry(autostart_file)
             starter_item.set('Name', 'f.lux indicator applet')
-            starter_item.set('Exec', 'fluxgui')
+            starter_item.set('Exec', os.path.realpath(sys.argv[0]))
             starter_item.set('Icon', 'fluxgui')
             starter_item.set('X-GNOME-Autostart-enabled', 'true')
             starter_item.write()

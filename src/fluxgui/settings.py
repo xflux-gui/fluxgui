@@ -159,6 +159,7 @@ class Settings(object):
             #create autostart entry
             starter_item = DesktopEntry(autostart_file)
             starter_item.set('Name', 'f.lux indicator applet')
+            starter_item.set('Comment', 'Better lighting for your computer')
             starter_item.set('Exec', os.path.realpath(sys.argv[0]))
             starter_item.set('Icon', 'fluxgui')
             starter_item.set('X-GNOME-Autostart-enabled', 'true')

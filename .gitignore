@@ -2,4 +2,5 @@
 MANIFEST
 dist/
 build/
-
+/xflux
+/installed.txt

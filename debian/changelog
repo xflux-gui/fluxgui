@@ -1,7 +1,10 @@
+# -*- text -*-
 fluxgui (1.1.11~pre) wily; urgency=low
 
+  * make fluxgui Gnome autostart work for locally installed fluxgui,
+    https://github.com/xflux-gui/fluxgui/pull/89.
   * update icons: https://github.com/xflux-gui/fluxgui/issues/85,
-    https://github.com/xflux-gui/fluxgui/pull/86
+    https://github.com/xflux-gui/fluxgui/pull/86.
   * fix https:/github.com/xflux-gui/fluxgui/issues/79: tray icon
     name was incorrect for some desktop environments.
 

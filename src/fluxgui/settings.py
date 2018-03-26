@@ -158,7 +158,21 @@ class Settings(object):
             #create autostart entry
             starter_item = DesktopEntry(autostart_file)
             starter_item.set('Name', 'f.lux indicator applet')
-            starter_item.set('Exec', 'fluxgui')
+            # Use the user's shell to start 'fluxgui', in case
+            # 'fluxgui' is not installed on a standard system path. We
+            # use 'sh' to start the users '/etc/passwd' shell via
+            # '$SHELL', so that this will still work if the user
+            # changes their shell after the
+            # 'autostart/fluxgui.desktop' file is created.
+            #
+            # See PR #89 for an alternative approach:
+            #
+            #   https://github.com/xflux-gui/fluxgui/pull/89
+            #
+            # The escaping of the 'Exec' field is described in
+            #
+            #   https://developer.gnome.org/desktop-entry-spec/#exec-variables.
+            starter_item.set('Exec', r'sh -c "\\"\\$SHELL\\" -c fluxgui"')
             starter_item.set('Icon', 'fluxgui')
             starter_item.set('X-GNOME-Autostart-enabled', 'true')
             starter_item.write()

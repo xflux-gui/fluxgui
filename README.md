@@ -37,11 +37,13 @@ See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/0
 
 If you have trouble with the PPA version try the manual install below.
 
-### Ubuntu/Debian Manual Install
+### Manual Install
 
 ```bash
-# Install dependencies
+# EITHER Install dependencies - Ubuntu/Debian
 sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
+# EXCLUSIVE OR Install dependencies - Fedora/CentOS
+sudo yum install git python-appindicator python2-pyxdg python2-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
 
 # Download fluxgui
 cd /tmp
@@ -62,9 +64,9 @@ python setup.py install --user
 fluxgui
 ```
 
-### Ubuntu/Debian Manual Uninstall
+### Manual Uninstall
 
-If you manually installed instead of using the PPA, you can uninstall
+If you manually installed instead of using package manager, you can uninstall
 by making `setup.py` tell you where it installed files and then
 removing the installed files.
 

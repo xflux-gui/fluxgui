@@ -37,25 +37,39 @@ See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/0
 
 If you have trouble with the PPA version try the manual install below.
 
-### Fedora Install
+### Fedora Package Manager Install
 
-There is no Fedora package provided yet. Please use "Manual Install" below.
+There is no Fedora package provided yet. Please use [Manual Install](#manual-install) below.
 
 ### Manual Install
 
-```bash
-# EITHER Install dependencies - Ubuntu/Debian
-sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
-# EXCLUSIVE OR Install dependencies - Fedora/CentOS
-sudo yum install git python-appindicator python2-pyxdg python2-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
+To install manually you first install the dependencies using your package manager, and then install `fluxgui` using the provided `setup.py`. The manual install can be done locally or system wide.
 
+#### Install Dependencies Using Package Manager
+
+##### Ubuntu/Debian
+
+```bash
+sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
+```
+##### Fedora/CentOS
+
+```bash
+sudo yum install git python-appindicator python2-pyxdg python2-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
+```
+
+#### Install `fluxgui`
+
+There are separate instructions in the code below for installing system wide and for installing locally in your user directory; choose one.
+
+```bash
 # Download fluxgui
 cd /tmp
 git clone "https://github.com/xflux-gui/fluxgui.git"
 cd fluxgui
 python download-xflux.py
 
-# EITHER install globally
+# EITHER install system wide
 sudo python setup.py install
 
 # EXCLUSIVE OR, install in your home directory. The binary installs

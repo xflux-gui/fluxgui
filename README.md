@@ -98,6 +98,47 @@ python setup.py install --user --record installed.txt
 xargs rm -vr < installed.txt
 ```
 
+### Fedora Manual Install
+
+```bash
+# Install dependencies
+sudo dnf install python-appindicator gnome-python2-gconf pyxdg \
+			pygtk2-libglade python-pexpect
+
+# Download fluxgui
+cd /tmp
+git clone "https://github.com/xflux-gui/fluxgui.git"
+cd fluxgui
+python download-xflux.py
+
+# EITHER install globally
+sudo python setup.py install
+
+# EXCLUSIVE OR, install in your home directory. The binary installs
+# into ~/.local/bin, so be sure to add that to your PATH if installing
+# locally. In particular, autostarting fluxgui in Gnome will not work
+# if the locally installed fluxgui is not on your PATH.
+python setup.py install --user
+
+# Run flux
+fluxgui
+```
+
+### Fedora Manual Uninstall
+
+You can uninstall it by making `setup.py` tell you where it installed files
+and then removing the installed files.
+
+```bash
+# EITHER uninstall globally
+sudo python setup.py install --record installed.txt
+sudo xargs rm -vr < installed.txt
+
+# EXCLUSIVE OR uinstall in your home directory
+python setup.py install --user --record installed.txt
+xargs rm -vr < installed.txt
+```
+
 License
 -------
 

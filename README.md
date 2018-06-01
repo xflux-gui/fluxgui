@@ -37,19 +37,39 @@ See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/0
 
 If you have trouble with the PPA version try the manual install below.
 
-### Ubuntu/Debian Manual Install
+### Fedora Package Manager Install
+
+There is no Fedora package provided yet. Please use [Manual Install](#manual-install) below.
+
+### Manual Install
+
+To install manually you first install the dependencies using your package manager, and then install `fluxgui` using the provided `setup.py`. The manual install can be done locally or system wide.
+
+#### Install Dependencies Using Package Manager
+
+##### Ubuntu/Debian
 
 ```bash
-# Install dependencies
 sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
+```
+##### Fedora/CentOS
 
+```bash
+sudo yum install git python-appindicator python2-pyxdg python2-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
+```
+
+#### Install `fluxgui`
+
+There are separate instructions in the code below for installing system wide and for installing locally in your user directory; choose one.
+
+```bash
 # Download fluxgui
 cd /tmp
 git clone "https://github.com/xflux-gui/fluxgui.git"
 cd fluxgui
 python download-xflux.py
 
-# EITHER install globally
+# EITHER install system wide
 sudo python setup.py install
 
 # EXCLUSIVE OR, install in your home directory. The binary installs
@@ -62,9 +82,9 @@ python setup.py install --user
 fluxgui
 ```
 
-### Ubuntu/Debian Manual Uninstall
+### Manual Uninstall
 
-If you manually installed instead of using the PPA, you can uninstall
+If you manually installed instead of using package manager, you can uninstall
 by making `setup.py` tell you where it installed files and then
 removing the installed files.
 

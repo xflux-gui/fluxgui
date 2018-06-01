@@ -37,6 +37,10 @@ See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/0
 
 If you have trouble with the PPA version try the manual install below.
 
+### Fedora Install
+
+There is no Fedora package provided yet. Please use "Manual Install" below.
+
 ### Manual Install
 
 ```bash

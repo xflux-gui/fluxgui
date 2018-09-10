@@ -1,10 +1,10 @@
 f.lux indicator applet
 ======================
-Better lighting for your computer
+_Better lighting for your computer_
 
 The f.lux indicator applet `fluxgui` is an indicator applet to control
 `xflux`, an application that makes the color of your computer's
-display adapt to the time of day, warm at nights and like sunlight
+display adapt to the time of day: warm at night, and like sunlight
 during the day. Reducing blue light exposure in the evening can help
 you fall asleep at night. See https://justgetflux.com/research.html
 for more details.
@@ -15,6 +15,10 @@ underlying `xflux` program the indicator applet controls. The `xflux`
 program is responsible for actually changing the color of your
 screen. See https://justgetflux.com/linux.html for more information
 about `xflux`.
+
+`xflux` is downloaded automatically when installing `fluxgui`. Simply
+run `fluxgui` in your terminal after installation to open the applet.
+You can also easily configure the applet to auto-start on login.
 
 Install Instructions
 --------------------

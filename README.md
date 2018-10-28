@@ -97,7 +97,7 @@ removing the installed files.
 sudo python setup.py install --record installed.txt
 sudo xargs rm -vr < installed.txt
 
-# EXCLUSIVE OR uinstall in your home directory
+# EXCLUSIVE OR uninstall in your home directory
 python setup.py install --user --record installed.txt
 xargs rm -vr < installed.txt
 ```

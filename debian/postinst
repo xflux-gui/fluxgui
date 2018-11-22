@@ -28,9 +28,21 @@ esac
 APT_PROXIES=$(apt-config shell http_proxy Acquire::http::proxy https_proxy Acquire::https::Proxy ftp_proxy Acquire::ftp::Proxy dl_direct Acquire::http::Proxy::justgetflux.com)
 if [ -n "$APT_PROXIES" ]; then
 	eval export $APT_PROXIES
+	if [[ "$ftp_proxy" == "false" ]]; then
+		# FTP Proxy is set to false, remove it.
+		unset ftp_proxy
+	fi
+	if [[ "$http_proxy" == "false" ]]; then
+		# HTTP Proxy is set to false, remove it.
+		unset http_proxy
+	fi
+	if [[ "$https_proxy" == "false" ]]; then
+		# HTTPS Proxy is set to false, remove it.
+		unset https_proxy
+	fi
 fi
 
-if [ "$dl_direct" = "DIRECT" ]; then
+if [[ "$dl_direct" == "DIRECT" ]]; then
 	unset http_proxy
 	unset https_proxy
 	unset ftp_proxy
@@ -41,6 +53,7 @@ cd /var/cache/fluxgui
 
 echo
 echo "Downloading xflux..."
+
 wget -v -N $URL || exit_with_error "Download failed"
 echo "Download done."
 echo

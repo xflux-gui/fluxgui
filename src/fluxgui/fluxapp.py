@@ -1,13 +1,14 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python
 
 from fluxgui import fluxcontroller, settings
 from fluxgui.exceptions import MethodUnavailableError
-import gtk
-import gtk.glade
-import appindicator
-import sys, os
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+from gi.repository import AppIndicator3 as appindicator
+import sys
+import os
 import signal
-import errno
 
 class FluxGUI(object):
     """
@@ -23,8 +24,8 @@ class FluxGUI(object):
             self.xflux_controller.start()
 
         except Exception as e:
-            print e
-            print "Critical error. Exiting."
+            print(e)
+            print("Critical error. Exiting.")
             self.exit(1)
 
     def __del__(self):
@@ -34,8 +35,8 @@ class FluxGUI(object):
         self.preferences.show()
 
     def signal_exit(self, signum, frame):
-        print 'Received signal: ', signum
-        print 'Quitting...'
+        print('Received signal: ', signum)
+        print('Quitting...')
         self.exit()
 
     def exit(self, code=0):
@@ -58,15 +59,15 @@ class Indicator(object):
     def __init__(self, fluxgui, xflux_controller):
         self.fluxgui = fluxgui
         self.xflux_controller = xflux_controller
-        self.indicator = appindicator.Indicator(
+        self.indicator = appindicator.Indicator.new(
           "fluxgui-indicator",
           "fluxgui",
-          appindicator.CATEGORY_APPLICATION_STATUS)
+          appindicator.IndicatorCategory.APPLICATION_STATUS)
 
         self.setup_indicator()
 
     def setup_indicator(self):
-        self.indicator.set_status(appindicator.STATUS_ACTIVE)
+        self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         self.indicator.set_icon('fluxgui-panel')
         self.indicator.set_menu(self.create_menu())
 
@@ -114,7 +115,7 @@ class Preferences(object):
 
     def connect_widget(self, widget_name, connect_target=None,
             connect_event="activate"):
-        widget = self.wTree.get_widget(widget_name)
+        widget = self.wTree.get_object(widget_name)
         if connect_target:
             widget.connect(connect_event, connect_target)
         return widget
@@ -126,7 +127,7 @@ class Preferences(object):
 
         self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
           os.path.realpath(__file__))), "fluxgui/preferences.glade")
-        self.wTree = gtk.glade.XML(self.gladefile)
+        self.wTree = Gtk.Builder.new_from_file(self.gladefile)
 
         self.window = self.connect_widget("window1", self.delete_event,
                 connect_event="destroy")

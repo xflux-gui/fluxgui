@@ -67,17 +67,18 @@ class XfluxController(object):
             startup_args = self._create_startup_arg_list(self._current_color,
                                                          **self.init_kwargs)
         try:
-            previous_instances = pexpect.run('pgrep -d, -u {} xflux'.format(pexpect.run('whoami'))).strip()
+            user_name = pexpect.run('whoami').decode('utf-8').strip()
+            command = 'pgrep -d, -u {} xflux'.format(user_name)
+            previous_instances = pexpect.run(command).strip().decode('utf-8')
             if previous_instances != "":
                 for process in previous_instances.split(","):
-                    pexpect.run('kill -9 %s' % process)
+                    pexpect.run('kill -9 {}'.format(process))
 
             self._xflux = pexpect.spawn("xflux", startup_args)
             # logfile=file("tmp/xfluxout.txt",'w'))
 
         except pexpect.ExceptionPexpect:
-            raise FileNotFoundError(
-                "\nError: Please install xflux in the PATH \n")
+            raise FileNotFoundError("\nError: Please install xflux in the PATH \n")
 
     def _stop(self):
         try:

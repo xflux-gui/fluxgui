@@ -1,14 +1,15 @@
 #!/usr/bin/python
 
+from fluxgui.exceptions import MethodUnavailableError
+from fluxgui import fluxcontroller, settings
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+gi.require_version('AppIndicator3', '0.1')
+from gi.repository import AppIndicator3 as appindicator
 import signal
 import os
 import sys
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import AppIndicator3 as appindicator
-from gi.repository import Gtk as gtk
-from fluxgui import fluxcontroller, settings
-from fluxgui.exceptions import MethodUnavailableError
 
 
 class FluxGUI(object):
@@ -77,9 +78,9 @@ class Indicator(object):
     def create_menu(self):
         menu = gtk.Menu()
 
-        self.add_menu_item("_Pause f.lux", self._toggle_pause,
+        self.add_menu_item("Pause f.lux", self._toggle_pause,
                            menu, MenuItem=gtk.CheckMenuItem)
-        self.add_menu_item("Prefere_nces", self._open_preferences, menu)
+        self.add_menu_item("Preferences", self._open_preferences, menu)
         self.add_menu_separator(menu)
         self.add_menu_item("Quit", self._quit, menu)
 
@@ -147,6 +148,7 @@ class Preferences(object):
                                                self.delete_event, "clicked")
         self.autostart = self.connect_widget("checkAutostart")
 
+        # TODO: Fix this bug
         if (self.settings.latitude is "" and self.settings.zipcode is "")\
                 or not self.settings.has_set_prefs:
             self.show()
@@ -168,11 +170,11 @@ class Preferences(object):
 
     def display_no_zipcode_or_latitude_error_box(self):
         md = gtk.MessageDialog(self.window,
-                               gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
-                               gtk.BUTTONS_OK, ("The f.lux indicator applet needs to know "
-                                                "your latitude or zipcode to run. "
-                                                "Please fill either of them in on "
-                                                "the preferences screen and click 'Close'."))
+                               gtk.DialogFlags.DESTROY_WITH_PARENT, gtk.MessageType.INFO,
+                               gtk.ButtonsType.OK, ("The f.lux indicator applet needs to know "
+                                                    "your latitude or zipcode to run. "
+                                                    "Please fill either of them in on "
+                                                    "the preferences screen and click 'Close'."))
         md.set_title("f.lux indicator applet")
         md.run()
         md.destroy()

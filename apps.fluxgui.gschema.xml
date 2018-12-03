@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="apps.fluxgui" path="/apps/fluxgui/">
+    <key type="b" name="autostart">
+      <default>false</default>
+      <summary>Autostart</summary>
+      <description>If set True the application start with the system.</description>
+    </key>
+
+    <key type="s" name="colortemp">
+        <default>'3400'</default>
+        <summary>Colortemp</summary>
+        <description></description>
+    </key>
+
+    <key type="s" name="latitude">
+        <default>'0'</default>
+        <summary>Latitude</summary>
+        <description>Latitude of the user.</description>
+    </key>
+
+    <key type="s" name="longitude">
+        <default>'0'</default>
+        <summary>Longitude</summary>
+        <description>Longitude of the user.</description>
+    </key>
+
+    <key type="s" name="zipcode">
+        <default>'0'</default>
+        <summary>Zipcode</summary>
+        <description>Zipcode of the user.</description>
+    </key>
+  </schema>
+</schemalist>

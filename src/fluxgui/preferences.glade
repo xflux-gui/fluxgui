@@ -37,7 +37,6 @@
                     <property name="margin_right">5</property>
                     <property name="margin_top">5</property>
                     <property name="margin_bottom">5</property>
-                    <property name="max_length">3</property>
                   </object>
                 </child>
               </object>
@@ -63,7 +62,6 @@
                     <property name="margin_right">5</property>
                     <property name="margin_top">5</property>
                     <property name="margin_bottom">5</property>
-                    <property name="max_length">3</property>
                   </object>
                 </child>
               </object>
@@ -89,7 +87,6 @@
                     <property name="margin_right">5</property>
                     <property name="margin_top">5</property>
                     <property name="margin_bottom">5</property>
-                    <property name="max_length">3</property>
                   </object>
                 </child>
               </object>

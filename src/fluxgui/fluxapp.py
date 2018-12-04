@@ -180,8 +180,7 @@ class Preferences(object):
         md.destroy()
 
     def preview_click_event(self, widget, data=None):
-        colsetting_temperature = settings.key_to_temperature(
-            self.colsetting.get_active())
+        colsetting_temperature = settings.key_to_temperature(self.colsetting.get_active())
         self.xflux_controller.preview_color(colsetting_temperature)
 
     def delete_event(self, widget, data=None):

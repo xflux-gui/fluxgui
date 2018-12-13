@@ -88,11 +88,11 @@ class Settings(object):
 
     def xflux_settings_dict(self):
         d = {
-            'color': self.color,
-            'latitude': self.latitude,
-            'longitude': self.longitude,
-            'zipcode': self.zipcode,
-            'pause_color': off_temperature
+                'color': self.color,
+                'latitude': self.latitude,
+                'longitude': self.longitude,
+                'zipcode': self.zipcode,
+                'pause_color': off_temperature
         }
         return d
 

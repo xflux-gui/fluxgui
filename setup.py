@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup
-import os
+import os, subprocess
 
 data_files = [
     ('share/icons/hicolor/16x16/apps', ['icons/hicolor/16x16/apps/fluxgui.svg']),
@@ -26,14 +26,19 @@ data_files = [
     ('share/applications', ['desktop/fluxgui.desktop'])]
 
 scripts = ['fluxgui']
+
 if (os.path.exists("xflux")):
-    scripts.append('xflux')
+    # Unlike for 'scripts', the 'setup.py' doesn't modify the
+    # permissions on files installed using 'data_files', so we need to
+    # set the permissions ourselves.
+    subprocess.call(['chmod', 'a+rx', 'xflux'])
+    data_files.append(('bin', ['xflux']))
 else:
     print("""WARNING: if you are running 'python setup.py' manually, and not as
 part of Debian package creation, then you need to download the 'xflux'
 binary separately. You can do this by running
 
-    python ./download-xflux.py
+    ./download-xflux.py
 
 before running 'setup.py'.""")
 

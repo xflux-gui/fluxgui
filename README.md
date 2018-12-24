@@ -23,9 +23,9 @@ You can also easily configure the applet to auto-start on login.
 Install Instructions
 --------------------
 
-### Only Python 2 is Supported
+### Only Python 3 is Supported
 
-The `fluxgui` is only known to work with Python 2, so use `python2` instead of `python` for the commands in this README if Python 3 is the default on your system.
+The `fluxgui` is only known to work with Python 3.
 
 ### Ubuntu PPA Package Manager Install
 
@@ -71,16 +71,16 @@ There are separate instructions in the code below for installing system wide and
 cd /tmp
 git clone "https://github.com/xflux-gui/fluxgui.git"
 cd fluxgui
-python download-xflux.py
+./download-xflux.py
 
 # EITHER install system wide
-sudo python setup.py install
+sudo ./setup.py install
 
 # EXCLUSIVE OR, install in your home directory. The binary installs
 # into ~/.local/bin, so be sure to add that to your PATH if installing
 # locally. In particular, autostarting fluxgui in Gnome will not work
 # if the locally installed fluxgui is not on your PATH.
-python setup.py install --user
+./setup.py install --user
        
 # Run flux
 fluxgui
@@ -94,11 +94,11 @@ removing the installed files.
 
 ```bash
 # EITHER uninstall globally
-sudo python setup.py install --record installed.txt
+sudo ./setup.py install --record installed.txt
 sudo xargs rm -vr < installed.txt
 
 # EXCLUSIVE OR uninstall in your home directory
-python setup.py install --user --record installed.txt
+./setup.py install --user --record installed.txt
 xargs rm -vr < installed.txt
 ```
 
@@ -116,8 +116,9 @@ When working on `fluxgui`, you can use
 ```bash
 cd <path to your fluxgui.git clone>
 # You only need to download xflux once.
-python download-xflux.py
-PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
+./download-xflux.py
+glib-compile-schemas .
+GSETTINGS_SCHEMA_DIR=`pwd` PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui
 ```
 to test your local copy of `fluxgui` without installing anything.
 

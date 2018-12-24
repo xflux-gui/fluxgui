@@ -16,7 +16,6 @@ class FluxGUI(object):
     """
     FluxGUI initializes/destroys the app
     """
-
     def __init__(self):
         try:
             self.settings = settings.Settings()
@@ -52,7 +51,6 @@ class FluxGUI(object):
 
     def run(self):
         gtk.main()
-
 
 class Indicator(object):
     """
@@ -105,11 +103,10 @@ class Indicator(object):
         self.xflux_controller.toggle_pause()
 
     def _open_preferences(self, item):
-        self.fluxgui.open_preferences()
+            self.fluxgui.open_preferences()
 
     def _quit(self, item):
         self.fluxgui.exit()
-
 
 class Preferences(object):
     """
@@ -124,6 +121,7 @@ class Preferences(object):
         if connect_target:
             widget.connect(connect_event, connect_target)
         return widget
+
 
     def __init__(self, settings, xflux_controller):
         self.settings = settings
@@ -213,7 +211,6 @@ class Preferences(object):
         self.window.hide()
         return False
 
-
 def main():
     try:
         app = FluxGUI()
@@ -224,7 +221,6 @@ def main():
         # No idea why we consistently get a keyboard interrupt here
         # after killing fluxgui with SIGINT or SIGTERM ...
         pass
-
 
 if __name__ == '__main__':
     main()

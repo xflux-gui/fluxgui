@@ -13,10 +13,10 @@ from fluxgui.exceptions import DirectoryCreationError
 default_temperature = '3400'
 off_temperature = '6500'
 temperatures = [
-    '2000',  # The minimum supported by flux; see https://github.com/xflux-gui/xflux-gui/issues/51
+    '2000', # The minimum supported by flux; see https://github.com/xflux-gui/xflux-gui/issues/51
     '2300',
     '2700',
-    '3400',  # The 'default_temperature' needs to be one of the options!
+    '3400', # The 'default_temperature' needs to be one of the options!
     '4200',
     '5000',
     # The "off temperature" is not one of the menu choices, but
@@ -25,8 +25,7 @@ temperatures = [
     #
     # TODO(ntc2): understand why this entry is in the list, and remove
     # it if possible.
-    off_temperature]
-
+    off_temperature ]
 
 def key_to_temperature(key):
     """The inverse of 'temperature_to_key'.
@@ -41,7 +40,6 @@ def key_to_temperature(key):
         return temperatures[key]
     except IndexError:
         return off_temperature
-
 
 def temperature_to_key(temperature):
     """Convert a temperature like "3400" to a Glade/GTK menu value like
@@ -58,7 +56,6 @@ def temperature_to_key(temperature):
     return len(temperatures) - 1
 
 ################################################################
-
 
 class Settings(object):
 
@@ -135,14 +132,14 @@ class Settings(object):
         else:
             self._delete_autostarter()
 
-    color = property(_get_color, _set_color)
-    latitude = property(_get_latitude, _set_latitude)
-    longitude = property(_get_longitude, _set_longitude)
-    zipcode = property(_get_zipcode, _set_zipcode)
-    autostart = property(_get_autostart, _set_autostart)
+    color=property(_get_color, _set_color)
+    latitude=property(_get_latitude, _set_latitude)
+    longitude=property(_get_longitude, _set_longitude)
+    zipcode=property(_get_zipcode, _set_zipcode)
+    autostart=property(_get_autostart, _set_autostart)
 
-    # autostart code copied from AWN
 
+    #autostart code copied from AWN
     def _get_autostart_file_path(self):
         autostart_dir = os.path.join(os.environ['HOME'], '.config',
                                      'autostart')
@@ -153,7 +150,7 @@ class Settings(object):
         autostart_dir = os.path.dirname(autostart_file)
 
         if not os.path.isdir(autostart_dir):
-            # create autostart dir
+            #create autostart dir
             try:
                 os.mkdir(autostart_dir)
             except DirectoryCreationError as e:

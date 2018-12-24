@@ -60,6 +60,14 @@ def temperature_to_key(temperature):
 class Settings(object):
 
     def __init__(self):
+        # You can use
+        #
+        #     gsettings [--schema-dir .] list-recursively apps.fluxgui
+        #
+        # to see current settings on command line. The '--schema-dir'
+        # is necessary if you're using a non-standard schema dir,
+        # e.g. when running fluxgui from the repo without installing
+        # it.
         self.settings = Gio.Settings.new('apps.fluxgui')
 
         self._color = self.settings.get_string("colortemp")

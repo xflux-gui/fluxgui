@@ -74,7 +74,8 @@ cd fluxgui
 ./download-xflux.py
 
 # EITHER install system wide
-sudo ./setup.py install
+sudo ./setup.py install --record installed.txt
+xargs sudo chmod -R a+rX < installed.txt
 
 # EXCLUSIVE OR, install in your home directory. The binary installs
 # into ~/.local/bin, so be sure to add that to your PATH if installing

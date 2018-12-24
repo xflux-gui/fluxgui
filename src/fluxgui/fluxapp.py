@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 from fluxgui.exceptions import MethodUnavailableError
 from fluxgui import fluxcontroller, settings

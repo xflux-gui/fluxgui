@@ -56,6 +56,7 @@ To install manually you first install the dependencies using your package manage
 ```bash
 sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
 ```
+
 ##### Fedora/CentOS
 
 ```bash

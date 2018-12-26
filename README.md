@@ -74,6 +74,9 @@ git clone "https://github.com/xflux-gui/fluxgui.git"
 cd fluxgui
 ./download-xflux.py
 
+# Compile GLIB schemas (temporary workaround until setup.py is fixed)
+glib-compile-schemas .
+
 # EITHER install system wide
 sudo ./setup.py install --record installed.txt
 xargs sudo chmod -R a+rX < installed.txt
@@ -82,10 +85,10 @@ xargs sudo chmod -R a+rX < installed.txt
 # into ~/.local/bin, so be sure to add that to your PATH if installing
 # locally. In particular, autostarting fluxgui in Gnome will not work
 # if the locally installed fluxgui is not on your PATH.
-./setup.py install --user
+./setup.py install --user --record installed.txt
        
-# Run flux
-fluxgui
+# Run flux (the GSETTINGS_SCHEMA_DIR is temporary until setup.py is updated)
+GSETTINGS_SCHEMA_DIR=. fluxgui
 ```
 
 ### Manual Uninstall

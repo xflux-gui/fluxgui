@@ -56,7 +56,7 @@ To install manually you first install the dependencies using your package manage
 WARNING: these dependencies may be out of date after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
 
 ```bash
-sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1 gir1.2-appindicator3-0.1
+sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1 gir1.2-appindicator3-0.1 libcanberra-gtk-module
 ```
 
 ##### Fedora/CentOS

@@ -74,21 +74,8 @@ git clone "https://github.com/xflux-gui/fluxgui.git"
 cd fluxgui
 ./download-xflux.py
 
-# Compile GLIB schemas (temporary workaround until setup.py is fixed)
-glib-compile-schemas .
-
 # EITHER install system wide
-#
-# Perhaps we're using setup.py incorrectly, but I'd expect it to create
-# files with permissions for regular users to access them, but it does
-# not. The 'umask 000' is necessary because otherwise setup.py will create
-# unreadable directories that aren't included in the installed.txt, e.g.
-#
-# /usr/local/share/icons
-# /usr/local/share/applications
-# /usr/local/lib/python3.5/dist-packages/fluxgui
-sudo sh -c 'umask 000 && ./setup.py install --record installed.txt'
-xargs sudo chmod -R a+rX < installed.txt
+sudo ./setup.py install --record installed.txt
 
 # EXCLUSIVE OR, install in your home directory
 #
@@ -98,8 +85,8 @@ xargs sudo chmod -R a+rX < installed.txt
 # if the locally installed fluxgui is not on your PATH.
 ./setup.py install --user --record installed.txt
        
-# Run flux (the GSETTINGS_SCHEMA_DIR is temporary until setup.py is updated)
-GSETTINGS_SCHEMA_DIR=. fluxgui
+# Run flux
+fluxgui
 ```
 
 ### Manual Uninstall

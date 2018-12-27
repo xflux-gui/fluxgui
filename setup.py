@@ -5,6 +5,22 @@ from distutils.log import info
 import distutils.command.install_data
 import os, subprocess
 
+# Set an appropriate umask for global installs. The 'setup.py' install
+# respects the umask, even if it results in files only root can read
+# in a global install :P
+os.umask(0o022)
+
+# Set appropriate permissions on all local files in the repo. The
+# 'setup.py' install preserves permissions on copied files, which
+# creates problems for global installs :P
+#
+# There is a fancier solution at
+# https://stackoverflow.com/a/25761434/470844 that uses
+# 'self.get_outputs()' in a custom 'distutils.command.install'
+# subclass to only modify permissions of files that 'setup.py'
+# installed.
+subprocess.call(['chmod', '-R', 'a+rX', '.'])
+
 # On Ubuntu 18.04 both '/usr/local/share/glib-2.0/schemas' (global
 # install) and '~/.local/share/glib-2.0/schemas' (local '--user'
 # install) are on the default search path for glib schemas. The global

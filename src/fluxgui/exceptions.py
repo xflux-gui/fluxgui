@@ -15,4 +15,3 @@ class XfluxError(Error):
 
 class MethodUnavailableError(Error):
     pass
-

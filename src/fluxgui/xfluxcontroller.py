@@ -1,8 +1,9 @@
 import pexpect
 import time
 import weakref
-from fluxgui.exceptions import *
+from fluxgui.exceptions import XfluxError, MethodUnavailableError
 from fluxgui import settings
+
 
 class XfluxController(object):
     """
@@ -66,13 +67,15 @@ class XfluxController(object):
             startup_args = self._create_startup_arg_list(self._current_color,
                 **self.init_kwargs)
         try:
-            previous_instances = pexpect.run('pgrep -d, -u %s xflux' % pexpect.run('whoami')).strip()
+            user_name = pexpect.run('whoami').decode('utf-8').strip()
+            command = 'pgrep -d, -u {} xflux'.format(user_name)
+            previous_instances = pexpect.run(command).strip().decode('utf-8')
             if previous_instances != "":
                 for process in previous_instances.split(","):
-                    pexpect.run('kill -9 %s' % process)
-                   
+                    pexpect.run('kill -9 {}'.format(process))
+
             self._xflux = pexpect.spawn("xflux", startup_args)
-                    #logfile=file("tmp/xfluxout.txt",'w'))
+            # logfile=file("tmp/xfluxout.txt",'w'))
 
         except pexpect.ExceptionPexpect:
             raise FileNotFoundError(
@@ -87,14 +90,14 @@ class XfluxController(object):
             # means 'kill -9' ...
             time.sleep(1)
         except Exception as e:
-            print 'XfluxController._stop: unexpected exception when resetting color:'
-            print e
+            print('XfluxController._stop: unexpected exception when resetting color:')
+            print(e)
         try:
             return self._xflux.terminate(force=True)
-        except Exception:
+        except Exception as e:
             # xflux has crashed in the meantime?
-            print 'XfluxController._stop: unexpected exception when terminating xflux:'
-            print e
+            print('XfluxController._stop: unexpected exception when terminating xflux:')
+            print(e)
             return True
 
     def _preview_color(self, preview_color, return_color):
@@ -163,7 +166,7 @@ class XfluxController(object):
     def _set_xflux_screen_color(self, color):
         # use _set_xflux_color unless keeping
         # self._current_color the same is necessary
-        self._xflux.sendline("k="+str(color))
+        self._xflux.sendline("k={}".format(str(color)))
 
 
 class _XfluxState(object):

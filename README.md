@@ -23,9 +23,9 @@ You can also easily configure the applet to auto-start on login.
 Install Instructions
 --------------------
 
-### Only Python 2 is Supported
+### Only Python 3 is Supported
 
-The `fluxgui` is only known to work with Python 2, so use `python2` instead of `python` for the commands in this README if Python 3 is the default on your system.
+The `fluxgui` is only known to work with Python 3.
 
 ### Ubuntu PPA Package Manager Install
 
@@ -53,10 +53,15 @@ To install manually you first install the dependencies using your package manage
 
 ##### Ubuntu/Debian
 
+WARNING: these dependencies may be out of date after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
+
 ```bash
-sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1
+sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1 gir1.2-appindicator3-0.1
 ```
+
 ##### Fedora/CentOS
+
+WARNING: these dependencies may be out of date after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
 
 ```bash
 sudo yum install git python-appindicator python2-pyxdg python2-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
@@ -71,16 +76,18 @@ There are separate instructions in the code below for installing system wide and
 cd /tmp
 git clone "https://github.com/xflux-gui/fluxgui.git"
 cd fluxgui
-python download-xflux.py
+./download-xflux.py
 
 # EITHER install system wide
-sudo python setup.py install
+sudo ./setup.py install --record installed.txt
 
-# EXCLUSIVE OR, install in your home directory. The binary installs
+# EXCLUSIVE OR, install in your home directory
+#
+# The fluxgui program installs
 # into ~/.local/bin, so be sure to add that to your PATH if installing
 # locally. In particular, autostarting fluxgui in Gnome will not work
 # if the locally installed fluxgui is not on your PATH.
-python setup.py install --user
+./setup.py install --user --record installed.txt
        
 # Run flux
 fluxgui
@@ -94,12 +101,15 @@ removing the installed files.
 
 ```bash
 # EITHER uninstall globally
-sudo python setup.py install --record installed.txt
+#
+# The 'installed.txt' is generated when you install. Reinstall first if you
+# as described above if you don't have an 'installed.txt' file.
 sudo xargs rm -vr < installed.txt
+sudo glib-compile-schemas "$(dirname "$(grep apps.fluxgui.gschema.xml installed.txt)")"
 
 # EXCLUSIVE OR uninstall in your home directory
-python setup.py install --user --record installed.txt
 xargs rm -vr < installed.txt
+glib-compile-schemas "$(dirname "$(grep apps.fluxgui.gschema.xml installed.txt)")"
 ```
 
 License
@@ -116,8 +126,9 @@ When working on `fluxgui`, you can use
 ```bash
 cd <path to your fluxgui.git clone>
 # You only need to download xflux once.
-python download-xflux.py
-PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui &
+./download-xflux.py
+glib-compile-schemas .
+GSETTINGS_SCHEMA_DIR=`pwd` PATH=`pwd`:$PATH PYTHONPATH=`pwd`/src:$PYTHONPATH ./fluxgui
 ```
 to test your local copy of `fluxgui` without installing anything.
 

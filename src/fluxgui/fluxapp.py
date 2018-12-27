@@ -1,13 +1,16 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python3
 
-from fluxgui import fluxcontroller, settings
 from fluxgui.exceptions import MethodUnavailableError
-import gtk
-import gtk.glade
-import appindicator
-import sys, os
+from fluxgui import fluxcontroller, settings
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
+gi.require_version('AppIndicator3', '0.1')
+from gi.repository import AppIndicator3 as appindicator
 import signal
-import errno
+import os
+import sys
+
 
 class FluxGUI(object):
     """
@@ -23,8 +26,8 @@ class FluxGUI(object):
             self.xflux_controller.start()
 
         except Exception as e:
-            print e
-            print "Critical error. Exiting."
+            print(e)
+            print("Critical error. Exiting.")
             self.exit(1)
 
     def __del__(self):
@@ -34,8 +37,8 @@ class FluxGUI(object):
         self.preferences.show()
 
     def signal_exit(self, signum, frame):
-        print 'Received signal: ', signum
-        print 'Quitting...'
+        print('Received signal: ', signum)
+        print('Quitting...')
         self.exit()
 
     def exit(self, code=0):
@@ -58,24 +61,24 @@ class Indicator(object):
     def __init__(self, fluxgui, xflux_controller):
         self.fluxgui = fluxgui
         self.xflux_controller = xflux_controller
-        self.indicator = appindicator.Indicator(
-          "fluxgui-indicator",
-          "fluxgui",
-          appindicator.CATEGORY_APPLICATION_STATUS)
+        self.indicator = appindicator.Indicator.new(
+            "fluxgui-indicator",
+            "fluxgui",
+            appindicator.IndicatorCategory.APPLICATION_STATUS)
 
         self.setup_indicator()
 
     def setup_indicator(self):
-        self.indicator.set_status(appindicator.STATUS_ACTIVE)
+        self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         self.indicator.set_icon('fluxgui-panel')
         self.indicator.set_menu(self.create_menu())
 
     def create_menu(self):
         menu = gtk.Menu()
 
-        self.add_menu_item("_Pause f.lux", self._toggle_pause,
+        self.add_menu_item("Pause f.lux", self._toggle_pause,
                 menu, MenuItem=gtk.CheckMenuItem)
-        self.add_menu_item("Prefere_nces", self._open_preferences, menu)
+        self.add_menu_item("Preferences", self._open_preferences, menu)
         self.add_menu_separator(menu)
         self.add_menu_item("Quit", self._quit, menu)
 
@@ -114,7 +117,7 @@ class Preferences(object):
 
     def connect_widget(self, widget_name, connect_target=None,
             connect_event="activate"):
-        widget = self.wTree.get_widget(widget_name)
+        widget = self.wTree.get_object(widget_name)
         if connect_target:
             widget.connect(connect_event, connect_target)
         return widget
@@ -126,7 +129,7 @@ class Preferences(object):
 
         self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
           os.path.realpath(__file__))), "fluxgui/preferences.glade")
-        self.wTree = gtk.glade.XML(self.gladefile)
+        self.wTree = gtk.Builder.new_from_file(self.gladefile)
 
         self.window = self.connect_widget("window1", self.delete_event,
                 connect_event="destroy")
@@ -164,11 +167,11 @@ class Preferences(object):
 
     def display_no_zipcode_or_latitude_error_box(self):
         md = gtk.MessageDialog(self.window,
-                gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO,
-                gtk.BUTTONS_OK, "The f.lux indicator applet needs to know " +
-                "your latitude or zipcode to run. " +
-                "Please fill either of them in on the preferences screen "+
-                "and click 'Close'.")
+                gtk.DialogFlags.DESTROY_WITH_PARENT, gtk.MessageType.INFO,
+                gtk.ButtonsType.OK, ("The f.lux indicator applet needs to know "
+                "your latitude or zipcode to run. "
+                "Please fill either of them in on "
+                "the preferences screen and click 'Close'."))
         md.set_title("f.lux indicator applet")
         md.run()
         md.destroy()

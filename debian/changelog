@@ -1,6 +1,8 @@
 # -*- text -*-
-fluxgui (1.1.11~pre) wily; urgency=low
+fluxgui (1.2.0~pre) wily; urgency=low
 
+  * port fluxgui to GTK+3 and Python 3
+    https://github.com/xflux-gui/fluxgui/pull/112.
   * make fluxgui Gnome autostart work for locally installed fluxgui,
     https://github.com/xflux-gui/fluxgui/pull/89.
   * update icons: https://github.com/xflux-gui/fluxgui/issues/85,

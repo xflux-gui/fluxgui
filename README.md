@@ -110,12 +110,15 @@ removing the installed files.
 
 ```bash
 # EITHER uninstall globally
-sudo ./setup.py install --record installed.txt
+#
+# The 'installed.txt' is generated when you install. Reinstall first if you
+# as described above if you don't have an 'installed.txt' file.
 sudo xargs rm -vr < installed.txt
+sudo glib-compile-schemas "$(dirname "$(grep apps.fluxgui.gschema.xml installed.txt)")"
 
 # EXCLUSIVE OR uninstall in your home directory
-./setup.py install --user --record installed.txt
 xargs rm -vr < installed.txt
+glib-compile-schemas "$(dirname "$(grep apps.fluxgui.gschema.xml installed.txt)")"
 ```
 
 License

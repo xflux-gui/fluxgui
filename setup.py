@@ -1,7 +1,15 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup
+from distutils.log import info
+import distutils.command.install_data
 import os, subprocess
+
+# On Ubuntu 18.04 both '/usr/local/share/glib-2.0/schemas' (global
+# install) and '~/.local/share/glib-2.0/schemas' (local '--user'
+# install) are on the default search path for glib schemas. The global
+# search paths are in '$XDG_DATA_DIRS'.
+gschema_dir_suffix = 'share/glib-2.0/schemas'
 
 data_files = [
     ('share/icons/hicolor/16x16/apps', ['icons/hicolor/16x16/apps/fluxgui.svg']),
@@ -23,7 +31,8 @@ data_files = [
     ('share/icons/elementary/status/24', ['icons/elementary/status/24/fluxgui-panel.svg']),
     ('share/icons/elementary-xfce/panel/22', ['icons/elementary-xfce/panel/22/fluxgui-panel.svg']),
     ('share/icons/elementary-xfce-dark/panel/22', ['icons/elementary-xfce-dark/panel/22/fluxgui-panel.svg']),
-    ('share/applications', ['desktop/fluxgui.desktop'])]
+    ('share/applications', ['desktop/fluxgui.desktop']),
+    (gschema_dir_suffix, ['apps.fluxgui.gschema.xml'])]
 
 scripts = ['fluxgui']
 
@@ -42,6 +51,15 @@ binary separately. You can do this by running
 
 before running 'setup.py'.""")
 
+class install_data(distutils.command.install_data.install_data):
+    def run(self):
+        super().run()
+
+        # Compile '*.gschema.xml' to update or create 'gschemas.compiled'.
+        info("compiling gsettings schemas")
+        gschema_dir = os.path.join(self.install_dir, gschema_dir_suffix)
+        self.spawn(["glib-compile-schemas", gschema_dir])
+
 setup(name = "f.lux indicator applet",
     version = "1.1.11~pre",
     description = "f.lux indicator applet - better lighting for your computer",
@@ -58,5 +76,5 @@ setup(name = "f.lux indicator applet",
     control xflux, an application that makes the color of your computer's
     display adapt to the time of day, warm at nights and like sunlight during
     the day""",
+    cmdclass = {'install_data': install_data}
   )
-

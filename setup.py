@@ -3,7 +3,11 @@
 from distutils.core import setup
 from distutils.log import info
 import distutils.command.install_data
-import os, subprocess
+import os, os.path, subprocess, sys
+
+if os.path.abspath(os.path.curdir) != os.path.abspath(os.path.dirname(__file__)):
+    print("The 'setup.py' must be run in its containing directory!")
+    sys.exit(1)
 
 # Set an appropriate umask for global installs. The 'setup.py' install
 # respects the umask, even if it results in files only root can read

@@ -132,7 +132,7 @@ class Preferences(object):
         self.wTree = gtk.Builder.new_from_file(self.gladefile)
 
         self.window = self.connect_widget("window1", self.delete_event,
-                connect_event="destroy")
+                connect_event="delete-event")
         self.latsetting = self.connect_widget("entryLatitude",
                 self.delete_event)
         self.lonsetting = self.connect_widget("entryLongitude",
@@ -209,7 +209,7 @@ class Preferences(object):
             return True
 
         self.window.hide()
-        return False
+        return True
 
 def main():
     try:

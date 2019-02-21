@@ -120,6 +120,14 @@ The f.lux indicator applet is released under the [MIT License](https://github.co
 Developing
 ----------
 
+### Coding Style
+
+Try to stick to the same coding style that is already used in the file you are editing.
+In particular, don't change the style of code you're not already editing for some other
+reason. Style changes create noise in the Git history and make the `git blame` output
+misleading. When reviewing a PR, the maintainers want to focus on the logical changes
+introduced by your code, and extraneous style changes make that harder.
+
 ### Running `fluxgui` Without Installing
 
 When working on `fluxgui`, you can use

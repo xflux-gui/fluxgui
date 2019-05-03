@@ -1,4 +1,7 @@
 #!/usr/bin/make -f
 %:
-	dh $@
+	dh $@ --with python3 --buildsystem pybuild
 
+
+override_dh_gencontrol:
+	dh_gencontrol -- -Tdebian/substvars

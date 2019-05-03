@@ -1,5 +1,5 @@
 # -*- text -*-
-fluxgui (1.2.0~pre) wily; urgency=low
+fluxgui (1.2.0) wily; urgency=low
 
   * port fluxgui to GTK+3 and Python 3
     https://github.com/xflux-gui/fluxgui/pull/112.
@@ -10,7 +10,7 @@ fluxgui (1.2.0~pre) wily; urgency=low
   * fix https:/github.com/xflux-gui/fluxgui/issues/79: tray icon
     name was incorrect for some desktop environments.
 
- -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
+ -- Nathan Collins <nathan.collins@gmail.com>  Fri, 03 May 2019 07:41:03 -0700
 
 fluxgui (1.1.10) wily; urgency=low
 

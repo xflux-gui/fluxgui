@@ -70,7 +70,7 @@ sudo apt-get install git python-appindicator python-xdg python-pexpect python-gc
 WARNING: these dependencies may be out of date after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
 
 ```bash
-sudo yum install git python-appindicator python2-pyxdg python2-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
+sudo yum install git python-appindicator python2-pyxdg python3-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
 ```
 
 #### Install `fluxgui`

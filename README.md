@@ -151,8 +151,11 @@ to test your local copy of `fluxgui` without installing anything.
 Note changes in `./debian/changelog`.
 
 Use version `<ver>~pre` until ready to release a version. When
-releasing a version make branch, remove the `~pre` suffix from the
-version strings in the branch, and `git tag -a` the branch `v<ver>`.
+releasing a version remove the `~pre` suffix from the version strings
+and commit, copying the changelog changes for the current release into
+the commit message. Then `git tag -a v<ver>`, using the commit msg for
+the tag annotation. Finally, create another commit with the new `<next
+version>~pre` version strings and changelog entry.
 
 When releasing the version string needs to be changed in
 `debian/changelog` and `setup.py`, and the release dates needs to be

@@ -1,4 +1,8 @@
 # -*- text -*-
+fluxgui (1.2.1~pre) wily; urgency=low
+
+ -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
+ 
 fluxgui (1.2.0) wily; urgency=low
 
   * port fluxgui to GTK+3 and Python 3

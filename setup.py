@@ -76,9 +76,10 @@ class install_data(distutils.command.install_data.install_data):
         super().run()
 
         # Compile '*.gschema.xml' to update or create 'gschemas.compiled'.
-        info("compiling gsettings schemas")
-        gschema_dir = os.path.join(self.install_dir, gschema_dir_suffix)
-        self.spawn(["glib-compile-schemas", gschema_dir])
+        if os.environ.get('DISABLE_GSCHEMAS_COMPILED', None) is None:
+            info("compiling gsettings schemas")
+            gschema_dir = os.path.join(self.install_dir, gschema_dir_suffix)
+            self.spawn(["glib-compile-schemas", gschema_dir])
 
 setup(name = "f.lux indicator applet",
     version = "1.2.1~pre",

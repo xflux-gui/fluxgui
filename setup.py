@@ -76,8 +76,8 @@ class install_data(distutils.command.install_data.install_data):
         super().run()
 
         # Compile '*.gschema.xml' to update or create 'gschemas.compiled'.
-        if os.environ.get('DISABLE_GSCHEMAS_COMPILED', None) is None:
-            info("compiling gsettings schemas")
+        if os.environ.get('DISABLE_GSCHEMAS_COMPILED') is None:
+            info("compiling gsettings schemas; set DISABLE_GSCHEMAS_COMPILED env var to disable")
             gschema_dir = os.path.join(self.install_dir, gschema_dir_suffix)
             self.spawn(["glib-compile-schemas", gschema_dir])
 

@@ -121,7 +121,7 @@ glib-compile-schemas "$(dirname "$(grep apps.fluxgui.gschema.xml installed.txt)"
 License
 -------
 
-The f.lux indicator applet is released under the [MIT License](https://github.com/xflux-gui/fluxgui/blob/master/LICENSE).
+The `fluxgui` applet is released under the [MIT License](https://github.com/xflux-gui/fluxgui/blob/master/LICENSE). The underlying `xflux` program that actually controls the screen color is closed source.
 
 Developing
 ----------

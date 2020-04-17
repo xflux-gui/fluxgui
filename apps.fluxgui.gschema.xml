@@ -7,6 +7,18 @@
       <description>If set True the application start with the system.</description>
     </key>
 
+    <key type="b" name="usexflux">
+        <default>false</default>
+        <summary>Xflux</summary>
+        <description>If set True the application will use x.flux to change the screen color.</description>
+    </key>
+
+    <key type="b" name="useredshift">
+        <default>false</default>
+        <summary>Redshift</summary>
+        <description>If set True the application will use redshift to change the screen color.</description>
+    </key>
+
     <key type="s" name="colortemp">
         <default>'3400'</default>
         <summary>Colortemp</summary>

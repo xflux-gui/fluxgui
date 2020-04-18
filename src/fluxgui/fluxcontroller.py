@@ -23,11 +23,11 @@ class FluxController(xfluxcontroller.XfluxController):
     # xflux methods that should also update settings
     def set_xflux_latitude(self, lat):
         self.settings.latitude = lat
-        super(FluxController, self).set_xflux_latitude(lat)
+        super(FluxController, self).set_latitude(lat)
 
     def set_xflux_longitude(self, longit):
         self.settings.longitude = longit
-        super(FluxController, self).set_xflux_longitude(longit)
+        super(FluxController, self).set_longitude(longit)
 
     def set_xflux_zipcode(self, zipc):
         self.settings.zipcode = zipc
@@ -35,11 +35,9 @@ class FluxController(xfluxcontroller.XfluxController):
 
     def _set_xflux_color(self, col):
         self.settings.color = col
-        super(FluxController, self)._set_xflux_color(col)
+        super(FluxController, self)._set_color(col)
 
     def _get_xflux_color(self):
-        return super(FluxController, self)._get_xflux_color()
+        return super(FluxController, self)._get_color()
 
     color=property(_get_xflux_color, _set_xflux_color)
-
-

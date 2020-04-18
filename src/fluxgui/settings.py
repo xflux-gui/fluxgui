@@ -75,6 +75,8 @@ class Settings(object):
         self._latitude = self.settings.get_string("latitude")
         self._longitude = self.settings.get_string("longitude")
         self._zipcode = self.settings.get_string("zipcode")
+        self._use_redshift = self.settings.get_boolean("useredshift")
+        self._use_xflux = self.settings.get_boolean("usexflux")
 
         self.has_set_prefs = True
         if not self._latitude and not self._zipcode:
@@ -100,6 +102,14 @@ class Settings(object):
                 'pause_color': off_temperature
         }
         return d
+
+    def redshift_settings_dict(self):
+        return {
+            'color': self.color,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'pause_color': off_temperature
+        }
 
     def _get_color(self):
         return self._color
@@ -140,11 +150,27 @@ class Settings(object):
         else:
             self._delete_autostarter()
 
-    color=property(_get_color, _set_color)
-    latitude=property(_get_latitude, _set_latitude)
-    longitude=property(_get_longitude, _set_longitude)
-    zipcode=property(_get_zipcode, _set_zipcode)
-    autostart=property(_get_autostart, _set_autostart)
+    def _set_xflux(self, value):
+        self._use_xflux = value
+        self.settings.set_boolean("usexflux", value)
+
+    def _get_xflux(self):
+        return self._use_xflux
+
+    def _set_redshift(self, value):
+        self._use_redshift = value
+        self.settings.set_boolean("useredshift", value)
+
+    def _get_redshift(self):
+        return self._use_redshift
+
+    color = property(_get_color, _set_color)
+    latitude = property(_get_latitude, _set_latitude)
+    longitude = property(_get_longitude, _set_longitude)
+    zipcode = property(_get_zipcode, _set_zipcode)
+    autostart = property(_get_autostart, _set_autostart)
+    use_redshift = property(_get_redshift, _set_redshift)
+    use_xflux = property(_get_xflux, _set_xflux)
 
 
     #autostart code copied from AWN

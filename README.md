@@ -56,7 +56,7 @@ To install manually you first install the dependencies using your package manage
 Partial list of Python 3 dependencies (after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR):
 
 ```bash
-sudo apt-get install python3-distutils gir1.2-appindicator3-0.1 gir1.2-gtk-3.0
+sudo apt-get install python3-pexpect python3-distutils gir1.2-appindicator3-0.1 gir1.2-gtk-3.0
 ```
 
 Out of date Python 2 dependencies; the remaining Python 3 deps should be similar:

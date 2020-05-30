@@ -38,20 +38,12 @@ class XfluxPage:
         else:
             self.checkXflux.set_active(False)
 
-        # if self.checkXflux.get_active():
-            # print(f"use_redshift={self.settings.use_redshift} use_xflux={self.settings.use_xflux}")
-            # self.settings.use_xflux = True
-            # self.settings.use_redshift = False
-        # else:
-            # self.settings.use_xflux = False
-
         if self.settings.autostart:
             self.autostart.set_active(True)
         else:
             self.autostart.set_active(False)
 
     def preview_click_event(self, widget, data=None):
-        print("preview")
         colsetting_temperature = settings.key_to_temperature(
             self.colsetting.get_active())
         self.xflux_controller.preview_color(colsetting_temperature)

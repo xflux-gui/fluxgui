@@ -27,17 +27,17 @@ class RedshiftController(Controller):
     def _set_redshift_color(self, col):
         self.state.set_setting(color=col)
 
-    def _get_xflux_color(self):
-        return self.current_color
+    def _get_redshift_color(self):
+        return self._current_color
 
-    color = property(_get_xflux_color, _set_redshift_color)
+    color = property(_get_redshift_color, _set_redshift_color)
 
     def _create_startup_arg_list(self, color='3400', **kwargs):
+        print(f"create_startup color={color} kwargs={kwargs}")
         startup_args = ['redshift']
         if "latitude" in kwargs and kwargs['latitude']:
             startup_args += ["-l", f"{kwargs['latitude']}:{kwargs['longitude']}"]
-            if "color" in kwargs and kwargs["color"]:
-                startup_args += ["-t", f"6500K:{color}"]
+        startup_args += ["-t", f"6500:{color}"]
 
         return startup_args
 
@@ -45,8 +45,12 @@ class RedshiftController(Controller):
         self._set_screen_color(new_color)
 
     def _set_screen_color(self, color):
-        self.current_color = color
+        self._current_color = color
         self._start()
+
+    def _set_setting(self, **kwargs):
+        args = self._create_startup_arg_list(**kwargs)
+        self._start(startup_args=args)
 
 
 class RedshiftSettings(RedshiftController):
@@ -59,6 +63,9 @@ class RedshiftSettings(RedshiftController):
         super(RedshiftSettings, self).__init__(
             **self.settings.redshift_settings_dict())
 
+    def __repr__(self):
+        return 'Redshift'
+
     def start(self):
         if self.settings.longitude == "" and self.settings.latitude == "":
             raise ValueError("Cannot start redshift, missing longitude or latitude")
@@ -69,19 +76,19 @@ class RedshiftSettings(RedshiftController):
         self.settings.autostart = autos
 
     # xflux methods that should also update settings
-    def set_xflux_latitude(self, lat):
+    def set_redshift_latitude(self, lat):
         self.settings.latitude = lat
         super(RedshiftSettings, self).set_latitude(lat)
 
-    def set_xflux_longitude(self, longit):
+    def set_redshift_longitude(self, longit):
         self.settings.longitude = longit
         super(RedshiftSettings, self).set_longitude(longit)
 
-    def _set_xflux_color(self, col):
+    def _set_redshift_color(self, col):
         self.settings.color = col
         super(RedshiftSettings, self)._set_color(col)
 
-    def _get_xflux_color(self):
+    def _get_redshift_color(self):
         return super(RedshiftSettings, self)._get_color()
 
-    color = property(_get_xflux_color, _set_xflux_color)
+    color = property(_get_redshift_color, _set_redshift_color)

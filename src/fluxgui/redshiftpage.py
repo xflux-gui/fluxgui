@@ -35,13 +35,6 @@ class RedshiftPage:
         else:
             self.checkRedshift.set_active(False)
 
-        # if self.checkRedshift.get_active():
-            # print(f"use_redshift={self.settings.use_redshift} use_xflux={self.settings.use_xflux}")
-            # self.settings.use_redshift = True
-            # self.settings.use_xflux = False
-        # else:
-            # self.settings.use_redshift = False
-
         if self.settings.autostart:
             self.autostart.set_active(True)
         else:
@@ -61,10 +54,6 @@ class RedshiftPage:
             self.redshift_controller.set_longitude(
                 self.lonsetting.get_text())
 
-        if self.settings.zipcode != self.zipsetting.get_text():
-            self.redshift_controller.set_xflux_zipcode(
-                self.zipsetting.get_text())
-
         colsetting_temperature = settings.key_to_temperature(
             self.colsetting.get_active())
         if self.settings.color != colsetting_temperature:
@@ -74,10 +63,6 @@ class RedshiftPage:
             self.redshift_controller.set_autostart(True)
         else:
             self.redshift_controller.set_autostart(False)
-        # if self.latsetting.get_text() == "" \
-                # and self.zipsetting.get_text() == "":
-            # self.display_no_zipcode_or_latitude_error_box()
-            # return True
 
         self.window.hide()
         return True

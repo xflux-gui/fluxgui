@@ -9,10 +9,11 @@ class XfluxController(Controller):
     A controller that starts and interacts with an xflux process.
     """
 
-    def __init__(self, color=settings.default_temperature, pause_color=settings.off_temperature, **kwargs):
+    def __init__(self, color=settings.default_temperature,
+                 pause_color=settings.off_temperature, **kwargs):
         if 'zipcode' not in kwargs and 'latitude' not in kwargs:
             raise XfluxError(
-                    "Required key not found (either zipcode or latitude)")
+                "Required key not found (either zipcode or latitude)")
         if 'longitude' not in kwargs:
             kwargs['longitude'] = 0
 
@@ -43,13 +44,13 @@ class XfluxController(Controller):
             color = self.program.after[10:14]
         return color
 
-    color=property(_get_xflux_color, _set_xflux_color)
+    color = property(_get_xflux_color, _set_xflux_color)
 
     _settings_map = {
-            'latitude':'l=',
-            'longitude':'g=',
-            'zipcode':'z=',
-            'color':'k=',
+        'latitude': 'l=',
+        'longitude': 'g=',
+        'zipcode': 'z=',
+        'color': 'k=',
     }
 
     def _set_setting(self, **kwargs):
@@ -63,7 +64,7 @@ class XfluxController(Controller):
                     if self.state == self.states["PAUSED"]:
                         self.state = self.states["RUNNING"]
                 else:
-                    self.program.sendline(self._settings_map[key]+str(value))
+                    self.program.sendline(self._settings_map[key] + str(value))
                 self._c()
 
     def _create_startup_arg_list(self, color='3400', **kwargs):
@@ -75,7 +76,7 @@ class XfluxController(Controller):
             startup_args += ["-l", str(kwargs["latitude"])]
         if "longitude" in kwargs and kwargs['longitude']:
             startup_args += ["-g", str(kwargs["longitude"])]
-        startup_args += ["-k", str(color), "-nofork"] # nofork is vital
+        startup_args += ["-k", str(color), "-nofork"]  # nofork is vital
 
         return startup_args
 
@@ -98,6 +99,6 @@ class XfluxController(Controller):
         self.program.sendline("c")
 
     def _set_screen_color(self, color):
-        # use _setprogram_color unless keeping
+        # use _set_color unless keeping
         # self._current_color the same is necessary
         self.program.sendline("k={}".format(str(color)))

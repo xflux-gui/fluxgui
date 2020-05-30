@@ -1,5 +1,6 @@
 from fluxgui import xfluxcontroller
 
+
 class FluxController(xfluxcontroller.XfluxController):
     """
     FluxController is the same as XfluxController except that it
@@ -43,4 +44,4 @@ class FluxController(xfluxcontroller.XfluxController):
     def _get_xflux_color(self):
         return super(FluxController, self)._get_color()
 
-    color=property(_get_xflux_color, _set_xflux_color)
+    color = property(_get_xflux_color, _set_xflux_color)

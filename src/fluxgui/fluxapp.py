@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+from gi.repository import Gtk as gtk
+from gi.repository import AppIndicator3 as appindicator
+import signal
+import os
+import sys
 from fluxgui.exceptions import MethodUnavailableError
 from fluxgui import fluxcontroller, settings
 from fluxgui.redshiftcontroller import RedshiftSettings
@@ -7,12 +12,7 @@ from fluxgui.xfluxpage import XfluxPage
 from fluxgui.redshiftpage import RedshiftPage
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk as gtk
 gi.require_version('AppIndicator3', '0.1')
-from gi.repository import AppIndicator3 as appindicator
-import signal
-import os
-import sys
 
 
 class FluxGUI(object):
@@ -56,6 +56,7 @@ class FluxGUI(object):
     def run(self):
         gtk.main()
 
+
 class Indicator(object):
     """
     Information and methods related to the indicator applet.
@@ -81,7 +82,7 @@ class Indicator(object):
         menu = gtk.Menu()
 
         self.add_menu_item("Pause f.lux", self._toggle_pause,
-                menu, MenuItem=gtk.CheckMenuItem)
+                           menu, MenuItem=gtk.CheckMenuItem)
         self.add_menu_item("Preferences", self._open_preferences, menu)
         self.add_menu_separator(menu)
         self.add_menu_item("Quit", self._quit, menu)
@@ -89,7 +90,7 @@ class Indicator(object):
         return menu
 
     def add_menu_item(self, label, handler, menu,
-            event="activate", MenuItem=gtk.MenuItem, show=True):
+                      event="activate", MenuItem=gtk.MenuItem, show=True):
         item = MenuItem(label)
         item.connect(event, handler)
         menu.append(item)
@@ -112,6 +113,7 @@ class Indicator(object):
     def _quit(self, item):
         self.fluxgui.exit()
 
+
 class Preferences(object):
     """
     Information and methods related to the preferences window.
@@ -120,7 +122,7 @@ class Preferences(object):
     """
 
     def connect_widget(self, widget_name, connect_target=None,
-            connect_event="activate"):
+                       connect_event="activate"):
         widget = self.wTree.get_object(widget_name)
         if connect_target:
             widget.connect(connect_event, connect_target)
@@ -138,7 +140,7 @@ class Preferences(object):
         # self.xflux_controller = xflux_controller
 
         self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
-          os.path.realpath(__file__))), "fluxgui/preferences.glade")
+            os.path.realpath(__file__))), "fluxgui/preferences.glade")
         self.wTree = gtk.Builder.new_from_file(self.gladefile)
 
         # self.window = self.connect_widget("window1", self.delete_event,
@@ -182,6 +184,7 @@ def main():
         # No idea why we consistently get a keyboard interrupt here
         # after killing fluxgui with SIGINT or SIGTERM ...
         pass
+
 
 if __name__ == '__main__':
     main()

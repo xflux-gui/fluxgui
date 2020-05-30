@@ -1,5 +1,6 @@
 from fluxgui import xfluxcontroller
 
+
 class FluxController(xfluxcontroller.XfluxController):
     """
     FluxController is the same as XfluxController except that it
@@ -9,7 +10,7 @@ class FluxController(xfluxcontroller.XfluxController):
     def __init__(self, settings):
         self.settings = settings
         super(FluxController, self).__init__(
-                **self.settings.xflux_settings_dict())
+            **self.settings.xflux_settings_dict())
 
     def start(self):
         if self.settings.zipcode == "" and self.settings.latitude == "":
@@ -40,6 +41,4 @@ class FluxController(xfluxcontroller.XfluxController):
     def _get_xflux_color(self):
         return super(FluxController, self)._get_xflux_color()
 
-    color=property(_get_xflux_color, _set_xflux_color)
-
-
+    color = property(_get_xflux_color, _set_xflux_color)

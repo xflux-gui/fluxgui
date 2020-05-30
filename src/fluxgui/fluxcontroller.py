@@ -11,6 +11,9 @@ class FluxController(xfluxcontroller.XfluxController):
         super(FluxController, self).__init__(
                 **self.settings.xflux_settings_dict())
 
+    def __repr__(self):
+        return 'Xflux'
+
     def start(self):
         if self.settings.zipcode == "" and self.settings.latitude == "":
             raise ValueError("Cannot start xflux, missing zipcode and latitude")

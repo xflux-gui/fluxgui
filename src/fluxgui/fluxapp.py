@@ -146,7 +146,7 @@ class Preferences(object):
                 self.delete_event, "clicked")
         self.autostart = self.connect_widget("checkAutostart")
 
-        if (self.settings.latitude is "" and self.settings.zipcode is "")\
+        if (self.settings.latitude == "" and self.settings.zipcode == "")\
                 or not self.settings.has_set_prefs:
             self.show()
             self.display_no_zipcode_or_latitude_error_box()

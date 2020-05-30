@@ -34,21 +34,24 @@ class Controller:
     def _set_color(self, col):
         self.state.set_setting(color=col)
 
+    def _kill(self, name):
+        user_name = pexpect.run('whoami').decode('utf-8').strip()
+        command = 'pgrep -d, -u {} {}'.format(user_name, name)
+        previous_instances = pexpect.run(command).strip().decode('utf-8')
+
+        if previous_instances != "":
+            for process in previous_instances.split(","):
+                pexpect.run('kill -9 {}'.format(process))
+
     def _start(self, startup_args=None):
         if not startup_args:
             startup_args = self._create_startup_arg_list(self._current_color,
                 **self.init_kwargs)
-            program = startup_args[0]
-        else:
-            program = startup_args[0]
-        try:
-            user_name = pexpect.run('whoami').decode('utf-8').strip()
-            command = 'pgrep -d, -u {} {}'.format(user_name, program)
-            previous_instances = pexpect.run(command).strip().decode('utf-8')
-            if previous_instances != "":
-                for process in previous_instances.split(","):
-                    pexpect.run('kill -9 {}'.format(process))
 
+        program = startup_args[0]
+
+        try:
+            self._kill(program)
             self.program = pexpect.spawn(program, startup_args[1:])
             # logfile=file("tmp/xfluxout.txt",'w'))
 

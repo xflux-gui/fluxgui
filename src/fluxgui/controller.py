@@ -1,6 +1,7 @@
 import time
 import pexpect
 from fluxgui import settings
+from fluxgui.states import _InitState, _RunningState, _PauseState, _TerminatedState
 
 
 class Controller:
@@ -10,8 +11,13 @@ class Controller:
         self._current_color = color
         self._pause_color = pause_color
 
-        self.states = {}
-        self.state = None
+        self.states = {
+            "INIT": _InitState(self),
+            "RUNNING": _RunningState(self),
+            "PAUSED": _PauseState(self),
+            "TERMINATED": _TerminatedState(self),
+        }
+        self.state = self.states["INIT"]
 
     def start(self, startup_args=None):
         self.state.start(startup_args)
@@ -46,7 +52,7 @@ class Controller:
     def _start(self, startup_args=None):
         if not startup_args:
             startup_args = self._create_startup_arg_list(self._current_color,
-                **self.init_kwargs)
+                                                         **self.init_kwargs)
 
         program = startup_args[0]
 

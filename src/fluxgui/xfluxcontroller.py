@@ -1,7 +1,6 @@
 from fluxgui import settings
 from fluxgui.exceptions import XfluxError
 from fluxgui.controller import Controller
-from fluxgui.states import _InitState, _RunningState, _PauseState, _TerminatedState
 
 
 class XfluxController(Controller):
@@ -17,15 +16,7 @@ class XfluxController(Controller):
         if 'longitude' not in kwargs:
             kwargs['longitude'] = 0
 
-        super(XfluxController, self).__init__(color, pause_color, **kwargs)
-
-        self.states = {
-            "INIT": _InitState(self),
-            "RUNNING": _RunningState(self),
-            "PAUSED": _PauseState(self),
-            "TERMINATED": _TerminatedState(self),
-        }
-        self.state = self.states["INIT"]
+        super().__init__(color, pause_color, **kwargs)
 
     def __repr__(self):
         return 'xflux'

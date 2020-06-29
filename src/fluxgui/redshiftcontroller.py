@@ -1,7 +1,6 @@
 from fluxgui import settings
 from fluxgui.controller import Controller
 from fluxgui.exceptions import XfluxError
-from fluxgui.states import _InitState, _RunningState, _PauseState, _TerminatedState
 
 
 class RedshiftController(Controller):
@@ -11,15 +10,7 @@ class RedshiftController(Controller):
             raise XfluxError(
                 "Required key not found (either longitude or latitude)")
 
-        super(RedshiftController, self).__init__(color, pause_color, **kwargs)
-
-        self.states = {
-            "INIT": _InitState(self),
-            "RUNNING": _RunningState(self),
-            "PAUSED": _PauseState(self),
-            "TERMINATED": _TerminatedState(self),
-        }
-        self.state = self.states["INIT"]
+        super().__init__(color, pause_color, **kwargs)
 
     def __repr__(self):
         return 'redshift'

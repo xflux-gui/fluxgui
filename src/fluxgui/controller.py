@@ -84,13 +84,13 @@ class Controller:
             # means 'kill -9' ...
             time.sleep(1)
         except Exception as e:
-            print('XfluxController._stop: unexpected exception when resetting color:')
+            print('Controller._stop: unexpected exception when resetting color:')
             print(e)
         try:
             return self.program.terminate(force=True)
         except Exception as e:
             # xflux has crashed in the meantime?
-            print('XfluxController._stop: unexpected exception when terminating xflux:')
+            print('Controller._stop: unexpected exception when terminating xflux:')
             print(e)
             return True
 

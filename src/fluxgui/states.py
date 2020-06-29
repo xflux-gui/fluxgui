@@ -6,7 +6,7 @@ class _State(object):
     can_change_settings = False
 
     def __init__(self, controller_instance):
-        self.name = str(controller_instance)
+        self.name = str(controller_instance).capitalize()
         self.controller_ref = weakref.ref(controller_instance)
 
     def start(self, startup_args):

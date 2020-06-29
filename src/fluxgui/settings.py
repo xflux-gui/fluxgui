@@ -85,7 +85,6 @@ class Settings(object):
         if not self._latitude and not self._zipcode:
             self.has_set_prefs = False
             self._zipcode = '90210'
-            self.autostart = True
 
         # After an upgrade to fluxgui where the color options change,
         # the color setting may no longer be one of the menu
@@ -98,11 +97,11 @@ class Settings(object):
 
     def xflux_settings_dict(self):
         d = {
-             'color': self.color,
-             'latitude': self.latitude,
-             'longitude': self.longitude,
-             'zipcode': self.zipcode,
-             'pause_color': off_temperature
+            'color': self.color,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'zipcode': self.zipcode,
+            'pause_color': off_temperature
         }
         return d
 

@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
     <property name="resizable">False</property>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
     <child>
       <object class="GtkNotebook" id="notebook">
         <property name="visible">True</property>
@@ -616,7 +613,7 @@ f.lux indicator applet made by Kilian Valkhof</property>
                       <object class="GtkLabel" id="label7">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Longitude(optional)</property>
+                        <property name="label" translatable="yes">Longitude</property>
                       </object>
                     </child>
                   </object>
@@ -780,6 +777,9 @@ f.lux indicator applet made by Kilian Valkhof</property>
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
 </interface>

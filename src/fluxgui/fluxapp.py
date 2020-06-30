@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from gi.repository import Gtk as gtk
-from gi.repository import AppIndicator3 as appindicator
 import signal
 import os
 import sys
@@ -13,21 +11,28 @@ from fluxgui.redshiftpage import RedshiftPage
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
+from gi.repository import Gtk as gtk
+from gi.repository import AppIndicator3 as appindicator
 
 
 class FluxGUI(object):
     """
     FluxGUI initializes/destroys the app
     """
+
     def __init__(self):
         try:
             self.settings = settings.Settings()
-            self.xflux_controller = fluxcontroller.FluxController(self.settings)
-            self.redshift_controller = RedshiftSettings(self.settings)
-            self.indicator = Indicator(self, self.xflux_controller)
-            self.preferences = Preferences(self.settings,
-                    self.xflux_controller, self.redshift_controller)
-            self.xflux_controller.start()
+            self.controllers = {"xflux": fluxcontroller.FluxController(self.settings),
+                                "redshift": RedshiftSettings(self.settings)}
+            self.indicator = Indicator(self, self.controllers)
+
+            if self.settings.use_redshift:
+                self.controllers["redshift"].start()
+            elif self.settings.use_xflux:
+                self.controllers["xflux"].start()
+
+            self.preferences = Preferences(self.settings, self.controllers)
 
         except Exception as e:
             print(e)
@@ -47,9 +52,12 @@ class FluxGUI(object):
 
     def exit(self, code=0):
         try:
-            self.xflux_controller.stop()
-        except MethodUnavailableError:
-            pass
+            if self.settings.use_redshift:
+                self.controllers["redshift"].stop()
+            elif self.settings.use_xflux:
+                self.controllers["xflux"].stop()
+        except MethodUnavailableError as e:
+            print(e)
         gtk.main_quit()
         sys.exit(code)
 
@@ -63,9 +71,10 @@ class Indicator(object):
     Executes FluxController and FluxGUI methods.
     """
 
-    def __init__(self, fluxgui, xflux_controller):
+    def __init__(self, fluxgui, controllers):
         self.fluxgui = fluxgui
-        self.xflux_controller = xflux_controller
+        self.xflux_controller = controllers["xflux"]
+        self.redshift_controller = controllers["redshift"]
         self.indicator = appindicator.Indicator.new(
             "fluxgui-indicator",
             "fluxgui",
@@ -105,7 +114,10 @@ class Indicator(object):
             item.show()
 
     def _toggle_pause(self, item):
-        self.xflux_controller.toggle_pause()
+        if self.fluxgui.settings.use_redshift:
+            self.redshift_controller.toggle_pause()
+        elif self.fluxgui.settings.use_xflux:
+            self.xflux_controller.toggle_pause()
 
     def _open_preferences(self, item):
         self.fluxgui.open_preferences()
@@ -121,6 +133,29 @@ class Preferences(object):
 
     """
 
+    def __init__(self, settings, controllers):
+        self.settings = settings
+
+        self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
+            os.path.realpath(__file__))), "fluxgui/preferences.glade")
+        self.wTree = gtk.Builder.new_from_file(self.gladefile)
+
+        self.window = self.connect_widget("window1", self.delete_event,
+                                          connect_event="delete-event")
+        self.notebook = self.connect_widget("notebook", self.switch_page,
+                                            connect_event="switch-page")
+        self.xflux_page = XfluxPage(self.window, controllers, self.settings,
+                                    self.connect_widget)
+        self.redshift_page = RedshiftPage(self.window, controllers, self.settings,
+                                          self.connect_widget)
+
+        if not self.settings.has_set_prefs:
+            self.show()
+            if self.settings.latitude == "" and self.settings.zipcode == "":
+                self.xflux_page.display_no_zipcode_or_latitude_error_box()
+            elif self.settings.latitude == "" and self.settings.longitude == "":
+                self.redshift_page.display_no_longitude_or_latitude_error_box()
+
     def connect_widget(self, widget_name, connect_target=None,
                        connect_event="activate"):
         widget = self.wTree.get_object(widget_name)
@@ -135,44 +170,31 @@ class Preferences(object):
         elif args[2] == 1:  # Redshift page
             self.redshift_page.show()
 
-    def __init__(self, settings, xflux_controller, redshift_controller):
-        self.settings = settings
-        # self.xflux_controller = xflux_controller
+    def delete_event(self, widget, data=None):
+        if self.settings.use_redshift:
+            if not self.redshift_page.is_latitude_or_longitude_set():
+                self.redshift_page.display_no_longitude_or_latitude_error_box()
+                return True
+            self.redshift_page.save_changes()
+        elif self.settings.use_xflux:
+            if not self.xflux_page.is_latitude_or_zipcode_set():
+                self.xflux_page.display_no_zipcode_or_latitude_error_box()
+                return True
+            self.xflux_page.save_changes()
 
-        self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
-            os.path.realpath(__file__))), "fluxgui/preferences.glade")
-        self.wTree = gtk.Builder.new_from_file(self.gladefile)
-
-        # self.window = self.connect_widget("window1", self.delete_event,
-        self.window = self.connect_widget("window1", gtk.main_quit,
-                connect_event="delete-event")
-        self.notebook = self.connect_widget("notebook", self.switch_page,
-                                            connect_event="switch-page")
-        self.xflux_page = XfluxPage(self.window, xflux_controller, self.settings,
-                                    self.connect_widget)
-        self.redshift_page = RedshiftPage(self.window, redshift_controller, self.settings,
-                                          self.connect_widget)
-        self.default_page = self.xflux_page
-
-        if (self.settings.latitude == "" and self.settings.zipcode == "")\
-                or not self.settings.has_set_prefs:
-            self.show()
-            self.display_no_zipcode_or_latitude_error_box()
+        self.window.hide()
+        return True
 
     def show(self):
-        self.default_page.show()
+        if self.settings.use_xflux:
+            self.xflux_page.show()
+            self.notebook.set_current_page(0)
+        elif self.settings.use_redshift:
+            self.redshift_page.show()
+            self.notebook.set_current_page(1)
+
         self.window.show()
 
-    def display_no_zipcode_or_latitude_error_box(self):
-        md = gtk.MessageDialog(self.window,
-                gtk.DialogFlags.DESTROY_WITH_PARENT, gtk.MessageType.INFO,
-                gtk.ButtonsType.OK, ("The f.lux indicator applet needs to know "
-                "your latitude or zipcode to run. "
-                "Please fill either of them in on "
-                "the preferences screen and click 'Close'."))
-        md.set_title("f.lux indicator applet")
-        md.run()
-        md.destroy()
 
 def main():
     try:

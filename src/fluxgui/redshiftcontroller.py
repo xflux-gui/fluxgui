@@ -41,8 +41,7 @@ class RedshiftController(Controller):
         self._start(startup_args=["redshift", "-O", color])
 
     def _set_setting(self, **kwargs):
-        if "color" in kwargs and kwargs["color"]:
-            self._stop()
+        self._stop()
         self._start(self._create_startup_arg_list(**kwargs))
 
     def _stop(self):

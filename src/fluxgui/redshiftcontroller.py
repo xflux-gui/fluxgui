@@ -16,6 +16,7 @@ class RedshiftController(Controller):
         return 'redshift'
 
     def _set_redshift_color(self, col):
+        self._current_color = col
         self.state.set_setting(color=col)
 
     def _get_redshift_color(self):
@@ -24,8 +25,8 @@ class RedshiftController(Controller):
     color = property(_get_redshift_color, _set_redshift_color)
 
     def _create_startup_arg_list(self, color='3400', **kwargs):
-        print(f"create_startup color={color} kwargs={kwargs}")
         startup_args = ['redshift']
+
         if "latitude" in kwargs and kwargs['latitude']:
             startup_args += ["-l", f"{kwargs['latitude']}:{kwargs['longitude']}"]
         startup_args += ["-t", f"6500:{color}"]
@@ -36,12 +37,20 @@ class RedshiftController(Controller):
         self._set_screen_color(new_color)
 
     def _set_screen_color(self, color):
-        self._current_color = color
-        self._start()
+        self._stop()
+        self._start(startup_args=["redshift", "-O", color])
 
     def _set_setting(self, **kwargs):
-        args = self._create_startup_arg_list(**kwargs)
-        self._start(startup_args=args)
+        if "color" in kwargs and kwargs["color"]:
+            self._stop()
+        self._start(self._create_startup_arg_list(**kwargs))
+
+    def _stop(self):
+        # if we use the super class _stop() redshift ends without changing the color
+        # back to normal, so we need to start redshift with option "-x" to reset 
+        # the color back to normal.
+        self._start(startup_args=["redshift", "-x"])
+        return True
 
 
 class RedshiftSettings(RedshiftController):
@@ -50,36 +59,37 @@ class RedshiftSettings(RedshiftController):
     requires a Settings instance and updates that instance when
     relevant controller calls are made."""
     def __init__(self, settings):
+        self.new_settings = {}
         self.settings = settings
-        super(RedshiftSettings, self).__init__(
-            **self.settings.redshift_settings_dict())
+        super().__init__(**self.settings.redshift_settings_dict())
 
     def __repr__(self):
         return 'Redshift'
 
     def start(self):
-        if self.settings.longitude == "" and self.settings.latitude == "":
-            raise ValueError("Cannot start redshift, missing longitude or latitude")
-        super(RedshiftSettings, self).start()
+        if self.new_settings:
+            self._set_setting(**self.new_settings)
+        else:
+            super().start()
 
-    # Controller methods that don't touch xflux
+    # Controller methods that don't touch redshift
     def set_autostart(self, autos):
         self.settings.autostart = autos
 
-    # xflux methods that should also update settings
+    # redshift methods that should also update settings
     def set_redshift_latitude(self, lat):
+        self.new_settings["latitude"] = lat
         self.settings.latitude = lat
-        super(RedshiftSettings, self).set_latitude(lat)
 
     def set_redshift_longitude(self, longit):
+        self.new_settings["longitude"] = longit
         self.settings.longitude = longit
-        super(RedshiftSettings, self).set_longitude(longit)
 
     def _set_redshift_color(self, col):
+        self.new_settings["color"] = col
         self.settings.color = col
-        super(RedshiftSettings, self)._set_color(col)
 
     def _get_redshift_color(self):
-        return super(RedshiftSettings, self)._get_color()
+        return self.settings.color
 
     color = property(_get_redshift_color, _set_redshift_color)

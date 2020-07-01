@@ -3,11 +3,12 @@
 import signal
 import os
 import sys
+import fluxgui.settings as settings
+from fluxgui.settings.xflux import XfluxSettings
+from fluxgui.settings.redshift import RedshiftSettings
+from fluxgui.tabs.xflux import XfluxTab
+from fluxgui.tabs.redshift import RedshiftTab
 from fluxgui.exceptions import MethodUnavailableError
-from fluxgui import fluxcontroller, settings
-from fluxgui.redshiftcontroller import RedshiftSettings
-from fluxgui.xfluxpage import XfluxPage
-from fluxgui.redshiftpage import RedshiftPage
 import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
@@ -23,7 +24,7 @@ class FluxGUI(object):
     def __init__(self):
         try:
             self.settings = settings.Settings()
-            self.controllers = {"xflux": fluxcontroller.FluxController(self.settings),
+            self.controllers = {"xflux": XfluxSettings(self.settings),
                                 "redshift": RedshiftSettings(self.settings)}
             self.indicator = Indicator(self, self.controllers)
 
@@ -144,17 +145,17 @@ class Preferences(object):
                                           connect_event="delete-event")
         self.notebook = self.connect_widget("notebook", self.switch_page,
                                             connect_event="switch-page")
-        self.xflux_page = XfluxPage(self.window, controllers, self.settings,
-                                    self.connect_widget)
-        self.redshift_page = RedshiftPage(self.window, controllers, self.settings,
-                                          self.connect_widget)
+        self.xflux_tab = XfluxTab(self.window, controllers, self.settings,
+                                  self.connect_widget)
+        self.redshift_tab = RedshiftTab(self.window, controllers, self.settings,
+                                        self.connect_widget)
 
         if not self.settings.has_set_prefs:
             self.show()
-            if self.settings.latitude == "" and self.settings.zipcode == "":
-                self.xflux_page.display_no_zipcode_or_latitude_error_box()
-            elif self.settings.latitude == "" and self.settings.longitude == "":
-                self.redshift_page.display_no_longitude_or_latitude_error_box()
+            if self.settings.latitude and self.settings.zipcode:
+                self.xflux_tab.display_no_zipcode_or_latitude_error_box()
+            elif self.settings.latitude and self.settings.longitude:
+                self.redshift_tab.display_no_longitude_or_latitude_error_box()
 
     def connect_widget(self, widget_name, connect_target=None,
                        connect_event="activate"):
@@ -166,31 +167,32 @@ class Preferences(object):
     def switch_page(self, *args):
         # the NoteBook page index is the last element of the list
         if args[2] == 0:  # Xflux page
-            self.xflux_page.show()
+            self.xflux_tab.show()
         elif args[2] == 1:  # Redshift page
-            self.redshift_page.show()
+            self.redshift_tab.show()
 
     def delete_event(self, widget, data=None):
+        if not self.redshift_tab.is_latitude_or_longitude_set():
+            self.redshift_tab.display_no_longitude_or_latitude_error_box()
+            return True
+        elif not self.xflux_tab.is_latitude_or_zipcode_set():
+            self.xflux_tab.display_no_zipcode_or_latitude_error_box()
+            return True
+
         if self.settings.use_redshift:
-            if not self.redshift_page.is_latitude_or_longitude_set():
-                self.redshift_page.display_no_longitude_or_latitude_error_box()
-                return True
-            self.redshift_page.save_changes()
+            self.redshift_tab.save_changes()
         elif self.settings.use_xflux:
-            if not self.xflux_page.is_latitude_or_zipcode_set():
-                self.xflux_page.display_no_zipcode_or_latitude_error_box()
-                return True
-            self.xflux_page.save_changes()
+            self.xflux_tab.save_changes()
 
         self.window.hide()
         return True
 
     def show(self):
         if self.settings.use_xflux:
-            self.xflux_page.show()
+            self.xflux_tab.show()
             self.notebook.set_current_page(0)
         elif self.settings.use_redshift:
-            self.redshift_page.show()
+            self.redshift_tab.show()
             self.notebook.set_current_page(1)
 
         self.window.show()

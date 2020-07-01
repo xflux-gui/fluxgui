@@ -1,4 +1,4 @@
-from fluxgui import settings
+import fluxgui.settings as settings
 from fluxgui.exceptions import XfluxError
 from fluxgui.controller import Controller
 

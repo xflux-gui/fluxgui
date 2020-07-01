@@ -1,10 +1,10 @@
-from fluxgui import settings
+import fluxgui.settings as settings
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 
 
-class RedshiftPage:
+class RedshiftTab:
     def __init__(self, window, controllers, settings, connect_widget):
         self.window = window
         self.settings = settings

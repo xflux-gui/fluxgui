@@ -10,6 +10,8 @@ class RedshiftController(Controller):
             raise XfluxError(
                 "Required key not found (either longitude or latitude)")
 
+        self._latitude = kwargs["latitude"] if "latitude" in kwargs else ""
+        self._longitude = kwargs["longitude"] if "longitude" in kwargs else ""
         super().__init__(color, pause_color, **kwargs)
 
     def __repr__(self):
@@ -27,8 +29,14 @@ class RedshiftController(Controller):
     def _create_startup_arg_list(self, color='3400', **kwargs):
         startup_args = ['redshift']
 
-        if "latitude" in kwargs and kwargs['latitude']:
-            startup_args += ["-l", f"{kwargs['latitude']}:{kwargs['longitude']}"]
+        if "latitude" in kwargs:
+            self._latitude = kwargs["latitude"]
+
+        if "longitude" in kwargs:
+            self._longitude = kwargs["longitude"]
+
+        if "latidute" in kwargs or "longitude" in kwargs:
+            startup_args += ["-l", f"{self._latitude}:{self._longitude}"]
         startup_args += ["-t", f"6500:{color}"]
 
         return startup_args

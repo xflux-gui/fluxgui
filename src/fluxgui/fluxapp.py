@@ -172,10 +172,10 @@ class Preferences(object):
             self.redshift_tab.show()
 
     def delete_event(self, widget, data=None):
-        if not self.redshift_tab.is_latitude_or_longitude_set():
+        if not self.redshift_tab.is_latitude_or_longitude_set() and self.settings.use_redshift:
             self.redshift_tab.display_no_longitude_or_latitude_error_box()
             return True
-        elif not self.xflux_tab.is_latitude_or_zipcode_set():
+        elif not self.xflux_tab.is_latitude_or_zipcode_set() and self.settings.use_xflux:
             self.xflux_tab.display_no_zipcode_or_latitude_error_box()
             return True
 

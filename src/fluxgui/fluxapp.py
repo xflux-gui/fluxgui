@@ -85,7 +85,7 @@ class Indicator(object):
 
     def setup_indicator(self):
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
-        self.indicator.set_icon('fluxgui-panel')
+        self.indicator.set_icon_full('fluxgui-panel', '')
         self.indicator.set_menu(self.create_menu())
 
     def create_menu(self):
@@ -101,7 +101,7 @@ class Indicator(object):
 
     def add_menu_item(self, label, handler, menu,
                       event="activate", MenuItem=gtk.MenuItem, show=True):
-        item = MenuItem(label)
+        item = MenuItem(label=label)
         item.connect(event, handler)
         menu.append(item)
         if show:

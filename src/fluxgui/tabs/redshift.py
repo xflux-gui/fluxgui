@@ -64,6 +64,7 @@ class RedshiftTab:
 
         if self.redshift_controller.new_settings:
             self.redshift_controller.start()
+            self.redshift_controller.new_settings.clear()
 
     def is_latitude_or_longitude_set(self):
         return self.latsetting.get_text() or self.lonsetting.get_text()

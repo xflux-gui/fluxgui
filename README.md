@@ -2,8 +2,8 @@ FLUXGUI DOES NOT WORK ON MOST MODERN SYSTEMS
 ======================
 
 Fluxgui doesn't work on most modern systems, and there are no plans to fix it. You probably want to use [Redshift](http://jonls.dk/redshift/) via `redshift-gtk` instead. If you're curious, see:
-* #27 for why `fluxgui` probably won't work on your system and how to test if it can.
-* #113 for a possible way forward for the project.
+* [#27](https://github.com/xflux-gui/fluxgui/issues/27) for why `fluxgui` probably won't work on your system and how to test if it can.
+* [#113](https://github.com/xflux-gui/fluxgui/issues/113) for a possible way forward for the project.
 
 
 f.lux indicator applet

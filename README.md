@@ -47,7 +47,7 @@ sudo apt-get install fluxgui
 See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details.
 
 #### For Ubuntu 20.04 LTS and above
-While `sudo apt-get update` there is a error [#144](https://github.com/xflux-gui/fluxgui/issues/144)
+While `sudo apt-get update` there is an error [#144](https://github.com/xflux-gui/fluxgui/issues/144)
 ```console
 E: The repository 'http://ppa.launchpad.net/nathan-renniewaldock/flux/ubuntu focal Release' does not have a Release file. 
 ```

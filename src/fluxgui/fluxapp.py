@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 
-from gi.repository import Gtk as gtk
-from gi.repository import AppIndicator3 as appindicator
 import signal
 import os
 import sys
-from fluxgui.exceptions import MethodUnavailableError
-from fluxgui import fluxcontroller, settings
 import gi
 gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk as gtk
 gi.require_version('AppIndicator3', '0.1')
+from gi.repository import AppIndicator3 as appindicator
+from fluxgui.exceptions import MethodUnavailableError
+from fluxgui import fluxcontroller, settings
 
 
 class FluxGUI(object):

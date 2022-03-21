@@ -6,8 +6,8 @@ import sys
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
-gi.require_version('AppIndicator3', '0.1')
-from gi.repository import AppIndicator3 as appindicator
+gi.require_version('AyatanaAppIndicator3', '0.1')
+from gi.repository import AyatanaAppIndicator3 as appindicator
 from fluxgui.exceptions import MethodUnavailableError
 from fluxgui import fluxcontroller, settings
 

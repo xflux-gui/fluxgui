@@ -37,6 +37,8 @@ The `fluxgui` is only known to work with Python 3.
 
 ### Ubuntu PPA Package Manager Install
 
+***The [PPA](https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux) was last updated in 2019 and so you probably want to do a [manual install](#manual-install)!***
+
 To install via apt:
 
 ```bash
@@ -46,14 +48,14 @@ sudo apt-get install fluxgui
 ```
 See [ubuntuhandbook.org instructions](http://ubuntuhandbook.org/index.php/2016/03/install-f-lux-in-ubuntu-16-04/) for more details.
 
-#### For Ubuntu 20.04 LTS and above
+#### Workaround for Ubuntu 20.04 LTS and above
 While `sudo apt-get update` there is an error [#144](https://github.com/xflux-gui/fluxgui/issues/144)
 ```console
 E: The repository 'http://ppa.launchpad.net/nathan-renniewaldock/flux/ubuntu focal Release' does not have a Release file. 
 ```
 To solve:
 1. `sudo vim /etc/apt/sources.list.d/nathan-renniewaldock-ubuntu-flux-focal.list`
-2. Replace `focal` to `bionic` and save it.
+2. Replace `focal` with `bionic` or whatever distro you're using and save it.
 3. Repeat [above](#ubuntu-ppa-package-manager-install) mentioned steps from line 2. 
 
 

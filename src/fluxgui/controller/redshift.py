@@ -6,12 +6,12 @@ from fluxgui.exceptions import XfluxError
 class RedshiftController(Controller):
     def __init__(self, color=settings.default_temperature, pause_color=settings.off_temperature,
                  **kwargs):
-        if 'longitude' not in kwargs and 'latitude' not in kwargs:
+        if 'longitude' not in kwargs or 'latitude' not in kwargs:
             raise XfluxError(
                 "Required key not found (either longitude or latitude)")
 
-        self._latitude = kwargs["latitude"] if "latitude" in kwargs else ""
-        self._longitude = kwargs["longitude"] if "longitude" in kwargs else ""
+        self._latitude = kwargs["latitude"]
+        self._longitude = kwargs["longitude"]
         super().__init__(color, pause_color, **kwargs)
 
     def __repr__(self):
@@ -35,8 +35,7 @@ class RedshiftController(Controller):
         if "longitude" in kwargs:
             self._longitude = kwargs["longitude"]
 
-        if "latidute" in kwargs or "longitude" in kwargs:
-            startup_args += ["-l", f"{self._latitude}:{self._longitude}"]
+        startup_args += ["-l", f"{self._latitude}:{self._longitude}"]
         startup_args += ["-t", f"6500:{color}"]
 
         return startup_args

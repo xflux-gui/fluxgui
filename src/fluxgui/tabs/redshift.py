@@ -66,11 +66,11 @@ class RedshiftTab:
             self.redshift_controller.start()
             self.redshift_controller.new_settings.clear()
 
-    def is_latitude_or_longitude_set(self):
-        return self.latsetting.get_text() or self.lonsetting.get_text()
+    def are_latitude_and_longitude_set(self):
+        return self.latsetting.get_text() and self.lonsetting.get_text()
 
     def delete_event(self, widget, data=None):
-        if not self.is_latitude_or_longitude_set():
+        if not self.are_latitude_and_longitude_set():
             self.display_no_longitude_or_latitude_error_box()
             return True
 
@@ -83,7 +83,7 @@ class RedshiftTab:
                                gtk.DialogFlags.DESTROY_WITH_PARENT, gtk.MessageType.INFO,
                                gtk.ButtonsType.OK, ("The f.lux indicator applet needs to know "
                                                     "your latitude and longitude to run. "
-                                                    "Please fill either of them in on "
+                                                    "Please fill both of them in on "
                                                     "the preferences screen and click 'Close'."))
         md.set_title("f.lux indicator applet")
         md.run()

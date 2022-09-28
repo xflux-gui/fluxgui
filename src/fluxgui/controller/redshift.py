@@ -27,7 +27,9 @@ class RedshiftController(Controller):
     color = property(_get_redshift_color, _set_redshift_color)
 
     def _create_startup_arg_list(self, color='3400', **kwargs):
-        startup_args = ['redshift']
+        # The '-o' means to apply the color change immediately,
+        # instead of gradually.
+        startup_args = ['redshift', '-o']
 
         if "latitude" in kwargs:
             self._latitude = kwargs["latitude"]

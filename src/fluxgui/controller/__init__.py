@@ -53,9 +53,8 @@ class Controller:
         if not startup_args:
             startup_args = self._create_startup_arg_list(self._current_color,
                                                          **self.init_kwargs)
-
+        print(f'Starting backend app: {startup_args}')
         program = startup_args[0]
-
         try:
             self._kill(program)
             self.program = pexpect.spawn(program, startup_args[1:])

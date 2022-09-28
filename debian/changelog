@@ -1,10 +1,12 @@
 # -*- text -*-
 fluxgui (2.0~pre) wily; urgency=low
+fluxgui (2.0) wily; urgency=low
 
   * add support for Redshift as the backend
     https://github.com/xflux-gui/fluxgui/pull/143.
 
- -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
+ -- Nathan Collins <nathan.collins@gmail.com>  Wed, 28 Sep 2022 20:51:26 +0800
+
  
 fluxgui (1.2.0) wily; urgency=low
 

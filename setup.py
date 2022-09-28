@@ -82,7 +82,7 @@ class install_data(distutils.command.install_data.install_data):
             self.spawn(["glib-compile-schemas", gschema_dir])
 
 setup(name = "f.lux indicator applet",
-    version = "2.0",
+    version = "2.0.1~pre",
     description = "f.lux indicator applet - better lighting for your computer",
     author = "Kilian Valkhof, Michael and Lorna Herf, Josh Winters",
     author_email = "kilian@kilianvalkhof.com",

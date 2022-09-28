@@ -1,5 +1,8 @@
 # -*- text -*-
-fluxgui (2.0~pre) wily; urgency=low
+fluxgui (2.0.1~pre) wily; urgency=low
+
+ -- Nathan Collins <nathan.collins@gmail.com>  <add date here when releasing>
+
 fluxgui (2.0) wily; urgency=low
 
   * add support for Redshift as the backend

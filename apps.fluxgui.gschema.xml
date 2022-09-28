@@ -14,7 +14,7 @@
     </key>
 
     <key type="b" name="useredshift">
-        <default>false</default>
+        <default>true</default>
         <summary>Redshift</summary>
         <description>If set True the application will use redshift to change the screen color.</description>
     </key>

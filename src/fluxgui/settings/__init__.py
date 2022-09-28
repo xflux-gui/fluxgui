@@ -65,12 +65,14 @@ class Settings(object):
     def __init__(self):
         # You can use
         #
-        #     gsettings [--schema-dir .] list-recursively apps.fluxgui
+        #     gsettings [--schemadir .] list-recursively apps.fluxgui
         #
         # to see current settings on command line. The '--schema-dir'
         # is necessary if you're using a non-standard schema dir,
         # e.g. when running fluxgui from the repo without installing
-        # it.
+        # it. You can reset all settings to default with
+        #
+        #     gsettings [--schemadir .] reset-recursively apps.fluxgui
         self.settings = Gio.Settings.new('apps.fluxgui')
 
         self._color = self.settings.get_string("colortemp")
@@ -78,12 +80,13 @@ class Settings(object):
         self._latitude = self.settings.get_string("latitude")
         self._longitude = self.settings.get_string("longitude")
         self._zipcode = self.settings.get_string("zipcode")
+        self._use_redshift = self.settings.get_boolean("useredshift")
+        self._use_xflux = self.settings.get_boolean("usexflux")
 
         self.has_set_prefs = True
         if not self._latitude and not self._zipcode:
             self.has_set_prefs = False
             self._zipcode = '90210'
-            self.autostart = True
 
         # After an upgrade to fluxgui where the color options change,
         # the color setting may no longer be one of the menu
@@ -103,6 +106,14 @@ class Settings(object):
             'pause_color': off_temperature
         }
         return d
+
+    def redshift_settings_dict(self):
+        return {
+            'color': self.color,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
+            'pause_color': off_temperature
+        }
 
     def _get_color(self):
         return self._color
@@ -143,11 +154,27 @@ class Settings(object):
         else:
             self._delete_autostarter()
 
+    def _set_xflux(self, value):
+        self._use_xflux = value
+        self.settings.set_boolean("usexflux", value)
+
+    def _get_xflux(self):
+        return self._use_xflux
+
+    def _set_redshift(self, value):
+        self._use_redshift = value
+        self.settings.set_boolean("useredshift", value)
+
+    def _get_redshift(self):
+        return self._use_redshift
+
     color = property(_get_color, _set_color)
     latitude = property(_get_latitude, _set_latitude)
     longitude = property(_get_longitude, _set_longitude)
     zipcode = property(_get_zipcode, _set_zipcode)
     autostart = property(_get_autostart, _set_autostart)
+    use_redshift = property(_get_redshift, _set_redshift)
+    use_xflux = property(_get_xflux, _set_xflux)
 
     # autostart code copied from AWN
 

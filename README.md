@@ -1,32 +1,39 @@
-FLUXGUI DOES NOT WORK ON MOST MODERN SYSTEMS
+XFLUX DOES NOT WORK ON MOST MODERN SYSTEMS
 ======================
 
-Fluxgui doesn't work on most modern systems, and there are no plans to fix it. You probably want to use [Redshift](http://jonls.dk/redshift/) via `redshift-gtk` instead. If you're curious, see:
-* [#27](https://github.com/xflux-gui/fluxgui/issues/27) for why `fluxgui` probably won't work on your system and how to test if it can.
-* [#113](https://github.com/xflux-gui/fluxgui/issues/113) for a possible way forward for the project.
+The `xflux` program that Fluxgui traditionally used to change the
+screen color hasn't worked on most modern systems since 2016, it's a
+closed source program that is not part of this project, and there are
+no plans to fix it. Because of this, Fluxgui by default now uses
+[Redshift](http://jonls.dk/redshift/) to control your screen color,
+which should be supported on all systems.
 
+See Issue #27 for why `xflux` probably won't work on your system and
+how to test if it can.
 
 f.lux indicator applet
 ======================
 _Better lighting for your computer_
 
-The f.lux indicator applet `fluxgui` is an indicator applet to control
-`xflux`, an application that makes the color of your computer's
-display adapt to the time of day: warm at night, and like sunlight
-during the day. Reducing blue light exposure in the evening can help
-you fall asleep at night. See https://justgetflux.com/research.html
-for more details.
+The f.lux indicator applet `fluxgui` is an indicator applet that uses
+`xflux` or `redshift` to make the color of your computer's display
+adapt to the time of day: warm at night, and like sunlight during the
+day. Reducing blue light exposure in the evening can help you fall
+asleep at night. See https://justgetflux.com/research.html or
+http://jonls.dk/redshift/ for more details.
 
 This project -- https://github.com/xflux-gui/fluxgui -- is only
 concerned with the `fluxgui` indicator applet program, not with the
-underlying `xflux` program the indicator applet controls. The `xflux`
-program is responsible for actually changing the color of your
-screen. See https://justgetflux.com/linux.html for more information
-about `xflux`.
+underlying `xflux` or `redshift` program the indicator applet
+controls. The `xflux` or `redshift` program is responsible for
+actually changing the color of your screen. See
+https://justgetflux.com/linux.html for more information about `xflux`.
 
-`xflux` is downloaded automatically when installing `fluxgui`. Simply
-run `fluxgui` in your terminal after installation to open the applet.
-You can also easily configure the applet to auto-start on login.
+The `xflux` program is downloaded automatically when installing
+`fluxgui`. You can install `redshift` via the `redshift` package on
+most Linux distros. Simply run `fluxgui` in your terminal after
+installation to open the applet.  You can also easily configure the
+applet to auto-start on login.
 
 Install Instructions
 --------------------
@@ -78,7 +85,7 @@ For the `appindicator` implementation, both plain `appindicator` and the Ayatana
 Partial list of Python 3 dependencies (after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR):
 
 ```bash
-sudo apt-get install python3-pexpect python3-distutils gir1.2-ayatanaappindicator3-0.1 gir1.2-gtk-3.0
+sudo apt-get install python3-pexpect python3-distutils gir1.2-ayatanaappindicator3-0.1 gir1.2-gtk-3.0 redshift
 ```
 
 Out of date Python 2 dependencies; the remaining Python 3 deps should be similar:
@@ -92,7 +99,7 @@ sudo apt-get install git python-appindicator python-xdg python-pexpect python-gc
 WARNING: these dependencies may be out of date after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
 
 ```bash
-sudo yum install git python-appindicator python2-pyxdg python3-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade
+sudo yum install git python-appindicator python2-pyxdg python3-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade redshift
 ```
 
 #### Install `fluxgui`

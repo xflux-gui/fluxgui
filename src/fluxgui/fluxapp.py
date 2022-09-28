@@ -3,6 +3,12 @@
 import signal
 import os
 import sys
+import fluxgui.settings as settings
+from fluxgui.settings.xflux import XfluxSettings
+from fluxgui.settings.redshift import RedshiftSettings
+from fluxgui.tabs.xflux import XfluxTab
+from fluxgui.tabs.redshift import RedshiftTab
+from fluxgui.exceptions import MethodUnavailableError
 
 import gi
 gi.require_version('Gtk', '3.0')
@@ -26,22 +32,24 @@ if not _imported_appindicator:
     print('Failed to import an appindicator implementation, dying ...')
     sys.exit(1)
 
-from fluxgui.exceptions import MethodUnavailableError
-from fluxgui import fluxcontroller, settings
-
-
 class FluxGUI(object):
     """
     FluxGUI initializes/destroys the app
     """
+
     def __init__(self):
         try:
             self.settings = settings.Settings()
-            self.xflux_controller = fluxcontroller.FluxController(self.settings)
-            self.indicator = Indicator(self, self.xflux_controller)
-            self.preferences = Preferences(self.settings,
-                                           self.xflux_controller)
-            self.xflux_controller.start()
+            self.controllers = {"xflux": XfluxSettings(self.settings),
+                                "redshift": RedshiftSettings(self.settings)}
+            self.indicator = Indicator(self, self.controllers)
+
+            if self.settings.use_redshift:
+                self.controllers["redshift"].start()
+            elif self.settings.use_xflux:
+                self.controllers["xflux"].start()
+
+            self.preferences = Preferences(self.settings, self.controllers)
 
         except Exception as e:
             print(e)
@@ -61,9 +69,12 @@ class FluxGUI(object):
 
     def exit(self, code=0):
         try:
-            self.xflux_controller.stop()
-        except MethodUnavailableError:
-            pass
+            if self.settings.use_redshift:
+                self.controllers["redshift"].stop()
+            elif self.settings.use_xflux:
+                self.controllers["xflux"].stop()
+        except MethodUnavailableError as e:
+            print(e)
         gtk.main_quit()
         sys.exit(code)
 
@@ -77,9 +88,10 @@ class Indicator(object):
     Executes FluxController and FluxGUI methods.
     """
 
-    def __init__(self, fluxgui, xflux_controller):
+    def __init__(self, fluxgui, controllers):
         self.fluxgui = fluxgui
-        self.xflux_controller = xflux_controller
+        self.xflux_controller = controllers["xflux"]
+        self.redshift_controller = controllers["redshift"]
         self.indicator = appindicator.Indicator.new(
             "fluxgui-indicator",
             "fluxgui",
@@ -89,7 +101,7 @@ class Indicator(object):
 
     def setup_indicator(self):
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
-        self.indicator.set_icon('fluxgui-panel')
+        self.indicator.set_icon_full('fluxgui-panel', '')
         self.indicator.set_menu(self.create_menu())
 
     def create_menu(self):
@@ -105,7 +117,7 @@ class Indicator(object):
 
     def add_menu_item(self, label, handler, menu,
                       event="activate", MenuItem=gtk.MenuItem, show=True):
-        item = MenuItem(label)
+        item = MenuItem(label=label)
         item.connect(event, handler)
         menu.append(item)
         if show:
@@ -119,7 +131,10 @@ class Indicator(object):
             item.show()
 
     def _toggle_pause(self, item):
-        self.xflux_controller.toggle_pause()
+        if self.fluxgui.settings.use_redshift:
+            self.redshift_controller.toggle_pause()
+        elif self.fluxgui.settings.use_xflux:
+            self.xflux_controller.toggle_pause()
 
     def _open_preferences(self, item):
         self.fluxgui.open_preferences()
@@ -135,16 +150,8 @@ class Preferences(object):
 
     """
 
-    def connect_widget(self, widget_name, connect_target=None,
-                       connect_event="activate"):
-        widget = self.wTree.get_object(widget_name)
-        if connect_target:
-            widget.connect(connect_event, connect_target)
-        return widget
-
-    def __init__(self, settings, xflux_controller):
+    def __init__(self, settings, controllers):
         self.settings = settings
-        self.xflux_controller = xflux_controller
 
         self.gladefile = os.path.join(os.path.dirname(os.path.dirname(
             os.path.realpath(__file__))), "fluxgui/preferences.glade")
@@ -152,84 +159,59 @@ class Preferences(object):
 
         self.window = self.connect_widget("window1", self.delete_event,
                                           connect_event="delete-event")
-        self.latsetting = self.connect_widget("entryLatitude",
-                                              self.delete_event)
-        self.lonsetting = self.connect_widget("entryLongitude",
-                                              self.delete_event)
-        self.zipsetting = self.connect_widget("entryZipcode",
-                                              self.delete_event)
-        self.colsetting = self.connect_widget("comboColor")
-        self.previewbutton = self.connect_widget("buttonPreview",
-                                                 self.preview_click_event,
-                                                 "clicked")
-        self.closebutton = self.connect_widget("buttonClose",
-                                               self.delete_event, "clicked")
-        self.autostart = self.connect_widget("checkAutostart")
+        self.notebook = self.connect_widget("notebook", self.switch_page,
+                                            connect_event="switch-page")
+        self.xflux_tab = XfluxTab(self.window, controllers, self.settings,
+                                  self.connect_widget)
+        self.redshift_tab = RedshiftTab(self.window, controllers, self.settings,
+                                        self.connect_widget)
 
-        if (self.settings.latitude == "" and self.settings.zipcode == "")\
-                or not self.settings.has_set_prefs:
+        if not self.settings.has_set_prefs:
             self.show()
-            self.display_no_zipcode_or_latitude_error_box()
+            if self.settings.latitude and self.settings.zipcode:
+                self.xflux_tab.display_no_zipcode_or_latitude_error_box()
+            elif self.settings.latitude and self.settings.longitude:
+                self.redshift_tab.display_no_longitude_or_latitude_error_box()
 
-    def show(self):
+    def connect_widget(self, widget_name, connect_target=None,
+                       connect_event="activate"):
+        widget = self.wTree.get_object(widget_name)
+        if connect_target:
+            widget.connect(connect_event, connect_target)
+        return widget
 
-        self.latsetting.set_text(self.settings.latitude)
-        self.lonsetting.set_text(self.settings.longitude)
-        self.zipsetting.set_text(self.settings.zipcode)
-        self.colsetting.set_active(settings.temperature_to_key(self.settings.color))
-
-        if self.settings.autostart:
-            self.autostart.set_active(True)
-        else:
-            self.autostart.set_active(False)
-
-        self.window.show()
-
-    def display_no_zipcode_or_latitude_error_box(self):
-        md = gtk.MessageDialog(self.window,
-                gtk.DialogFlags.DESTROY_WITH_PARENT, gtk.MessageType.INFO,
-                gtk.ButtonsType.OK, ("The f.lux indicator applet needs to know "
-                "your latitude or zipcode to run. "
-                "Please fill either of them in on "
-                "the preferences screen and click 'Close'."))
-        md.set_title("f.lux indicator applet")
-        md.run()
-        md.destroy()
-
-    def preview_click_event(self, widget, data=None):
-        colsetting_temperature = settings.key_to_temperature(
-            self.colsetting.get_active())
-        self.xflux_controller.preview_color(colsetting_temperature)
+    def switch_page(self, *args):
+        # the NoteBook page index is the last element of the list
+        if args[2] == 0:  # Xflux page
+            self.xflux_tab.show()
+        elif args[2] == 1:  # Redshift page
+            self.redshift_tab.show()
 
     def delete_event(self, widget, data=None):
-        if self.settings.latitude != self.latsetting.get_text():
-            self.xflux_controller.set_xflux_latitude(
-                self.latsetting.get_text())
-
-        if self.settings.longitude != self.lonsetting.get_text():
-            self.xflux_controller.set_xflux_longitude(
-                self.lonsetting.get_text())
-
-        if self.settings.zipcode != self.zipsetting.get_text():
-            self.xflux_controller.set_xflux_zipcode(
-                self.zipsetting.get_text())
-
-        colsetting_temperature = settings.key_to_temperature(
-            self.colsetting.get_active())
-        if self.settings.color != colsetting_temperature:
-            self.xflux_controller.color = colsetting_temperature
-
-        if self.autostart.get_active():
-            self.xflux_controller.set_autostart(True)
-        else:
-            self.xflux_controller.set_autostart(False)
-        if self.latsetting.get_text() == "" \
-                and self.zipsetting.get_text() == "":
-            self.display_no_zipcode_or_latitude_error_box()
+        if not self.redshift_tab.are_latitude_and_longitude_set() and self.settings.use_redshift:
+            self.redshift_tab.display_no_longitude_or_latitude_error_box()
             return True
+        elif not self.xflux_tab.is_latitude_or_zipcode_set() and self.settings.use_xflux:
+            self.xflux_tab.display_no_zipcode_or_latitude_error_box()
+            return True
+
+        if self.settings.use_redshift:
+            self.redshift_tab.save_changes()
+        elif self.settings.use_xflux:
+            self.xflux_tab.save_changes()
 
         self.window.hide()
         return True
+
+    def show(self):
+        if self.settings.use_xflux:
+            self.xflux_tab.show()
+            self.notebook.set_current_page(0)
+        elif self.settings.use_redshift:
+            self.redshift_tab.show()
+            self.notebook.set_current_page(1)
+
+        self.window.show()
 
 
 def main():

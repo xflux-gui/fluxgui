@@ -44,7 +44,7 @@ The `fluxgui` is only known to work with Python 3.
 
 ### Ubuntu PPA Package Manager Install
 
-***The [PPA](https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux) was last updated in 2019 and so you probably want to do a [manual install](#manual-install)!***
+***The [PPA](https://launchpad.net/~nathan-renniewaldock/+archive/ubuntu/flux) was last updated in 2019 (last supported Ubuntu version is 18.04 - bionic) and so you probably want to do a [manual install](#manual-install)!***
 
 To install via apt:
 

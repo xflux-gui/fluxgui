@@ -82,7 +82,7 @@ For the `appindicator` implementation, both plain `appindicator` and the Ayatana
 
 ##### Ubuntu/Debian
 
-Partial list of Python 3 dependencies (after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR):
+Partial list of Python 3 dependencies (after the upgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR):
 
 ```bash
 sudo apt-get install python3-pexpect python3-distutils gir1.2-ayatanaappindicator3-0.1 gir1.2-gtk-3.0 redshift
@@ -96,7 +96,7 @@ sudo apt-get install git python-appindicator python-xdg python-pexpect python-gc
 
 ##### Fedora/CentOS
 
-WARNING: these dependencies may be out of date after the uprgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
+WARNING: these dependencies may be out of date after the upgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR.
 
 ```bash
 sudo yum install git python-appindicator python2-pyxdg python3-pexpect gnome-python2-gconf pygtk2 pygtk2-libglade redshift

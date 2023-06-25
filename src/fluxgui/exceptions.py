@@ -1,5 +1,4 @@
-__all__ = ['DirectoryCreationError', 'FileNotFoundError',
-           'XfluxError', 'MethodUnavailableError']
+__all__ = ['DirectoryCreationError', 'XfluxError', 'MethodUnavailableError']
 
 
 class Error(Exception):
@@ -7,10 +6,6 @@ class Error(Exception):
 
 
 class DirectoryCreationError(Error):
-    pass
-
-
-class FileNotFoundError(Error):
     pass
 
 

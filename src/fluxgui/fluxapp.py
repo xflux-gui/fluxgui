@@ -15,22 +15,18 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 # As of 2022/03/23 there is no Ayatana appindicator on Fedora, so fall
 # back to using regular appindicator if necessary.
-_imported_appindicator = False
 try:
     gi.require_version('AyatanaAppIndicator3', '0.1')
     from gi.repository import AyatanaAppIndicator3 as appindicator
-    _imported_appindicator = True
 except:
     print('Failed to import Ayatana appindicator, falling back to plain appindicator ...')
-try:
-    gi.require_version('AppIndicator3', '0.1')
-    from gi.repository import AppIndicator3 as appindicator
-    _imported_appindicator = True
-except:
-    print('Failed to import plain appindicator ...')
-if not _imported_appindicator:
-    print('Failed to import an appindicator implementation, dying ...')
-    sys.exit(1)
+    try:
+        gi.require_version('AppIndicator3', '0.1')
+        from gi.repository import AppIndicator3 as appindicator
+    except:
+        print('Failed to import plain appindicator ...')
+        print('Failed to import an appindicator implementation, dying ...')
+        sys.exit(1)
 
 class FluxGUI(object):
     """

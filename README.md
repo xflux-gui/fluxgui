@@ -85,13 +85,13 @@ For the `appindicator` implementation, both plain `appindicator` and the Ayatana
 Partial list of Python 3 dependencies (after the upgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR):
 
 ```bash
-sudo apt-get install python3-pexpect python3-distutils gir1.2-ayatanaappindicator3-0.1 gir1.2-gtk-3.0 redshift
+sudo apt-get install python3-pexpect python3-distutils python3-xdg gir1.2-ayatanaappindicator3-0.1 gir1.2-gtk-3.0 redshift
 ```
 
 Out of date Python 2 dependencies; the remaining Python 3 deps should be similar:
 
 ```bash
-sudo apt-get install git python-appindicator python-xdg python-pexpect python-gconf python-gtk2 python-glade2 libxxf86vm1  libcanberra-gtk-module
+sudo apt-get install git python-gconf python-gtk2 python-glade2 libxxf86vm1 libcanberra-gtk-module
 ```
 
 ##### Fedora/CentOS

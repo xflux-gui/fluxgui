@@ -12,7 +12,7 @@ Package: fluxgui
 Architecture: all
 Multi-Arch: foreign
 Depends: ${xflux:Depends}, ${misc:Depends}, ${python3:Depends}, wget, ca-certificates,
- python3-pexpect, gir1.2-ayatanaappindicator3-0.1, python3-gi, python3-xdg
+ python3-pexpect, gir1.2-ayatanaappindicator3-0.1, python3-gi, python3-xdg, redshift
 Description: f.lux indicator applet is an indicator applet to control xflux, an
  application that makes the color of your computer's display adapt to the time
  of day, warm at nights and like sunlight during the day

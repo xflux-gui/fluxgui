@@ -1,3 +1,82 @@
+### Modern Debian / Python 3.12+ Installation
+The original installation instructions use `distutils`, which was removed from Python 3.12. On modern Debian releases, the installation can be made to work by using `setuptools` instead.
+
+The following has been tested on Debian 13 with LXQt.
+
+#### Install dependencies
+
+```bash
+sudo apt update
+sudo apt install \
+    python3-pexpect \
+    python3-xdg \
+    python3-gi \
+    python3-gi-cairo \
+    python3-setuptools \
+    gir1.2-ayatanaappindicator3-0.1 \
+    gir1.2-gtk-3.0 \
+    redshift \
+    git
+```
+
+#### Download fluxgui
+
+```bash
+cd /tmp
+git clone "https://github.com/xflux-gui/fluxgui.git"
+cd fluxgui
+./download-xflux.py
+```
+
+#### Replace the removed `distutils` dependency
+
+Modern Python versions no longer provide `distutils`. Replace the import in `setup.py`:
+
+```bash
+sed -i 's/from distutils.core import setup/from setuptools import setup/' setup.py
+```
+
+Then install fluxgui locally:
+
+```bash
+python3 setup.py install --user
+```
+
+#### Install the GSettings schema
+
+The application requires its GSettings schema to be compiled and installed separately:
+
+```bash
+mkdir -p ~/.local/share/glib-2.0/schemas
+cp apps.fluxgui.gschema.xml ~/.local/share/glib-2.0/schemas/
+glib-compile-schemas ~/.local/share/glib-2.0/schemas
+```
+
+#### Run fluxgui
+
+```bash
+~/.local/bin/fluxgui
+```
+
+The application should now start normally.
+
+If the schema has not been installed system-wide, the application can also be run directly from the source directory with:
+
+```bash
+glib-compile-schemas .
+GSETTINGS_SCHEMA_DIR="$(pwd)" ~/.local/bin/fluxgui
+```
+
+### Notes
+
+* `pkg_resources` may emit a deprecation warning when starting fluxgui. This warning does not prevent the application from running.
+* `fluxgui` is currently maintained only minimally and uses an old Python packaging model.
+* The `xflux` backend does not work on many modern systems. `fluxgui` uses Redshift as its backend by default, which should be preferred on modern Linux systems.
+
+
+
+
+
 THIS PACKAGE IS BARELY MAINTAINED
 ======================
 

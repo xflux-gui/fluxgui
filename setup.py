@@ -2,7 +2,7 @@
 
 from setuptools import setup
 import setuptools.command.install
-import logging, os, os.path, subprocess, sys
+import os, os.path, subprocess, sys
 
 if os.path.abspath(os.path.curdir) != os.path.abspath(os.path.dirname(__file__)):
     print("The 'setup.py' must be run in its containing directory!")
@@ -79,7 +79,7 @@ class install(setuptools.command.install.install):
         # entries are installed relative to, and already accounts for
         # '--root' and '--prefix'.
         if os.environ.get('DISABLE_GSCHEMAS_COMPILED') is None:
-            self.announce("compiling gsettings schemas; set DISABLE_GSCHEMAS_COMPILED env var to disable", logging.INFO)
+            print("compiling gsettings schemas; set DISABLE_GSCHEMAS_COMPILED env var to disable")
             gschema_dir = os.path.join(self.install_data, gschema_dir_suffix)
             self.spawn(["glib-compile-schemas", gschema_dir])
 

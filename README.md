@@ -3,11 +3,6 @@ THIS PACKAGE IS BARELY MAINTAINED
 
 You should use [`redshift-gtk`](https://github.com/jonls/redshift) instead. That's what I use :)
 
-THE INSTALLATION PROCESS IS BROKEN IN PYTHON VERSIONS AFTER 3.9
-======================
-
-See [Issue #178](https://github.com/xflux-gui/fluxgui/issues/178).
-
 XFLUX DOES NOT WORK ON MOST MODERN SYSTEMS
 ======================
 
@@ -95,19 +90,17 @@ For the `appindicator` implementation, both plain `appindicator` and the Ayatana
 Partial list of Python 3 dependencies (after the upgrade to GTK+ 3 in PR #112. If you discover the correct deps, please submit a PR):
 
 ```bash
-sudo apt-get install python3-pexpect python3-distutils python3-xdg gir1.2-ayatanaappindicator3-0.1 gir1.2-gtk-3.0 redshift
-```
 
-According to [this comment]( https://github.com/xflux-gui/fluxgui/issues/176#issuecomment-2295441326), these deps may also be needed:
-
-```bash
-gir1.2-appindicator3-0.1 python3-gi python3-gi-cairo
-```
-
-Out of date Python 2 dependencies; the remaining Python 3 deps should be similar:
-
-```bash
-sudo apt-get install git python-gconf python-gtk2 python-glade2 libxxf86vm1 libcanberra-gtk-module
+sudo apt install \
+    python3-pexpect \
+    python3-xdg \
+    python3-gi \
+    python3-gi-cairo \
+    python3-setuptools \
+    gir1.2-ayatanaappindicator3-0.1 \
+    gir1.2-gtk-3.0 \
+    redshift \
+    git
 ```
 
 ##### Fedora/CentOS

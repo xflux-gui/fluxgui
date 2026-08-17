@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
-from distutils.log import info
-import distutils.command.install_data
-import os, os.path, subprocess, sys
+from setuptools import setup
+import setuptools.command.install
+import logging, os, os.path, subprocess, sys
 
 if os.path.abspath(os.path.curdir) != os.path.abspath(os.path.dirname(__file__)):
     print("The 'setup.py' must be run in its containing directory!")
@@ -20,7 +19,7 @@ os.umask(0o022)
 #
 # There is a fancier solution at
 # https://stackoverflow.com/a/25761434/470844 that uses
-# 'self.get_outputs()' in a custom 'distutils.command.install'
+# 'self.get_outputs()' in a custom 'setuptools.command.install'
 # subclass to only modify permissions of files that 'setup.py'
 # installed.
 subprocess.call(['chmod', '-R', 'a+rX', '.'])
@@ -71,14 +70,17 @@ then you need to download the 'xflux' binary separately. You can do this by runn
 
 before running 'setup.py'.""")
 
-class install_data(distutils.command.install_data.install_data):
+class install(setuptools.command.install.install):
     def run(self):
         super().run()
 
         # Compile '*.gschema.xml' to update or create 'gschemas.compiled'.
+        # The 'install_data' attribute is the directory that 'data_files'
+        # entries are installed relative to, and already accounts for
+        # '--root' and '--prefix'.
         if os.environ.get('DISABLE_GSCHEMAS_COMPILED') is None:
-            info("compiling gsettings schemas; set DISABLE_GSCHEMAS_COMPILED env var to disable")
-            gschema_dir = os.path.join(self.install_dir, gschema_dir_suffix)
+            self.announce("compiling gsettings schemas; set DISABLE_GSCHEMAS_COMPILED env var to disable", logging.INFO)
+            gschema_dir = os.path.join(self.install_data, gschema_dir_suffix)
             self.spawn(["glib-compile-schemas", gschema_dir])
 
 setup(name = "f.lux indicator applet",
@@ -97,5 +99,5 @@ setup(name = "f.lux indicator applet",
     control xflux, an application that makes the color of your computer's
     display adapt to the time of day, warm at nights and like sunlight during
     the day""",
-    cmdclass = {'install_data': install_data}
+    cmdclass = {'install': install}
   )
